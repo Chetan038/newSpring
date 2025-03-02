@@ -1,0 +1,69 @@
+login.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>login here</h1>
+
+
+
+<c:if test="${not empty errorMsg}">
+<h4>${errorMsg}</h4>
+</c:if>
+
+
+<form action="loginForm" method="post">   
+
+
+Email:<input type="email" name="email"/><br/><br/>
+Password:<input type="password" name="password"/><br/><br/>
+
+<input type="submit" value="Login">
+</form>
+
+if not registered <a href="reg">Register</a>
+
+</body>
+</html>
+
+register.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>Register form</h1>
+
+<c:if test="${not empty successMsg}">
+<h4>${successMsg}</h4>
+</c:if>
+
+
+<c:if test="${not empty errorMsg}">
+<h4>${errorMsg}</h4>
+</c:if>
+
+
+<form action="regForm" method="post">   
+
+Name:<input type="text" name="name"/><br/><br/>
+Email:<input type="email" name="email"/><br/><br/>
+Password:<input type="password" name="password"/><br/><br/>
+Phone no:<input type="text" name="phoneno"/><br/><br/>
+<input type="submit" value="Register">
+</form>
+
+</body>
+</html>
