@@ -1,100 +1,3 @@
-package com.chetan.main.controllers;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import com.chetan.main.entities.Employee;
-import com.chetan.main.services.EmployeeService;
-
-@Controller
-public class EmployeeController {
-
-    @Autowired
-    private EmployeeService employeeService;
-
-    @GetMapping("/home")
-    public String homePage(Model model) {
-        model.addAttribute("employees", employeeService.getAllEmployees());
-        return "home";
-    }
-
-    @GetMapping("/addEmployee")
-    public String addEmployeeForm(Model model) {
-        model.addAttribute("employee", new Employee());
-        return "add_employee";
-    }
-
-    @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute Employee employee) {
-        employeeService.saveEmployee(employee);
-        return "redirect:/home";
-    }
-
-    @GetMapping("/editEmployee/{empId}")
-    public String editEmployee(@PathVariable String empId, Model model) {
-        model.addAttribute("employee", employeeService.getEmployeeById(empId));
-        return "edit_employee";
-    }
-
-    @PostMapping("/updateEmployee")
-    public String updateEmployee(@ModelAttribute Employee employee) {
-        employeeService.updateEmployee(employee);
-        return "redirect:/home";
-    }
-
-    @GetMapping("/deleteEmployee/{empId}")
-    public String deleteEmployee(@PathVariable String empId) {
-        employeeService.deleteEmployee(empId);
-        return "redirect:/home";
-    }
-}
-
-
-@@@@
-package com.chetan.main.services;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.chetan.main.entities.Employee;
-import com.chetan.main.repositories.EmployeeRepository;
-import java.util.List;
-
-@Service
-public class EmployeeServiceImpl implements EmployeeService {
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
-    public Employee getEmployeeById(String empId) {
-        return employeeRepository.findById(empId).orElse(null);
-    }
-
-    @Override
-    public void saveEmployee(Employee employee) {
-        employeeRepository.save(employee);
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) {
-        employeeRepository.save(employee);
-    }
-
-    @Override
-    public void deleteEmployee(String empId) {
-        employeeRepository.deleteById(empId);
-    }
-}
-
-
-@@@@@
-
 
 
 This is my Employe management project using spring boot ,jsp ,oracle database, mvc
@@ -103,12 +6,12 @@ this is my file struture and code files
 
 src/main/java
 com.chetan.main->SpringBootAppApplication.java
-com.chetan.main.controllers->MyController.java
-com.chetan.main.entities->User.java
-com.chetan.main.repositories->UserRepository.java
-com.chetan.main.Services->UserService.java,UserServicelmpl.java
+com.chetan.main.controllers->MyController.java,EmployeeController.java
+com.chetan.main.entities->User.java,Employee.java
+com.chetan.main.repositories->UserRepository.java,EmployeeRepository.java
+com.chetan.main.Services->UserService.java,UserServicelmpl.java,EmployeeService.java,EmployeeServielmpl.java
 
-src/main/webapp/views/->login.jsp,register.jsp
+src/main/webapp/views/->login.jsp,register.jsp,add_employee.jsp,edit_employee.jsp,home.jsp
 
 
 SpringBootAppApplication.java
@@ -325,86 +228,649 @@ public class UserServiceImpl implements UserService {
 
 }
 
-database script
+EmployeeController.java
 
--- Create a new tablespace for the new project
+package com.chetan.main.controllers;
 
-CREATE TABLESPACE NEW_DATA
-  DATAFILE 'C:/Chetan/Development/DB/NEW_DATA.dbf'
-  SIZE 100M AUTOEXTEND ON; 
-  
-  
-alter session set "_ORACLE_SCRIPT"=true;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import com.chetan.main.entities.Employee;
+import com.chetan.main.Services.EmployeeService;
 
--- Part 1: Create User to serve as the 'Schema Owner' of all the objects
-CREATE USER NEWSO IDENTIFIED BY "NEWSO_pwd"
-  DEFAULT TABLESPACE users
-  TEMPORARY TABLESPACE temp
-  QUOTA UNLIMITED ON users;
+@Controller
+public class EmployeeController {
 
+    @Autowired
+    private EmployeeService employeeService;
 
--- Part 2: Create Application Connect User with Read-write access to the schema
-    CREATE USER NEWCU IDENTIFIED BY "NEWCU_pwd"
-  DEFAULT TABLESPACE users
-  TEMPORARY TABLESPACE temp;
-  
-ALTER USER NEWSO quota unlimited on NEW_DATA;
+    @GetMapping("/home")
+    public String homePage(Model model) {
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        return "home";
+    }
 
+    @GetMapping("/addEmployee")
+    public String addEmployeeForm(Model model) {
+        model.addAttribute("employee", new Employee());
+        return "add_employee";
+    }
 
--- ROLES
+    @PostMapping("/saveEmployee")
+    public String saveEmployee(@ModelAttribute Employee employee) {
+        employeeService.saveEmployee(employee);
+        return "redirect:/home";
+    }
 
--- Part 1: Create application role with write access
-CREATE ROLE NEW_ROLE_CU_RW NOT IDENTIFIED;
-GRANT CREATE SESSION TO NEW_ROLE_CU_RW;
-GRANT CONNECT TO NEW_ROLE_CU_RW;
+    @GetMapping("/editEmployee/{EMP_ID}")
+    public String editEmployee(@PathVariable String EMP_ID, Model model) {
+        model.addAttribute("employee", employeeService.getEmployeeById(EMP_ID));
+        return "edit_employee";
+    }
 
--- Assign ROLES
-GRANT NEW_ROLE_CU_RW TO NEWCU;
+    @PostMapping("/updateEmployee")
+    public String updateEmployee(@ModelAttribute Employee employee) {
+        employeeService.updateEmployee(employee);
+        return "redirect:/home";
+    }
 
-
--- GRANT SELECT on sequence (if you're using sequences to generate primary keys)
-CREATE SEQUENCE NEWSO.USERR_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
-GRANT SELECT ON NEWSO.USERR_SEQ TO NEW_ROLE_CU_RW;
-
-CREATE TABLE NEWSO.USERR
-(
-
-NAME 	VARCHAR2(255)NOT NULL,
-EMAIL 		VARCHAR2(255)NOT NULL,
-PASSWORD 		VARCHAR2(255)NOT NULL,
-PHONENO		VARCHAR2(255)NOT NULL
-
-)TABLESPACE NEW_DATA;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.USERR TO NEW_ROLE_CU_RW;
-
--- NOTE: Hibernate will handle the table creation based on your JPA entities
--- You do not need to manually create the APP_USER table here, Hibernate will automatically generate it based on the code.
--- Just make sure the entity
-
-Alter table NEWSO.USERR Add id NUMBER NOT NULL;
-
-Alter table NEWSO.USERR Add constraint user_pk PRIMARY KEY (id);
-
-select * from NEWSO.USERR;
+    @GetMapping("/deleteEmployee/{EMP_ID}")
+    public String deleteEmployee(@PathVariable String EMP_ID) {
+        employeeService.deleteEmployee(EMP_ID);
+        return "redirect:/home";
+    }
+}
 
 
-select USERR from NEWSO where  upper(USERR) ='USERR';
+Employee.java
 
-select sys_context('userenv','current_schema') From dual;
+package com.chetan.main.entities;
 
-select constraint_name from user_constraints where table_name = 'NEWSO.USERR' and constraint_type='P';
+import java.io.Serializable;
 
-alter table NEWSO.USERR drop primary key;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="EMPLOYEE", schema="NEWSO")
+
+public class Employee implements Serializable{
+	
+	@Id
+	@Column(name="",nullable=false)
+	private String EMP_ID;
+	@Column(name="",nullable=false)
+	private String E_NAME;
+	@Column(name="",nullable=false)
+	private Double SALARY;
+	@Column(name="",nullable=false)
+	private String DEPARTMENT;
+	@Column(name="",nullable=false)
+	private String STATUS;
+	@Column(name="",nullable=false)
+	private String PHONENO;
+	public String getEMP_ID() {
+		return EMP_ID;
+	}
+	public void setEMP_ID(String eMP_ID) {
+		EMP_ID = eMP_ID;
+	}
+	public String getE_NAME() {
+		return E_NAME;
+	}
+	public void setE_NAME(String e_NAME) {
+		E_NAME = e_NAME;
+	}
+	public Double getSALARY() {
+		return SALARY;
+	}
+	public void setSALARY(Double sALARY) {
+		SALARY = sALARY;
+	}
+	public String getDEPARTMENT() {
+		return DEPARTMENT;
+	}
+	public void setDEPARTMENT(String dEPARTMENT) {
+		DEPARTMENT = dEPARTMENT;
+	}
+	public String getSTATUS() {
+		return STATUS;
+	}
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+	public String getPHONENO() {
+		return PHONENO;
+	}
+	public void setPHONENO(String pHONENO) {
+		PHONENO = pHONENO;
+	}
+	
+	
+
+}
 
 
-now make when a table employee table in datase from refrence of above database script
-in which table havea emplye id,name,salaray,department,status,phone no, and make one entry in table
-make emply id primary key but dont auto increment.
+EmployeeRepository.java
+package com.chetan.main.repositories;
 
-now make and home page jsp to display all the list of employes in a row and in that row
-there shuld be two button to edit and delete when edit button is pressed   a new webpage should
-open to edit the employee and the changes shuld reflect in database.
-and in home page there should be add new employee and logout button so add new employee is 
-pressed a new page should open for enteri new employee and it shuld be savead in data bsase
-make jsp pages for this and code 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.chetan.main.entities.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee, String>{
+
+}
+
+EmployeeService.java
+package com.chetan.main.Services;
+
+import java.util.List;
+
+import com.chetan.main.entities.Employee;
+
+public interface EmployeeService {
+	
+	List<Employee> getAllEmployees();
+	Employee getEmployeeById(String EMP_ID);
+	void saveEmployee(Employee employee);
+	void updateEmployee(Employee employee);
+	void deleteEmployee(String EMP_ID);
+
+}
+
+EmployeeServielmpl.java
+
+package com.chetan.main.Services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.chetan.main.entities.Employee;
+import com.chetan.main.repositories.EmployeeRepository;
+import java.util.List;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getEmployeeById(String EMP_ID) {
+        return employeeRepository.findById(EMP_ID).orElse(null);
+    }
+
+    @Override
+    public void saveEmployee(Employee employee) {
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public void deleteEmployee(String EMP_ID) {
+        employeeRepository.deleteById(EMP_ID);
+    }
+}
+
+login.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+        color: #ff477e;
+        margin-bottom: 20px;
+    }
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    input[type="submit"] {
+        background: #ff477e;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    input[type="submit"]:hover {
+        background: #ff2d64;
+    }
+    a {
+        display: block;
+        margin-top: 15px;
+        text-decoration: none;
+        color: #ff477e;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    a:hover {
+        color: #ff2d64;
+    }
+    h4 {
+        color: red;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Login Here</h1>
+
+    <c:if test="${not empty errorMsg}">
+        <h4>${errorMsg}</h4>
+    </c:if>
+
+    <form action="loginForm" method="post">   
+        <input type="email" name="email" placeholder="Email" required /><br/>
+        <input type="password" name="password" placeholder="Password" required /><br/>
+        <input type="submit" value="Login">
+    </form>
+
+    <a href="reg">Not registered? Register here</a>
+</div>
+
+</body>
+</html>
+
+home.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Employee Management</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 80%;
+        text-align: center;
+        animation: fadeIn 0.8s ease-in-out;
+        overflow-x: auto;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+        color: #ff477e;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    th {
+        background: #ff477e;
+        color: white;
+    }
+    a {
+        text-decoration: none;
+        color: #ff477e;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    a:hover {
+        color: #ff2d64;
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background: #ff477e;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .btn:hover {
+        background: #ff2d64;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Employee List</h2>
+    <table>
+        <tr>
+            <th>Emp ID</th><th>Name</th><th>Salary</th><th>Department</th><th>Status</th><th>Phone No</th><th>Actions</th>
+        </tr>
+        <c:forEach var="emp" items="${employees}">
+            <tr>
+                <td>${emp.empId}</td>
+                <td>${emp.name}</td>
+                <td>${emp.salary}</td>
+                <td>${emp.department}</td>
+                <td>${emp.status}</td>
+                <td>${emp.phoneNo}</td>
+                <td>
+                    <a href="editEmployee/${emp.empId}">Edit</a> |
+                    <a href="deleteEmployee/${emp.empId}">Delete</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+    <a href="addEmployee" class="btn">Add New Employee</a>
+    <a href="logout" class="btn">Logout</a>
+</div>
+
+</body>
+</html>
+
+add_employee.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Employee</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+        color: #ff477e;
+        margin-bottom: 20px;
+    }
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    input[type="submit"] {
+        background: #ff477e;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    input[type="submit"]:hover {
+        background: #ff2d64;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add Employee</h2>
+    <form action="saveEmployee" method="post">
+        <input type="text" name="empId" placeholder="Emp ID" required /><br>
+        <input type="text" name="name" placeholder="Name" required /><br>
+        <input type="number" name="salary" placeholder="Salary" required /><br>
+        <input type="text" name="department" placeholder="Department" required /><br>
+        <input type="text" name="status" placeholder="Status" required /><br>
+        <input type="text" name="phoneNo" placeholder="Phone No" required /><br>
+        <input type="submit" value="Save Employee">
+    </form>
+</div>
+
+</body>
+</html>
+
+
+edit_employee.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edit Employee</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+        color: #ff477e;
+        margin-bottom: 20px;
+    }
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    input[type="submit"] {
+        background: #ff477e;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    input[type="submit"]:hover {
+        background: #ff2d64;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Edit Employee</h2>
+    <form action="updateEmployee" method="post">
+        <input type="hidden" name="empId" value="${employee.empId}" />
+        <input type="text" name="name" value="${employee.name}" required /><br>
+        <input type="number" name="salary" value="${employee.salary}" required /><br>
+        <input type="submit" value="Update Employee">
+    </form>
+</div>
+
+</body>
+</html>
+
+pom.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.3</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.chetan</groupId>
+	<artifactId>SpringBootWebApp</artifactId>
+	<version>1.0</version>
+	<name>SpringBootWebApp</name>
+	<description>Demo project for Spring Boot</description>
+	<url />
+	<licenses>
+		<license />
+	</licenses>
+	<developers>
+		<developer />
+	</developers>
+	<scm>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!--
+		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
+		<dependency>
+			<groupId>jakarta.servlet.jsp.jstl</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper</artifactId>
+			<version>10.1.34</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.chetan</groupId>
+			<artifactId>SpringBootWebApp</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
+
+
+appicaiton.properties
+spring.application.name=SpringBootWebApp
+spring.mvc.view.prefix=/views/
+spring.mvc.view.suffix=.jsp
+
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=NEWCU
+spring.datasource.password=NEWCU_pwd
+
+
+spring.jpa.show-sql=true
+
+
+this is my project fix the error make change where possible and fix this when i am login in the home page is not displaying 
