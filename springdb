@@ -1,0 +1,89 @@
+-- Create a new tablespace for the new project
+
+CREATE TABLESPACE NEW_DATA
+  DATAFILE 'C:/Chetan/Development/DB/NEW_DATA.dbf'
+  SIZE 100M AUTOEXTEND ON; 
+  
+  
+alter session set "_ORACLE_SCRIPT"=true;
+
+-- Part 1: Create User to serve as the 'Schema Owner' of all the objects
+CREATE USER NEWSO IDENTIFIED BY "NEWSO_pwd"
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp
+  QUOTA UNLIMITED ON users;
+
+
+-- Part 2: Create Application Connect User with Read-write access to the schema
+    CREATE USER NEWCU IDENTIFIED BY "NEWCU_pwd"
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp;
+  
+ALTER USER NEWSO quota unlimited on NEW_DATA;
+
+
+-- ROLES
+
+-- Part 1: Create application role with write access
+CREATE ROLE NEW_ROLE_CU_RW NOT IDENTIFIED;
+GRANT CREATE SESSION TO NEW_ROLE_CU_RW;
+GRANT CONNECT TO NEW_ROLE_CU_RW;
+
+-- Assign ROLES
+GRANT NEW_ROLE_CU_RW TO NEWCU;
+
+
+-- GRANT SELECT on sequence (if you're using sequences to generate primary keys)
+CREATE SEQUENCE NEWSO.USERR_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+GRANT SELECT ON NEWSO.USERR_SEQ TO NEW_ROLE_CU_RW;
+
+CREATE TABLE NEWSO.USERR
+(
+
+NAME 	VARCHAR2(255)NOT NULL,
+EMAIL 		VARCHAR2(255)NOT NULL,
+PASSWORD 		VARCHAR2(255)NOT NULL,
+PHONENO		VARCHAR2(255)NOT NULL
+
+)TABLESPACE NEW_DATA;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.USERR TO NEW_ROLE_CU_RW;
+
+-- NOTE: Hibernate will handle the table creation based on your JPA entities
+-- You do not need to manually create the APP_USER table here, Hibernate will automatically generate it based on the code.
+-- Just make sure the entity
+
+Alter table NEWSO.USERR Add id NUMBER NOT NULL;
+
+Alter table NEWSO.USERR Add constraint user_pk PRIMARY KEY (id);
+
+select * from NEWSO.USERR;
+
+
+select USERR from NEWSO where  upper(USERR) ='USERR';
+
+select sys_context('userenv','current_schema') From dual;
+
+select constraint_name from user_constraints where table_name = 'NEWSO.USERR' and constraint_type='P';
+
+alter table NEWSO.USERR drop primary key;
+
+
+CREATE TABLE NEWSO.EMPLOYEE
+(
+EMP_ID VARCHAR2(50) PRIMARY KEY,
+E_NAME 	VARCHAR2(255)NOT NULL,
+SALARY NUMBER(10,2) NOT NULL,
+DEPARTMENT VARCHAR(255) NOT NULL,
+STATUS VARCHAR2(20) NOT NULL,
+PHONENO	VARCHAR2(20) NOT NULL
+
+)TABLESPACE NEW_DATA;
+
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.EMPLOYEE TO NEW_ROLE_CU_RW;
+
+INSERT INTO NEWSO.EMPLOYEE (EMP_ID,E_NAME,SALARY,DEPARTMENT,STATUS,PHONENO) VALUES('E001','CHETAN',500000,'IT','ACTIVE','912342134');
+
+SELECT * FROM NEWSO.EMPLOYEE;
