@@ -1,3 +1,49 @@
+
+package com.chetan.main.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.chetan.main.entities.Employee;
+import com.chetan.main.repositories.EmployeeRepository;
+import java.util.List;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getEmployeeById(String empId) {
+        return employeeRepository.findById(empId).orElse(null);
+    }
+
+    @Override
+    public void saveEmployee(Employee employee) {
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public void deleteEmployee(String empId) {
+        employeeRepository.deleteById(empId);
+    }
+}
+
+
+@@@@@
+
+
+
 This is my Employe management project using spring boot ,jsp ,oracle database, mvc
 
 this is my file struture and code files
