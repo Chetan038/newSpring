@@ -1,14 +1,13 @@
- The absolute uri: [http://java.sun.com/jsp/jstl/core] cannot be resolved in either web.xml or the jar files deployed with this application
-this two error is comming
+Hibernate: select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.phoneno from newso.userr u1_0 where u1_0.email=?
+[2m2025-03-03T11:59:27.030+05:30[0;39m [31mERROR[0;39m [35m14044[0;39m [2m--- [SpringBootWebApp] [nio-8080-exec-2] [0;39m[36mo.a.c.c.C.[.[localhost].[/].[jsp]       [0;39m [2m:[0;39m Servlet.service() for servlet [jsp] threw exception
 
 
-
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>jstl</artifactId>
-    <version>1.2</version>
-</dependency>
+java.lang.ClassNotFoundException: javax.servlet.jsp.tagext.TagLibraryValidator
 
 
+[2m2025-03-03T11:59:27.036+05:30[0;39m [31mERROR[0;39m [35m14044[0;39m [2m--- [SpringBootWebApp] [nio-8080-exec-2] [0;39m[36mo.a.c.c.C.[.[.[/].[dispatcherServlet]   [0;39m [2m:[0;39m Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [java.lang.NoClassDefFoundError: javax/servlet/jsp/tagext/TagLibraryValidator] with root cause
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+java.lang.ClassNotFoundException: javax.servlet.jsp.tagext.TagLibraryValidator
+
+
+this erro is coming how to fix
