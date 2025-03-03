@@ -1,12 +1,9 @@
-2025-03-03T14:28:42.325+05:30[0;39m [32m INFO[0;39m [35m1820[0;39m [2m--- [EmployeeManagementApp] [  restartedMain] [0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-Hibernate: create table newso.employeee (emp_id varchar2(255 char) not null, department varchar2(255 char) not null, e_name varchar2(255 char) not null, phoneno varchar2(255 char) not null, salary float(53) not null, status varchar2(255 char) not null, primary key (emp_id))
-[2m2025-03-03T14:28:43.412+05:30[0;39m [33m WARN[0;39m [35m1820[0;39m [2m--- [EmployeeManagementApp] [  restartedMain] [0;39m[36mo.h.t.s.i.ExceptionHandlerLoggedImpl    [0;39m [2m:[0;39m GenerationTarget encountered exception accepting command : Error executing DDL "create table newso.employeee (emp_id varchar2(255 char) not null, department varchar2(255 char) not null, e_name varchar2(255 char) not null, phoneno varchar2(255 char) not null, salary float(53) not null, status varchar2(255 char) not null, primary key (emp_id))" via JDBC [ORA-01031: insufficient privileges
+[2m2025-03-03T17:06:46.297+05:30[0;39m [32m INFO[0;39m [35m16996[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: alter table newso.employee modify emp_id varchar2(255 char)
+[2m2025-03-03T17:06:47.189+05:30[0;39m [33m WARN[0;39m [35m16996[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.h.t.s.i.ExceptionHandlerLoggedImpl    [0;39m [2m:[0;39m GenerationTarget encountered exception accepting command : Error executing DDL "alter table newso.employee modify emp_id varchar2(255 char)" via JDBC [ORA-01031: insufficient privileges
 
 https://docs.oracle.com/error-help/db/ora-01031/]
 
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table newso.employeee (emp_id varchar2(255 char) not null, department varchar2(255 char) not null, e_name varchar2(255 char) not null, phoneno varchar2(255 char) not null, salary float(53) not null, status varchar2(255 char) not null, primary key (emp_id))" via JDBC [ORA-01031: insufficient privileges
-
-https://docs.oracle.com/error-help/db/ora-01031/]
-
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table newso.employee modify emp_id varchar2(255 char)" via JDBC [ORA-01031: insufficient privileges
 
 fix this error
