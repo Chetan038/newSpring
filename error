@@ -1,6 +1,12 @@
-[2m2025-03-03T12:05:53.692+05:30[0;39m [31mERROR[0;39m [35m26936[0;39m [2m--- [SpringBootWebApp] [nio-8080-exec-2] [0;39m[36mo.a.c.c.C.[.[.[/].[dispatcherServlet]   [0;39m [2m:[0;39m Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [java.lang.NoClassDefFoundError: javax/servlet/jsp/tagext/TagLibraryValidator] with root cause
+2025-03-03T14:28:42.325+05:30[0;39m [32m INFO[0;39m [35m1820[0;39m [2m--- [EmployeeManagementApp] [  restartedMain] [0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table newso.employeee (emp_id varchar2(255 char) not null, department varchar2(255 char) not null, e_name varchar2(255 char) not null, phoneno varchar2(255 char) not null, salary float(53) not null, status varchar2(255 char) not null, primary key (emp_id))
+[2m2025-03-03T14:28:43.412+05:30[0;39m [33m WARN[0;39m [35m1820[0;39m [2m--- [EmployeeManagementApp] [  restartedMain] [0;39m[36mo.h.t.s.i.ExceptionHandlerLoggedImpl    [0;39m [2m:[0;39m GenerationTarget encountered exception accepting command : Error executing DDL "create table newso.employeee (emp_id varchar2(255 char) not null, department varchar2(255 char) not null, e_name varchar2(255 char) not null, phoneno varchar2(255 char) not null, salary float(53) not null, status varchar2(255 char) not null, primary key (emp_id))" via JDBC [ORA-01031: insufficient privileges
 
-Hibernate: select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.phoneno from newso.userr u1_0 where u1_0.email=?
-[2m2025-03-03T12:05:53.688+05:30[0;39m [31mERROR[0;39m [35m26936[0;39m [2m--- [SpringBootWebApp] [nio-8080-exec-2] [0;39m[36mo.a.c.c.C.[.[localhost].[/].[jsp]       [0;39m [2m:[0;39m Servlet.service() for servlet [jsp] threw exception
+https://docs.oracle.com/error-help/db/ora-01031/]
 
-this erro is coming fix it
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table newso.employeee (emp_id varchar2(255 char) not null, department varchar2(255 char) not null, e_name varchar2(255 char) not null, phoneno varchar2(255 char) not null, salary float(53) not null, status varchar2(255 char) not null, primary key (emp_id))" via JDBC [ORA-01031: insufficient privileges
+
+https://docs.oracle.com/error-help/db/ora-01031/]
+
+
+fix this error
