@@ -1,3 +1,66 @@
+home.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<html>
+<head><title>Employee Management</title></head>
+<body>
+    <h2>Employee List</h2>
+    <table border="1">
+        <tr>
+            <th>Emp ID</th><th>Name</th><th>Salary</th><th>Department</th><th>Status</th><th>Phone No</th><th>Actions</th>
+        </tr>
+        <c:forEach var="emp" items="${employees}">
+            <tr>
+                <td>${emp.empId}</td>
+                <td>${emp.name}</td>
+                <td>${emp.salary}</td>
+                <td>${emp.department}</td>
+                <td>${emp.status}</td>
+                <td>${emp.phoneNo}</td>
+                <td>
+                    <a href="editEmployee/${emp.empId}">Edit</a>
+                    <a href="deleteEmployee/${emp.empId}">Delete</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+    <br>
+    <a href="addEmployee">Add New Employee</a>
+    <a href="logout">Logout</a>
+</body>
+</html>
+
+
+
+
+
+@@@@
+
+add_employee.jsp
+
+<form action="saveEmployee" method="post">
+    Emp ID: <input type="text" name="empId" required /><br>
+    Name: <input type="text" name="name" required /><br>
+    Salary: <input type="number" name="salary" required /><br>
+    Department: <input type="text" name="department" required /><br>
+    Status: <input type="text" name="status" required /><br>
+    Phone No: <input type="text" name="phoneNo" required /><br>
+    <input type="submit" value="Save Employee">
+</form>
+
+@@@
+
+edit_employee.java
+
+<form action="updateEmployee" method="post">
+    <input type="hidden" name="empId" value="${employee.empId}" />
+    Name: <input type="text" name="name" value="${employee.name}" required /><br>
+    Salary: <input type="number" name="salary" value="${employee.salary}" required /><br>
+    <input type="submit" value="Update Employee">
+</form>
+
+
+
 login.jsp
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
