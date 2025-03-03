@@ -1,0 +1,311 @@
+This is my Employe management project using spring boot ,jsp ,oracle database, mvc
+
+this is my file struture and code files
+
+src/main/java
+com.chetan.main->SpringBootAppApplication.java
+com.chetan.main.controllers->MyController.java
+com.chetan.main.entities->User.java
+com.chetan.main.repositories->UserRepository.java
+com.chetan.main.Services->UserService.java,UserServicelmpl.java
+
+src/main/webapp/views/->login.jsp,register.jsp
+
+
+SpringBootAppApplication.java
+package com.chetan.main;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringBootWebAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootWebAppApplication.class, args);
+	}
+
+}
+
+
+MyController.java
+package com.chetan.main.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.chetan.main.Services.UserService;
+import com.chetan.main.entities.User;
+
+import org.springframework.ui.Model;
+
+
+
+@Controller
+public class MyController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@GetMapping("/reg")
+	public String openRegPage(Model modle)
+	{
+		modle.addAttribute("user",new User());
+		return "register";
+	}
+	@GetMapping("/loginPage")
+	public String openLoginPage(Model model)
+	{
+	    model.addAttribute("user", new User());	
+		return "login";
+	}
+	
+	
+	@PostMapping("/loginForm")
+	public String submitLoginForm(@ModelAttribute("user") User user,Model model) {
+		
+	    User validUser= userService.loginUser(user.getEmail(),user.getPassword());
+	    
+	    if(validUser!=null)
+	    {
+	    	return "profile";
+	    }
+	    else {
+	    	model.addAttribute("errorMsg", "User not registered scussefully");
+	    	return "login";
+	    }
+		
+	}
+	
+	@PostMapping("/regForm")
+	public String submitRegForm(@ModelAttribute("user") User user,Model model)
+	{
+		boolean status=userService.reisterUser(user);
+		if(status)
+		{
+			model.addAttribute("successMsg", "User registered scussefully");
+		}
+		else {
+			model.addAttribute("errorMsg", "User not registered scussefully");
+			
+		}
+			
+		return "register";
+	}
+
+}
+
+User.java
+package com.chetan.main.entities;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="USERR",schema="NEWSO")
+public class User {
+
+	
+	@Id
+
+	@Column(name="id",nullable=false)
+	private int id;
+	@Column
+	private String name;
+	@Column
+	private String email;
+	@Column
+	private String password;
+	@Column
+	private String phoneno;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPhoneno() {
+		return phoneno;
+	}
+	public void setPhoneno(String phoneno) {
+		this.phoneno = phoneno;
+	}
+	
+	
+}
+
+UserRepository.java
+package com.chetan.main.repositories;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.chetan.main.entities.User;
+
+
+
+public interface UserRepository extends JpaRepository<User, Integer>{
+	User findByEmail(String email);
+
+}
+
+UserService.java
+package com.chetan.main.Services;
+
+import com.chetan.main.entities.User;
+
+public interface UserService {
+	
+	public boolean reisterUser(User user);
+	public User loginUser(String email,String password);
+
+}
+
+UserServicelmpl.java
+package com.chetan.main.Services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chetan.main.entities.User;
+import com.chetan.main.repositories.UserRepository;
+
+
+@Service
+public class UserServiceImpl implements UserService {
+	
+	@Autowired
+	private UserRepository userRepository;
+
+	@Override
+	public boolean reisterUser(User user) {
+		// TODO Auto-generated method stub
+		try {
+		userRepository.save(user);
+		return true;
+		}
+		catch(Exception e) {return false;}
+		
+	}
+
+	@Override
+	public User loginUser(String email, String password) {
+		User validUser =userRepository.findByEmail(email);
+		if(validUser!=null && validUser.getPassword().equals(password))
+		{
+			return validUser;
+		}
+		return null;
+	}
+	
+
+}
+
+database script
+
+-- Create a new tablespace for the new project
+
+CREATE TABLESPACE NEW_DATA
+  DATAFILE 'C:/Chetan/Development/DB/NEW_DATA.dbf'
+  SIZE 100M AUTOEXTEND ON; 
+  
+  
+alter session set "_ORACLE_SCRIPT"=true;
+
+-- Part 1: Create User to serve as the 'Schema Owner' of all the objects
+CREATE USER NEWSO IDENTIFIED BY "NEWSO_pwd"
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp
+  QUOTA UNLIMITED ON users;
+
+
+-- Part 2: Create Application Connect User with Read-write access to the schema
+    CREATE USER NEWCU IDENTIFIED BY "NEWCU_pwd"
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp;
+  
+ALTER USER NEWSO quota unlimited on NEW_DATA;
+
+
+-- ROLES
+
+-- Part 1: Create application role with write access
+CREATE ROLE NEW_ROLE_CU_RW NOT IDENTIFIED;
+GRANT CREATE SESSION TO NEW_ROLE_CU_RW;
+GRANT CONNECT TO NEW_ROLE_CU_RW;
+
+-- Assign ROLES
+GRANT NEW_ROLE_CU_RW TO NEWCU;
+
+
+-- GRANT SELECT on sequence (if you're using sequences to generate primary keys)
+CREATE SEQUENCE NEWSO.USERR_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+GRANT SELECT ON NEWSO.USERR_SEQ TO NEW_ROLE_CU_RW;
+
+CREATE TABLE NEWSO.USERR
+(
+
+NAME 	VARCHAR2(255)NOT NULL,
+EMAIL 		VARCHAR2(255)NOT NULL,
+PASSWORD 		VARCHAR2(255)NOT NULL,
+PHONENO		VARCHAR2(255)NOT NULL
+
+)TABLESPACE NEW_DATA;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.USERR TO NEW_ROLE_CU_RW;
+
+-- NOTE: Hibernate will handle the table creation based on your JPA entities
+-- You do not need to manually create the APP_USER table here, Hibernate will automatically generate it based on the code.
+-- Just make sure the entity
+
+Alter table NEWSO.USERR Add id NUMBER NOT NULL;
+
+Alter table NEWSO.USERR Add constraint user_pk PRIMARY KEY (id);
+
+select * from NEWSO.USERR;
+
+
+select USERR from NEWSO where  upper(USERR) ='USERR';
+
+select sys_context('userenv','current_schema') From dual;
+
+select constraint_name from user_constraints where table_name = 'NEWSO.USERR' and constraint_type='P';
+
+alter table NEWSO.USERR drop primary key;
+
+
+now make when a table employee table in datase from refrence of above database script
+in which table havea emplye id,name,salaray,department,status,phone no, and make one entry in table
+make emply id primary key but dont auto increment.
+
+now make and home page jsp to display all the list of employes in a row and in that row
+there shuld be two button to edit and delete when edit button is pressed   a new webpage should
+open to edit the employee and the changes shuld reflect in database.
+and in home page there should be add new employee and logout button so add new employee is 
+pressed a new page should open for enteri new employee and it shuld be savead in data bsase
+make jsp pages for this and code 
