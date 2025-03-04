@@ -8,10 +8,56 @@ static/index.html(which loads up first)
 templates/employess/login.html,index.html(themyleaf)
 
 UserController.java
+package com.boostmytool.empstore.controllers;
 
-User.java
+import com.boostmytool.empstore.models.User;
+import com.boostmytool.empstore.services.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-UserRepository.java
+
+import java.util.Optional;
+
+@Controller
+public class UserController {
+
+    @Autowired
+    private UserRepository userRepository; 
+
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "employees/login";
+    }
+
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
+        Optional<User> optionalUser = userRepository.findByEmail(email); 
+
+     
+        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) { 
+            model.addAttribute("error", "Invalid email or password");
+            return "employees/login";
+        }
+
+      
+        return "redirect:/employees";
+    }
+
+
+
+    
+    @GetMapping("/logout")
+    public String logout() {
+      
+        return "redirect:/login";
+    }
+}
+
+
 
 package com.boostmytool.empstore.controllers;
 
@@ -374,54 +420,5 @@ login.html
 </body>
 </html>
 
-@@@@
 
-package com.boostmytool.empstore.controllers;
-
-import com.boostmytool.empstore.models.User;
-import com.boostmytool.empstore.services.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-
-import java.util.Optional;
-
-@Controller
-public class UserController {
-
-    @Autowired
-    private UserRepository userRepository; 
-
-
-    @GetMapping("/login")
-    public String loginPage() {
-        return "employees/login";
-    }
-
-
-    @PostMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
-        Optional<User> optionalUser = userRepository.findByEmail(email); 
-
-     
-        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) { 
-            model.addAttribute("error", "Invalid email or password");
-            return "employees/login";
-        }
-
-      
-        return "redirect:/employees";
-    }
-
-
-
-    
-    @GetMapping("/logout")
-    public String logout() {
-      
-        return "redirect:/login";
-    }
-}
-
+make UserController java page code simpler and when i am direclty accesing the index page of templates folder it shuld not open first it should check where use is logged in or not and it should also be not open afte logout
