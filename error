@@ -1,3 +1,27 @@
+import jakarta.servlet.http.HttpSession;
+
+@PostMapping("/login")
+public String loginUser(@RequestParam String email, 
+                        @RequestParam String password, 
+                        Model model, 
+                        HttpSession session) {
+    
+    User user = userRepository.findByEmail(email); // Assuming you have this method
+
+    if (user != null && user.getPassword().equals(password)) {
+        session.setAttribute("loggedInUser", user.getName()); // Store Name in Session
+        return "redirect:/employees"; // Redirect to employee list
+    }
+
+    model.addAttribute("error", "Invalid Credentials!");
+    return "login";
+}
+
+????
+
+
+
+
 <script>
     window.onload = function () {
         // Prevent back navigation to this page after logout
