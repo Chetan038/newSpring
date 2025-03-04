@@ -1,3 +1,29 @@
+<%@ page import="java.util.List, com.dao.EmployeeDAO, com.conn.DbConnect, com.entity.Employee" %>
+
+
+<%
+	response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+	response.setHeader("Pragma","no-cache");
+	response.setDateHeader("Expires",0);
+
+    HttpSession sessionn = request.getSession(false);
+    if (sessionn == null || sessionn.getAttribute("username") == null) {
+    	%> <p style="color:red;">Session ended !!Cannot Access HOME page!!</p>
+    	  <button class="cancel-btn" onclick="window.location.href='login.jsp';">Goto Login</button>
+    	  
+    	  <%
+       
+        return;
+    }
+    
+    int userId=(int)sessionn.getAttribute("user_seq_id");
+    String username=(String)sessionn.getAttribute("username");
+%>
+
+@@@@@@
+
+
+
 package com.boostmytool.empstore.controllers;
 
 import com.boostmytool.empstore.models.User;
