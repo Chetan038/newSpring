@@ -1,3 +1,15 @@
+
+No property 'email' found for type 'User'
+
+Could not create query for public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); No property 'email' found for type 'User'
+
+Error creating bean with name 'userRepository' defined in com.boostmytool.empstore.services.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); No property 'email' found for type 'User'
+
+Error creating bean with name 'userController': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.boostmytool.empstore.services.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); No property 'email' found for type 'User'
+
+
+fix this error
+
 package com.chetan.main.controller;
 
 import com.chetan.main.model.User;
