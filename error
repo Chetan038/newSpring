@@ -1,4 +1,71 @@
 
+package com.boostmytool.empstore.controllers;
+
+import com.boostmytool.empstore.models.User;
+import com.boostmytool.empstore.services.UserRepository;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@Controller
+public class UserController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "employees/login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isPresent() && user.get().getPASSWORD().equals(password)) {
+            session.setAttribute("loggedInUser", user.get());
+            return "redirect:/employees";
+        } else {
+            model.addAttribute("error", "Invalid email or password");
+            return "employees/login";
+        }
+    }
+
+    @GetMapping("/employees")
+    public String employeePage(HttpSession session) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+        return "employees/index";  // Ensure Thymeleaf resolves this template correctly
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+}
+
+
+
+@@@@@
+@GetMapping("/")
+public String rootRedirect(HttpSession session) {
+    if (session.getAttribute("loggedInUser") == null) {
+        return "redirect:/login";
+    }
+    return "redirect:/employees";
+}
+
+
+
+
+
+
 this is my file stuture 
 com.boostmytool.empstore.controllers->UserController.java,EmployeesController.java
 com.boostmytool.empstore.models->User.java,Employee.java
