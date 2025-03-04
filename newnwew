@@ -1,18 +1,4 @@
 
-@GetMapping("/delete")
-public String deleteRecord(@RequestParam String EMP_ID) {
-    System.out.println("Delete request received for EMP_ID: " + EMP_ID);
-
-    if (repo.existsById(EMP_ID)) {
-        System.out.println("Employee found. Proceeding to delete...");
-        repo.deleteById(EMP_ID);
-    } else {
-        System.out.println("Employee ID not found in database!");
-    }
-
-    return "redirect:/employees";
-}
-@@
 
 This is my Employe management project using spring boot ,jsp ,oracle database, mvc,theyleaf
 
@@ -88,13 +74,7 @@ public class EmployeesController {
         return "employees/CreateProduct";
     }
     
-    @GetMapping("/delete")
-    public String deleteRecord(@RequestParam String EMP_ID) {
-    	Employee employee =repo.findById(EMP_ID);
-      
-    	repo.delete(employee);
-        return "redirect:/employees";
-    }
+  
     
     
 }
