@@ -1,3 +1,20 @@
+
+<tbody>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.EMP_ID}"></td>
+        <td th:text="${employee.E_NAME}"></td>
+        <td th:text="${employee.SALARY}"></td>
+        <td th:text="${employee.DEPARTMENT}"></td>
+        <td th:text="${employee.STATUS}"></td>
+        <td th:text="${employee.PHONENO}"></td>
+        <td>
+            <a class="btn btn-primary btn-sm" th:href="@{/employees/edit/{id}(id=${employee.EMP_ID})}">Edit</a>
+            <a class="btn btn-danger btn-sm" th:href="@{/employees/delete/{id}(id=${employee.EMP_ID})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+</tbody>
+
+@@@@@@@@
 package com.boostmytool.empstore.controllers;
 
 import java.util.List;
