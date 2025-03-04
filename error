@@ -374,8 +374,54 @@ login.html
 </body>
 </html>
 
-when i am loggin in it is not after pressing the login in button it logins and display the index.html which is in employess folder but does not
-displays any data but when i click in employee details button is aslo load the page but here it diplays all the details from data base so fix this issue
+@@@@
+
+package com.boostmytool.empstore.controllers;
+
+import com.boostmytool.empstore.models.User;
+import com.boostmytool.empstore.services.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Optional;
+
+@Controller
+public class UserController {
+
+    @Autowired
+    private UserRepository userRepository; 
+
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "employees/login";
+    }
+
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
+        Optional<User> optionalUser = userRepository.findByEmail(email); 
+
+     
+        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) { 
+            model.addAttribute("error", "Invalid email or password");
+            return "employees/login";
+        }
+
+      
+        return "redirect:/employees";
+    }
+
+
+
+    
+    @GetMapping("/logout")
+    public String logout() {
+      
+        return "redirect:/login";
+    }
+}
 
