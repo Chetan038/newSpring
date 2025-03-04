@@ -1,4 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center my-4">Add New Employee</h2>
+        <form action="/employees/save" method="post">
+            <div class="mb-3">
+                <label>Employee ID:</label>
+                <input type="text" class="form-control" name="EMP_ID" required>
+            </div>
+            <div class="mb-3">
+                <label>Name:</label>
+                <input type="text" class="form-control" name="E_NAME" required>
+            </div>
+            <div class="mb-3">
+                <label>Salary:</label>
+                <input type="number" step="0.01" class="form-control" name="SALARY" required>
+            </div>
+            <div class="mb-3">
+                <label>Department:</label>
+                <input type="text" class="form-control" name="DEPARTMENT" required>
+            </div>
+            <div class="mb-3">
+                <label>Status:</label>
+                <input type="text" class="form-control" name="STATUS" required>
+            </div>
+            <div class="mb-3">
+                <label>Phone No:</label>
+                <input type="text" class="form-control" name="PHONENO" required>
+            </div>
+            <button type="submit" class="btn btn-success">Save Employee</button>
+            <a href="/employees" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+</body>
+</html>
 
+
+
+@@@
 <tbody>
     <tr th:each="employee : ${employees}">
         <td th:text="${employee.EMP_ID}"></td>
