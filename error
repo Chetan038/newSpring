@@ -1,3 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Prevent browser from caching the login page -->
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+    </form>
+</body>
+</html>
+
+6666
+
+
+
 package com.boostmytool.empstore.controllers;
 
 import com.boostmytool.empstore.models.User;
