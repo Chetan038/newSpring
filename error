@@ -1,4 +1,17 @@
+<script>
+    window.onload = function () {
+        // Prevent back navigation to this page after logout
+        if (performance.navigation.type === 2) { // 2 = Back/Forward button used
+            window.location.href = "/login";
+        }
+    };
 
+    // Disable browser cache
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1); // Prevent going back
+    };
+</script>
 
    @ModelAttribute
     public void setResponseHeaders(HttpServletResponse response) {
