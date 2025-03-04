@@ -1,0 +1,461 @@
+This is my Employe management project using spring boot ,jsp ,oracle database, mvc,theyleaf
+
+this is my file struture and code files
+
+src/main/java
+
+src/main/java
+
+com.bootmytool.empstore.controllers->EmployessController.java,UserController.java
+com.bootmytool.empstore.models->Employee.java,EmployeeDto.java,User.java
+com.bootmytool.empstore.services->EmployeeRepository.java,UserRepository.java
+
+
+
+templates/emloyees/index.html,login.html
+
+
+EmployessController.java
+package com.boostmytool.empstore.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.boostmytool.empstore.models.Employee;
+import com.boostmytool.empstore.services.EmployeeRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/employees")
+public class EmployeesController {
+	
+    @Autowired
+    private EmployeeRepository repo;
+    
+    @ModelAttribute
+    public void setResponseHeaders(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+    }
+	
+    @GetMapping({"","/"})
+    public String showEmployeeList(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+
+        List<Employee> employees = repo.findAll();
+        model.addAttribute("employees", employees);
+        return "employees/index";
+    }
+
+    @GetMapping("/create")
+    public String showCreatePage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("employeeDto", new Employee());
+        return "employees/CreateProduct";
+    }
+}
+
+UserController.java
+package com.boostmytool.empstore.controllers;
+
+import com.boostmytool.empstore.models.User;
+import com.boostmytool.empstore.services.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
+
+@Controller
+public class UserController {
+
+    @Autowired
+    private UserRepository userRepository; 
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "employees/login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, 
+                            @RequestParam String password, 
+                            Model model, 
+                            HttpSession session) {
+        
+        User user = userRepository.findByEmail(email); 
+
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("loggedInUser", user.getName());
+            return "redirect:/employees"; 
+           
+        }
+
+        model.addAttribute("error", "Invalid Credentials!");
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Destroy session
+        }
+        return "redirect:/login";
+    }
+}
+Employee.java
+package com.boostmytool.empstore.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="EMPLOYEE", schema="NEWSO")
+public class Employee {
+
+	@Id
+	@Column(name="EMP_ID",nullable=false)
+	private String EMP_ID;
+	@Column(name="E_NAME",nullable=false)
+	private String E_NAME;
+	@Column(name="SALARY",nullable=false)
+	private Double SALARY;
+	@Column(name="DEPARTMENT",nullable=false)
+	private String DEPARTMENT;
+	@Column(name="STATUS",nullable=false)
+	private String STATUS;
+	@Column(name="PHONENO",nullable=false)
+	private String PHONENO;
+	public String getEMP_ID() {
+		return EMP_ID;
+	}
+	public void setEMP_ID(String eMP_ID) {
+		EMP_ID = eMP_ID;
+	}
+	public String getE_NAME() {
+		return E_NAME;
+	}
+	public void setE_NAME(String e_NAME) {
+		E_NAME = e_NAME;
+	}
+	public Double getSALARY() {
+		return SALARY;
+	}
+	public void setSALARY(Double sALARY) {
+		SALARY = sALARY;
+	}
+	public String getDEPARTMENT() {
+		return DEPARTMENT;
+	}
+	public void setDEPARTMENT(String dEPARTMENT) {
+		DEPARTMENT = dEPARTMENT;
+	}
+	public String getSTATUS() {
+		return STATUS;
+	}
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+	public String getPHONENO() {
+		return PHONENO;
+	}
+	public void setPHONENO(String pHONENO) {
+		PHONENO = pHONENO;
+	}
+	
+}
+
+EmployeeDto.java
+package com.boostmytool.empstore.models;
+
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotEmpty;
+
+public class EmployeeDto {
+
+	@NotEmpty(message="null value not allowed")
+	private String EMP_ID;
+	@NotEmpty(message="null value not allowed")
+	private String E_NAME;
+	@NotEmpty(message="null value not allowed")
+	private Double SALARY;
+	@NotEmpty(message="null value not allowed")
+	private String DEPARTMENT;
+	@NotEmpty(message="null value not allowed")
+	private String STATUS;
+	@NotEmpty(message="null value not allowed")
+	private String PHONENO;
+	public String getEMP_ID() {
+		return EMP_ID;
+	}
+	public void setEMP_ID(String eMP_ID) {
+		EMP_ID = eMP_ID;
+	}
+	public String getE_NAME() {
+		return E_NAME;
+	}
+	public void setE_NAME(String e_NAME) {
+		E_NAME = e_NAME;
+	}
+	public Double getSALARY() {
+		return SALARY;
+	}
+	public void setSALARY(Double sALARY) {
+		SALARY = sALARY;
+	}
+	public String getDEPARTMENT() {
+		return DEPARTMENT;
+	}
+	public void setDEPARTMENT(String dEPARTMENT) {
+		DEPARTMENT = dEPARTMENT;
+	}
+	public String getSTATUS() {
+		return STATUS;
+	}
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+	public String getPHONENO() {
+		return PHONENO;
+	}
+	public void setPHONENO(String pHONENO) {
+		PHONENO = pHONENO;
+	}
+	
+}
+
+User.java
+
+package com.boostmytool.empstore.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "USERR", schema = "NEWSO")
+public class User {
+
+    @Id
+    @Column(name = "EMAIL", nullable = false)
+    private String email;  // Changed from EMAIL to email (camelCase)
+
+    @Column(name = "NAME", nullable = false)
+    private String name;  // Changed from NAME to name
+
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;  // Changed from PASSWORD to password
+
+    @Column(name = "PHONENO")
+    private String phoneno;  // Added phoneno field
+
+    // Getters and Setters
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoneno() {
+        return phoneno;
+    }
+
+    public void setPhoneno(String phoneno) {
+        this.phoneno = phoneno;
+    }
+}
+
+
+
+EmployeeRepository.java
+package com.boostmytool.empstore.services;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.boostmytool.empstore.models.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee, String>{
+
+}
+
+UserRepository.java
+package com.boostmytool.empstore.services;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+import com.boostmytool.empstore.models.User;
+
+@Service
+public interface UserRepository extends JpaRepository<User, String> {
+    User findByEmail(String email); 
+}
+
+templates/emloyees/index.html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Prevent Browser Caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+
+       <script>
+        window.onload = function() {
+        	
+        	
+            // Prevent browser back navigation after logout
+            if (!sessionStorage.getItem("loggedIn")) {
+             
+                document.getElementById("session-message").style.display = "block";
+                document.getElementById("employee-table").style.display = "none";
+            } else {
+            
+                document.getElementById("session-message").style.display = "none";
+                document.getElementById("employee-table").style.display = "block";
+            }
+
+            // Force reload to prevent cached pages from being displayed
+            window.history.replaceState(null, null, window.location.href);
+        };
+
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+            window.location.href = "/logout";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Employee Details</h1>
+        
+       
+
+        <!-- Session Ended Message -->
+        <div id="session-message" style="display: none; text-align: center; color: red;">
+            <p><b>Session ended! Cannot access this page.</b></p>
+            <button class="btn btn-danger" onclick="window.location.href='/login'">Go to Login</button>
+        </div>
+
+        <!-- Employee Table (Hidden if session expired) -->
+        <div id="employee-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Salary</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="employee : ${employees}">
+                        <td th:text="${employee.EMP_ID}"></td>
+                        <td th:text="${employee.E_NAME}"></td>
+                        <td th:text="${employee.SALARY}"></td>
+                        <td th:text="${employee.DEPARTMENT}"></td>
+                        <td th:text="${employee.STATUS}"></td>
+                        <td th:text="${employee.PHONENO}"></td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" th:href="@{/employees/edit(EMP_ID=${employee.EMP_ID})}">Edit</a>
+                            <a class="btn btn-danger btn-sm" th:href="@{/employees/delete(EMP_ID=${employee.EMP_ID})}" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a class="btn btn-primary" href="/employees/create">Add Employee</a>
+            <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+    </div>
+</body>
+</html>
+login.html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>Login</h2>
+    <form action="/login" method="post" onsubmit="setSession()">
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+    </form>
+
+    <script>
+        function setSession() {
+            // When login is successful, set session storage
+            sessionStorage.setItem("loggedIn", "true");
+        }
+    </script>
+</body>
+</html>
+
+
+
+make add employee featurea and edit employee feature in which new employee details can be added and saved in database silmilay for edit and create html files for them in templates folder 
+and delete feature when clicked on delte button in index.html
+
+make this according to code i have provided
