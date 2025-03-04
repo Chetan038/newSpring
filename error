@@ -1,3 +1,18 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Dashboard</title>
+</head>
+<body>
+
+    <h1>Welcome, <span th:text="${session.loggedInUser}">User</span>!</h1>
+
+    <a href="/logout">Logout</a>
+
+</body>
+</html>
+
 import jakarta.servlet.http.HttpSession;
 
 @PostMapping("/login")
