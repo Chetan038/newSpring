@@ -1,70 +1,4 @@
 
-package com.boostmytool.empstore.controllers;
-
-import com.boostmytool.empstore.models.User;
-import com.boostmytool.empstore.services.UserRepository;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-
-@Controller
-public class UserController {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @GetMapping("/login")
-    public String loginPage() {
-        return "employees/login";
-    }
-
-    @PostMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        Optional<User> user = userRepository.findByEmail(email);
-
-        if (user.isPresent() && user.get().getPASSWORD().equals(password)) {
-            session.setAttribute("loggedInUser", user.get());
-            return "redirect:/employees";
-        } else {
-            model.addAttribute("error", "Invalid email or password");
-            return "employees/login";
-        }
-    }
-
-    @GetMapping("/employees")
-    public String employeePage(HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login";
-        }
-        return "employees/index";  // Ensure Thymeleaf resolves this template correctly
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
-    }
-}
-
-
-
-@@@@@
-@GetMapping("/")
-public String rootRedirect(HttpSession session) {
-    if (session.getAttribute("loggedInUser") == null) {
-        return "redirect:/login";
-    }
-    return "redirect:/employees";
-}
-
-
-
-
-
 
 this is my file stuture 
 com.boostmytool.empstore.controllers->UserController.java,EmployeesController.java
@@ -126,62 +60,6 @@ public class UserController {
 
 
 
-package com.boostmytool.empstore.controllers;
-
-
-
-import com.boostmytool.empstore.models.User;
-import com.boostmytool.empstore.services.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpSession;
-import java.util.Optional;
-
-@Controller
-public class UserController {
-
-    @Autowired
-    private UserRepository userRepository; // Using the UserRepository as service
-
-    @GetMapping("/login")
-    public String loginPage() {
-        return "employees/login";
-    }
-
-    @PostMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-
-        if (optionalUser.isEmpty() || !optionalUser.get().getPASSWORD().equals(password)) {
-            model.addAttribute("error", "Invalid email or password");
-            return "employees/login";
-        }
-
-        session.setAttribute("loggedInUser", optionalUser.get());
-        return "redirect:/home";
-    }
-
-    @GetMapping("/home")
-    public String homePage(HttpSession session, Model model) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
-
-        model.addAttribute("user", loggedInUser);
-        return "employees/home";
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
-    }
-}
 
 EmployeesController.java
 package com.boostmytool.empstore.controllers;
@@ -289,7 +167,8 @@ public class Employee {
 	}
 	
 }
-EmployeeRepository
+EmployeeRepository.java
+
 package com.boostmytool.empstore.services;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -299,6 +178,9 @@ import com.boostmytool.empstore.models.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, String>{
 
 }
+
+
+
 index.html
 
 
@@ -488,4 +370,7 @@ login.html
 </html>
 
 
-make UserController java page code simpler and when i am direclty accesing the index page of templates folder it shuld not open first it should check where use is logged in or not and it should also be not open afte logout
+so when i am loggin in from login page it displays  index page of template folder so make a proper session mangement where 
+and fix one issue i am facing when i press logut button in  /employees url pagee  the session should end and when i press back button in 
+browser it shuold not open the the /employees page because user has logged out and he cannot try to direclty /employees link page it should redirect to login page
+so fix this issue 
