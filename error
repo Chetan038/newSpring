@@ -1,19 +1,22 @@
+this is my file stuture 
+com.boostmytool.empstore.controllers->UserController.java
+com.boostmytool.empstore.models->User.java
+com.boostmytool.empstore.services->UserRepository.java
 
-No property 'email' found for type 'User'
+templates/employess/login.html (themyleaf)
 
-Could not create query for public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); No property 'email' found for type 'User'
+UserController.java
 
-Error creating bean with name 'userRepository' defined in com.boostmytool.empstore.services.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); No property 'email' found for type 'User'
+User.java
 
-Error creating bean with name 'userController': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.boostmytool.empstore.services.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.boostmytool.empstore.services.UserRepository.findByEmail(java.lang.String); No property 'email' found for type 'User'
+UserRepository.java
+
+package com.boostmytool.empstore.controllers;
 
 
-fix this error
 
-package com.chetan.main.controller;
-
-import com.chetan.main.model.User;
-import com.chetan.main.service.UserRepository;
+import com.boostmytool.empstore.models.User;
+import com.boostmytool.empstore.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +40,7 @@ public class UserController {
     public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
-        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) {
+        if (optionalUser.isEmpty() || !optionalUser.get().getPASSWORD().equals(password)) {
             model.addAttribute("error", "Invalid email or password");
             return "employees/login";
         }
@@ -65,9 +68,85 @@ public class UserController {
     }
 }
 
+User.java
+
+package com.boostmytool.empstore.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="USERR", schema="NEWSO")
+public class User {
+
+	
+	@Id
+	@Column(name="email", nullable=false)
+	private String EMAIL;
+	
+	
+	@Column(nullable=false)
+	private String NAME;
+	
+	
+	
+	@Column(nullable=false)
+	private String PASSWORD;
 
 
-@@@
+
+	public String getNAME() {
+		return NAME;
+	}
+
+	public void setNAME(String nAME) {
+		NAME = nAME;
+	}
+
+	public String getEMAIL() {
+		return EMAIL;
+	}
+
+	public void setEMAIL(String eMAIL) {
+		EMAIL = eMAIL;
+	}
+
+	public String getPASSWORD() {
+		return PASSWORD;
+	}
+
+	public void setPASSWORD(String pASSWORD) {
+		PASSWORD = pASSWORD;
+	}
+	
+	
+	
+}
+
+UserRepository.java
+
+package com.boostmytool.empstore.services;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+
+import com.boostmytool.empstore.models.Employee;
+import com.boostmytool.empstore.models.User;
+
+
+@Service
+public interface UserRepository extends JpaRepository<User, String>{
+	
+Optional<User> findByEmail(String email);
+
+
+}
+
+login.html
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -91,20 +170,6 @@ public class UserController {
 </body>
 </html>
 
-
-@@@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h2>Welcome, <span th:text="${user.name}"></span>!</h2>
-    <a href="/logout">Logout</a>
-</body>
-</html>
-
-
-
+now fix the eroor in this my database USERR table have NAME,EMAIL,PASSWORD,PHONENO and ID which is 0 just ignore this id coloum
 
 
