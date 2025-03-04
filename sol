@@ -1,3 +1,9 @@
+Exception in thread "main" java.lang.Error: Unresolved compilation problem: 
+	SpringApplication cannot be resolved
+
+	at com.boostmytool.empstore.EmpstoreApplication.main(EmpstoreApplication.java:10)
+
+
 // Add the necessary imports
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
