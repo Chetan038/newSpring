@@ -1,6 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Edit Employee</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center my-4">Edit Employee</h2>
+        <form th:action="@{/employees/update/{id}(id=${employee.EMP_ID})}" method="post" th:object="${employee}">
+            <div class="mb-3">
+                <label>Employee ID:</label>
+                <input type="text" class="form-control" th:field="*{EMP_ID}" readonly>
+            </div>
+            <div class="mb-3">
+                <label>Name:</label>
+                <input type="text" class="form-control" th:field="*{E_NAME}" required>
+            </div>
+            <div class="mb-3">
+                <label>Salary:</label>
+                <input type="number" step="0.01" class="form-control" th:field="*{SALARY}" required>
+            </div>
+            <div class="mb-3">
+                <label>Department:</label>
+                <input type="text" class="form-control" th:field="*{DEPARTMENT}" required>
+            </div>
+            <div class="mb-3">
+                <label>Status:</label>
+                <input type="text" class="form-control" th:field="*{STATUS}" required>
+            </div>
+            <div class="mb-3">
+                <label>Phone No:</label>
+                <input type="text" class="form-control" th:field="*{PHONENO}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Employee</button>
+            <a href="/employees" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+</body>
+</html>
+@@@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
     <title>Add Employee</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
