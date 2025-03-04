@@ -1,194 +1,11 @@
 
-response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-response.setHeader("Pragma", "no-cache");
-response.setHeader("Expires", "0");
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <!-- Prevent browser from caching the login page -->
-    <script>
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>
-</head>
-<body>
-    <h2>Login</h2>
-    <form action="/login" method="post">
-        <div>
-            <label>Email:</label>
-            <input type="email" name="email" required>
-        </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-        <p th:if="${error}" th:text="${error}" style="color: red;"></p>
-    </form>
-</body>
-</html>
-
-6666
-
-
-
-package com.boostmytool.empstore.controllers;
-
-import com.boostmytool.empstore.models.User;
-import com.boostmytool.empstore.services.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpSession;
-import java.util.Optional;
-
-@Controller
-public class UserController {
-
-    @Autowired
-    private UserRepository userRepository; // Using UserRepository as service
-
-    // Display login page
-    @GetMapping("/login")
-    public String loginPage() {
-        return "employees/login";
-    }
-
-    // Handle login form submission
-    @PostMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        Optional<User> optionalUser = userRepository.findByEmail(email); // Ensure this matches the field in User.java
-
-        // Fix: Use correct getter method (getPassword() instead of getPASSWORD())
-        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) { 
-            model.addAttribute("error", "Invalid email or password");
-            return "employees/login";
-        }
-
-        session.setAttribute("loggedInUser", optionalUser.get()); // Store user in session after login
-        return "redirect:/home";
-    }
-
-    // Display home page after login
-    @GetMapping("/home")
-    public String homePage(HttpSession session, Model model) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-
-        if (loggedInUser == null) {
-            return "redirect:/login"; // Redirect to login if user is not logged in
-        }
-
-        model.addAttribute("user", loggedInUser);
-        return "employees/home";
-    }
-
-    // Logout user and invalidate session
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate(); // Clears session data
-        return "redirect:/login";
-    }
-}
-
-
-@@@
-reposi
-
-package com.boostmytool.empstore.services;
-
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
-import com.boostmytool.empstore.models.User;
-
-@Service
-public interface UserRepository extends JpaRepository<User, String> {
-    Optional<User> findByEmail(String email);  // Must match the field name in User.java
-}
-
-@@@
-
-use
-
-
-package com.boostmytool.empstore.models;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "USERR", schema = "NEWSO")
-public class User {
-
-    @Id
-    @Column(name = "EMAIL", nullable = false)
-    private String email;  // Changed from EMAIL to email (camelCase)
-
-    @Column(name = "NAME", nullable = false)
-    private String name;  // Changed from NAME to name
-
-    @Column(name = "PASSWORD", nullable = false)
-    private String password;  // Changed from PASSWORD to password
-
-    @Column(name = "PHONENO")
-    private String phoneno;  // Added phoneno field
-
-    // Getters and Setters
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneno() {
-        return phoneno;
-    }
-
-    public void setPhoneno(String phoneno) {
-        this.phoneno = phoneno;
-    }
-}
-
-
-
-
-
-
 this is my file stuture 
-com.boostmytool.empstore.controllers->UserController.java
-com.boostmytool.empstore.models->User.java
-com.boostmytool.empstore.services->UserRepository.java
+com.boostmytool.empstore.controllers->UserController.java,EmployeesController.java
+com.boostmytool.empstore.models->User.java,Employee.java
+com.boostmytool.empstore.services->UserRepository.java,EmployeeRepository;
 
-templates/employess/login.html (themyleaf)
+static/index.html(which loads up first)
+templates/employess/login.html,index.html(themyleaf)
 
 UserController.java
 
@@ -253,7 +70,188 @@ public class UserController {
     }
 }
 
+EmployeesController.java
+package com.boostmytool.empstore.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.boostmytool.empstore.models.Employee;
+import com.boostmytool.empstore.models.EmployeeDto;
+import com.boostmytool.empstore.services.EmployeeRepository;
+
+@Controller
+@RequestMapping("/employees")
+public class EmployeesController {
+	
+	@Autowired
+	private EmployeeRepository repo;
+	
+	
+	@GetMapping({"","/"})
+	public String showEmployeeList(Model model) {
+		
+		List<Employee>  employees= repo.findAll();
+		model.addAttribute("employees", employees);
+		return "employees/index";
+	}
+	
+	@GetMapping("/create")
+	public String showCreatePage(Model model) {
+		
+		EmployeeDto employeeDto = new EmployeeDto();
+		model.addAttribute("employeeDto", employeeDto);
+		return "employees/CreateProduct";
+	}
+	
+
+}
+
+Employee.java
+
+package com.boostmytool.empstore.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="EMPLOYEE", schema="NEWSO")
+public class Employee {
+
+	@Id
+	@Column(name="EMP_ID",nullable=false)
+	private String EMP_ID;
+	@Column(name="E_NAME",nullable=false)
+	private String E_NAME;
+	@Column(name="SALARY",nullable=false)
+	private Double SALARY;
+	@Column(name="DEPARTMENT",nullable=false)
+	private String DEPARTMENT;
+	@Column(name="STATUS",nullable=false)
+	private String STATUS;
+	@Column(name="PHONENO",nullable=false)
+	private String PHONENO;
+	public String getEMP_ID() {
+		return EMP_ID;
+	}
+	public void setEMP_ID(String eMP_ID) {
+		EMP_ID = eMP_ID;
+	}
+	public String getE_NAME() {
+		return E_NAME;
+	}
+	public void setE_NAME(String e_NAME) {
+		E_NAME = e_NAME;
+	}
+	public Double getSALARY() {
+		return SALARY;
+	}
+	public void setSALARY(Double sALARY) {
+		SALARY = sALARY;
+	}
+	public String getDEPARTMENT() {
+		return DEPARTMENT;
+	}
+	public void setDEPARTMENT(String dEPARTMENT) {
+		DEPARTMENT = dEPARTMENT;
+	}
+	public String getSTATUS() {
+		return STATUS;
+	}
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+	public String getPHONENO() {
+		return PHONENO;
+	}
+	public void setPHONENO(String pHONENO) {
+		PHONENO = pHONENO;
+	}
+	
+}
+EmployeeRepository
+package com.boostmytool.empstore.services;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.boostmytool.empstore.models.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee, String>{
+
+}
+index.html
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emolyee Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <div class="container">
+     <h1 class="text-center my-4">Employee Details</h1>
+     <br>
+     
+
+     
+     <table class="table">
+     <thead>
+     <tr>
+     <th>Id</th>
+     <th>NAME</th>
+     <th>SALARY</th>
+     <th>DEPARTMENT</th>
+     <th>STATUS</th>
+     <th>PHONENO</th>
+     <th>ACTION</th>
+     
+     </tr>
+     
+     </thead>
+     
+     <tbody>
+     <tr th:each="employee : ${employees}">
+     <td th:text="${employee.EMP_ID}"></td>
+      <td th:text="${employee.E_NAME}"></td>
+        <td th:text="${employee.SALARY}"></td>
+       <td th:text="${employee.DEPARTMENT}"></td>
+         <td th:text="${employee.STATUS}"></td>
+         <td th:text="${employee.PHONENO}"></td>
+         <td style="white-space:nowrap"><a class="btn btn-primary btn-sm"
+             th:href="@{/employees/edit(EMP_ID=${employee.EMP_ID})}">Edit</a>
+              <a class="btn btn-danger btn-sm"
+             th:href="@{/employees/delete(EMP_ID=${employee.EMP_ID})}" onclick="return confirm('Are you Sure?')">Delete</a>
+             </td>
+     </tr>
+     </tbody>
+     </table>
+    </div>
+    <br>
+    
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;">
+     <a style="width:150px; padding:10px;" class="btn btn-primary" href="/employees/create">Add Employee</a><br>
+     
+<!--      <a style="width:140px; padding:10px;" class="btn btn-primary" href="/logout">Logout</a> -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
 User.java
+
 
 package com.boostmytool.empstore.models;
 
@@ -331,6 +329,27 @@ Optional<User> findByEmail(String email);
 
 }
 
+static/index.html
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emolyee Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <div class="container">
+     <h1 class="text-center my-4">EMPLOYEE MANAGEMENT</h1>
+     
+     <a style="display: block; margin: 0;auto:0; height:10%;" class="btn btn-primary" href="/employees">Employess Details</a>
+   <a class="btn btn-primary" href="/login">Login</a> 
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
 login.html
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -355,6 +374,8 @@ login.html
 </body>
 </html>
 
-now fix the eroor in this my database USERR table have NAME,EMAIL,PASSWORD,PHONENO and ID which is 0 just ignore this id coloum
+when i am loggin in it is not after pressing the login in button it logins and display the index.html which is in employess folder but does not
+displays any data but when i click in employee details button is aslo load the page but here it diplays all the details from data base so fix this issue
+
 
 
