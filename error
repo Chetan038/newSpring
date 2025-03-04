@@ -1,3 +1,148 @@
+package com.boostmytool.empstore.controllers;
+
+import com.boostmytool.empstore.models.User;
+import com.boostmytool.empstore.services.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
+
+@Controller
+public class UserController {
+
+    @Autowired
+    private UserRepository userRepository; // Using UserRepository as service
+
+    // Display login page
+    @GetMapping("/login")
+    public String loginPage() {
+        return "employees/login";
+    }
+
+    // Handle login form submission
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        Optional<User> optionalUser = userRepository.findByEmail(email); // Ensure this matches the field in User.java
+
+        // Fix: Use correct getter method (getPassword() instead of getPASSWORD())
+        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) { 
+            model.addAttribute("error", "Invalid email or password");
+            return "employees/login";
+        }
+
+        session.setAttribute("loggedInUser", optionalUser.get()); // Store user in session after login
+        return "redirect:/home";
+    }
+
+    // Display home page after login
+    @GetMapping("/home")
+    public String homePage(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            return "redirect:/login"; // Redirect to login if user is not logged in
+        }
+
+        model.addAttribute("user", loggedInUser);
+        return "employees/home";
+    }
+
+    // Logout user and invalidate session
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Clears session data
+        return "redirect:/login";
+    }
+}
+
+
+@@@
+reposi
+
+package com.boostmytool.empstore.services;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+import com.boostmytool.empstore.models.User;
+
+@Service
+public interface UserRepository extends JpaRepository<User, String> {
+    Optional<User> findByEmail(String email);  // Must match the field name in User.java
+}
+
+@@@
+
+use
+
+
+package com.boostmytool.empstore.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "USERR", schema = "NEWSO")
+public class User {
+
+    @Id
+    @Column(name = "EMAIL", nullable = false)
+    private String email;  // Changed from EMAIL to email (camelCase)
+
+    @Column(name = "NAME", nullable = false)
+    private String name;  // Changed from NAME to name
+
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;  // Changed from PASSWORD to password
+
+    @Column(name = "PHONENO")
+    private String phoneno;  // Added phoneno field
+
+    // Getters and Setters
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoneno() {
+        return phoneno;
+    }
+
+    public void setPhoneno(String phoneno) {
+        this.phoneno = phoneno;
+    }
+}
+
+
+
+
+
+
 this is my file stuture 
 com.boostmytool.empstore.controllers->UserController.java
 com.boostmytool.empstore.models->User.java
