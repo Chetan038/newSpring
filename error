@@ -1,54 +1,98 @@
-2025-03-03T17:18:31.234+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mc.b.empstore.EmpstoreApplication        [0;39m [2m:[0;39m Starting EmpstoreApplication using Java 21.0.6 with PID 20652 (C:\Users\ME2B3HC\Documents\workspacen\empstore\target\classes started by ME2B3HC in C:\Users\ME2B3HC\Documents\workspacen\empstore)
-[2m2025-03-03T17:18:31.236+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mc.b.empstore.EmpstoreApplication        [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
-[2m2025-03-03T17:18:31.276+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.s.b.devtools.restart.ChangeableUrls   [0;39m [2m:[0;39m The Class-Path manifest attribute in C:\Users\ME2B3HC\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.5.0.24.07\ojdbc11-23.5.0.24.07.jar referenced one or more files that do not exist: file:/C:/Users/ME2B3HC/.m2/repository/com/oracle/database/jdbc/ojdbc11/23.5.0.24.07/oraclepki.jar
-[2m2025-03-03T17:18:31.276+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-[2m2025-03-03T17:18:31.276+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-[2m2025-03-03T17:18:31.673+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-[2m2025-03-03T17:18:31.685+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
-[2m2025-03-03T17:18:32.005+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8080 (http)
-[2m2025-03-03T17:18:32.013+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
-[2m2025-03-03T17:18:32.014+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.36]
-[2m2025-03-03T17:18:32.060+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[2m2025-03-03T17:18:32.060+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 783 ms
-[2m2025-03-03T17:18:32.168+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
-[2m2025-03-03T17:18:32.198+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36morg.hibernate.Version                   [0;39m [2m:[0;39m HHH000412: Hibernate ORM core version 6.6.8.Final
-[2m2025-03-03T17:18:32.219+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
-[2m2025-03-03T17:18:32.384+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
-[2m2025-03-03T17:18:32.402+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
-[2m2025-03-03T17:18:32.651+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@2e0c121b
-[2m2025-03-03T17:18:32.652+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
-[2m2025-03-03T17:18:32.751+05:30[0;39m [33m WARN[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36morg.hibernate.dialect.Dialect           [0;39m [2m:[0;39m HHH000511: The 18.0.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
-[2m2025-03-03T17:18:33.004+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36morg.hibernate.orm.connections.pooling   [0;39m [2m:[0;39m HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 18.0
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-[2m2025-03-03T17:18:33.533+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-[2m2025-03-03T17:18:34.465+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
-[2m2025-03-03T17:18:34.495+05:30[0;39m [33m WARN[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mJpaBaseConfiguration$JpaWebConfiguration[0;39m [2m:[0;39m spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-[2m2025-03-03T17:18:34.510+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.s.b.a.w.s.WelcomePageHandlerMapping   [0;39m [2m:[0;39m Adding welcome page: class path resource [static/index.html]
-[2m2025-03-03T17:18:34.645+05:30[0;39m [33m WARN[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mion$DefaultTemplateResolverConfiguration[0;39m [2m:[0;39m Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-[2m2025-03-03T17:18:34.741+05:30[0;39m [33m WARN[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m Unable to start LiveReload server
-[2m2025-03-03T17:18:34.754+05:30[0;39m [33m WARN[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
-[2m2025-03-03T17:18:34.756+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
-[2m2025-03-03T17:18:34.758+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown initiated...
-[2m2025-03-03T17:18:34.764+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown completed.
-[2m2025-03-03T17:18:34.772+05:30[0;39m [32m INFO[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+package com.chetan.main.controller;
 
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-[2m2025-03-03T17:18:34.784+05:30[0;39m [31mERROR[0;39m [35m20652[0;39m [2m--- [empstore] [  restartedMain] [0;39m[36mo.s.b.d.LoggingFailureAnalysisReporter  [0;39m [2m:[0;39m 
+import com.chetan.main.model.User;
+import com.chetan.main.service.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-***************************
-APPLICATION FAILED TO START
-***************************
+import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
 
-Description:
+@Controller
+public class UserController {
 
-Web server failed to start. Port 8080 was already in use.
+    @Autowired
+    private UserRepository userRepository; // Using the UserRepository as service
 
-Action:
+    @GetMapping("/login")
+    public String loginPage() {
+        return "employees/login";
+    }
 
-Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) {
+            model.addAttribute("error", "Invalid email or password");
+            return "employees/login";
+        }
+
+        session.setAttribute("loggedInUser", optionalUser.get());
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
+    public String homePage(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", loggedInUser);
+        return "employees/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+}
+
+
+
+@@@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+    </form>
+</body>
+</html>
+
+
+@@@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome, <span th:text="${user.name}"></span>!</h2>
+    <a href="/logout">Logout</a>
+</body>
+</html>
+
+
+
+
+
