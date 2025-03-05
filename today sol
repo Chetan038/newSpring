@@ -1,0 +1,163 @@
+
+User.java (Inside com.bostmytools.emppmng.models)
+@@@
+package com.bostmytools.emppmng.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "USERR", schema = "NEWSO")
+public class User {
+    
+    @Id
+    @Column(name = "ID")
+    private Long id;
+    
+    @Column(name = "NAME", nullable = false)
+    private String name;
+    
+    @Column(name = "EMAIL", nullable = false)
+    private String email;
+    
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;
+    
+    @Column(name = "PHONENO", nullable = false)
+    private String phoneNo;
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getPhoneNo() { return phoneNo; }
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
+}
+@@@@
+
+File: UserRepository.java (Inside com.bostmytools.emppmng.services)
+
+package com.bostmytools.emppmng.services;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bostmytools.emppmng.models.User;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmailAndPassword(String email, String password);
+}
+
+
+@@@
+
+package com.bostmytools.emppmng.controllers;
+
+import com.bostmytools.emppmng.models.User;
+import com.bostmytools.emppmng.services.UserRepository;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
+
+@Controller
+public class LoginController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; // Redirect to login.html
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
+
+        if (userOptional.isPresent()) {
+            session.setAttribute("loggedInUser", userOptional.get());
+            return "redirect:/employees"; // Redirect to employee dashboard
+        } else {
+            model.addAttribute("errorMessage", "Invalid email or password");
+            return "login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+}
+
+
+
+@@@@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center my-4">Login</h2>
+        
+        <!-- Error Message -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <form method="POST" action="/login">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+@@@@
+
+@GetMapping({"", "/"})
+public String showEmployeeList(Model model, HttpSession session) {
+    if (session.getAttribute("loggedInUser") == null) {
+        return "redirect:/login"; // Redirect to login if not authenticated
+    }
+
+    List<Employee> employees = repo.findAll();
+    model.addAttribute("employees", employees);
+    return "employees/index";
+}
+
+
+@@@
+<a class="btn btn-danger" href="/logout">Logout</a>
