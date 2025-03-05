@@ -1,4 +1,11 @@
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
 
+Wed Mar 05 11:55:44 IST 2025
+There was an unexpected error (type=Internal Server Error, status=500).
+Error resolving template [login], template might not exist or might not be accessible by any of the configured Template Resolvers
+org.thymeleaf.exceptions.TemplateInputException: Error resolving template [login], template might not exist or might not be accessible by any of the configured Template Resolvers
+
+$$$
 
 
 eoorro
