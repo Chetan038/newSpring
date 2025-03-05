@@ -23,6 +23,7 @@
             width: 350px;
             text-align: center;
             animation: fadeIn 1s ease-in-out;
+            transition: transform 0.3s ease-in-out;
         }
 
         h2 {
@@ -73,6 +74,19 @@
             font-size: 14px;
         }
 
+        /* Shake effect */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
         /* Fade-in animation */
         @keyframes fadeIn {
             from {
@@ -87,9 +101,9 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="login-container" id="loginContainer">
         <h2>Login</h2>
-        <form action="/login" method="post">
+        <form action="/login" method="post" onsubmit="return validateLogin(event)">
             <div>
                 <input type="email" name="email" placeholder="Enter your email" required>
             </div>
@@ -97,12 +111,26 @@
                 <input type="password" name="password" placeholder="Enter your password" required>
             </div>
             <button type="submit">Login</button>
-            <p th:if="${error}" th:text="${error}"></p>
+            <p id="error-message" th:if="${error}" th:text="${error}"></p>
         </form>
     </div>
+
+    <script>
+        function validateLogin(event) {
+            // Simulate an error (in real scenarios, this would come from the backend)
+            let errorMessage = document.getElementById("error-message");
+            let loginContainer = document.getElementById("loginContainer");
+
+            if (errorMessage && errorMessage.innerText.trim() !== "") {
+                event.preventDefault(); // Prevent form submission
+                loginContainer.classList.add("shake"); // Add shake effect
+                
+                // Remove shake effect after animation ends
+                setTimeout(() => {
+                    loginContainer.classList.remove("shake");
+                }, 400);
+            }
+        }
+    </script>
 </body>
 </html>
-
-
-dont change the them add feature that  <div class="login-container"> should shake effect when user enter worng email or password and diplay worong email or password message
-
