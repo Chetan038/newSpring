@@ -4,12 +4,118 @@ this is my file struture and code files
 
 src/main/java
 
-com.botmytools.emppmng.controllers->EmployeesController.java
-com.botmytools.emppmng.models->Employee.java
-com.botmytools.emppmng.services->EmployeeRepository.java
+com.botmytools.emppmng.controllers->EmployeesController.java,LoginController.java
+com.botmytools.emppmng.models->Employee.java,User.java
+com.botmytools.emppmng.services->EmployeeRepository.java,UserRepository.java
 
 and Static/index.html
-template/employess/index.html,edit.html/create.html
+template/employess/index.html,edit.html,create.html
+template/login.html
+
+
+LoginController.java
+package com.bostmytools.emppmng.controllers;
+
+import com.bostmytools.emppmng.models.User;
+import com.bostmytools.emppmng.services.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
+
+@Controller
+public class LoginController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; 
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, HttpServletRequest request, Model model) {
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
+
+        if (userOptional.isPresent()) {
+            session.setAttribute("loggedInUser", userOptional.get());
+            return "redirect:/employees"; 
+        } else {
+            model.addAttribute("errorMessage", "Invalid email or password");
+            return "login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+}
+User.java
+package com.bostmytools.emppmng.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "USERR", schema = "NEWSO")
+public class User {
+    
+    @Id
+    @Column(name = "ID")
+    private Long id;
+    
+    @Column(name = "NAME", nullable = false)
+    private String name;
+    
+    @Column(name = "EMAIL", nullable = false)
+    private String email;
+    
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;
+    
+    @Column(name = "PHONENO", nullable = false)
+    private String phoneNo;
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getPhoneNo() { return phoneNo; }
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
+}
+UserRepository.java
+package com.bostmytools.emppmng.services;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bostmytools.emppmng.models.User;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmailAndPassword(String email, String password);
+}
+
+
 
 
 EmployeesController.java
@@ -283,108 +389,32 @@ template/employees/index.html
 </body>
 </html>
 
-and this is my database script from this user NEWSO.USERR table to crate the login system
-
--- Create a new tablespace for the new project
-
-CREATE TABLESPACE NEW_DATA
-  DATAFILE 'C:/Chetan/Development/DB/NEW_DATA.dbf'
-  SIZE 100M AUTOEXTEND ON; 
+login.html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
   
-  
-alter session set "_ORACLE_SCRIPT"=true;
-
--- Part 1: Create User to serve as the 'Schema Owner' of all the objects
-CREATE USER NEWSO IDENTIFIED BY "NEWSO_pwd"
-  DEFAULT TABLESPACE users
-  TEMPORARY TABLESPACE temp
-  QUOTA UNLIMITED ON users;
-
-
--- Part 2: Create Application Connect User with Read-write access to the schema
-    CREATE USER NEWCU IDENTIFIED BY "NEWCU_pwd"
-  DEFAULT TABLESPACE users
-  TEMPORARY TABLESPACE temp;
-  
-ALTER USER NEWSO quota unlimited on NEW_DATA;
-
-
--- ROLES
-
--- Part 1: Create application role with write access
-CREATE ROLE NEW_ROLE_CU_RW NOT IDENTIFIED;
-GRANT CREATE SESSION TO NEW_ROLE_CU_RW;
-GRANT CONNECT TO NEW_ROLE_CU_RW;
-
--- Assign ROLES
-GRANT NEW_ROLE_CU_RW TO NEWCU;
-
-
--- GRANT SELECT on sequence (if you're using sequences to generate primary keys)
-CREATE SEQUENCE NEWSO.USERR_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
-GRANT SELECT ON NEWSO.USERR_SEQ TO NEW_ROLE_CU_RW;
-
-CREATE TABLE NEWSO.USERR
-(
-
-NAME 	VARCHAR2(255)NOT NULL,
-EMAIL 		VARCHAR2(255)NOT NULL,
-PASSWORD 		VARCHAR2(255)NOT NULL,
-PHONENO		VARCHAR2(255)NOT NULL
-
-)TABLESPACE NEW_DATA;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.USERR TO NEW_ROLE_CU_RW;
-
--- NOTE: Hibernate will handle the table creation based on your JPA entities
--- You do not need to manually create the APP_USER table here, Hibernate will automatically generate it based on the code.
--- Just make sure the entity
-
-Alter table NEWSO.USERR Add id NUMBER NOT NULL;
-
-Alter table NEWSO.USERR Add constraint user_pk PRIMARY KEY (id);
-
-select * from NEWSO.USERR;
-
-
-select USERR from NEWSO where  upper(USERR) ='USERR';
-
-select sys_context('userenv','current_schema') From dual;
-
-select constraint_name from user_constraints where table_name = 'NEWSO.USERR' and constraint_type='P';
-
-alter table NEWSO.USERR drop primary key;
-
-
-CREATE TABLE NEWSO.EMPLOYEE
-(
-EMP_ID VARCHAR2(50) PRIMARY KEY,
-E_NAME 	VARCHAR2(255)NOT NULL,
-SALARY NUMBER(10,2) NOT NULL,
-DEPARTMENT VARCHAR(255) NOT NULL,
-STATUS VARCHAR2(20) NOT NULL,
-PHONENO	VARCHAR2(20) NOT NULL
-
-)TABLESPACE NEW_DATA;
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/login" method="post">
+            <div>
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p th:if="${error}" th:text="${error}"></p>
+        </form>
+    </div>
+</body>
+</html>
 
 
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.EMPLOYEE TO NEW_ROLE_CU_RW;
-
-INSERT INTO NEWSO.EMPLOYEE (EMP_ID,E_NAME,SALARY,DEPARTMENT,STATUS,PHONENO) VALUES('E001','CHETAN',500000,'IT','ACTIVE','912342134');
-INSERT INTO NEWSO.EMPLOYEE (EMP_ID,E_NAME,SALARY,DEPARTMENT,STATUS,PHONENO) VALUES('E002','SHARON',400000,'IT','ACTIVE','9123421354');
-
-SELECT * FROM NEWSO.EMPLOYEE;
-
-desc newso.employee;
-
-alter table newso.employee modify EMP_ID VARCHAR2(255 Char);
-alter table newso.employee modify phoneno varchar2(255 char);
-
-alter table newso.employee modify status varchar2(255 char);
-alter table newso.employee modify salary float(53); 
-commit;
-
-
-
-according to this file strute make a login system when user is clicks login button in index.html page of staic folder sussusrflly logged in it shoul open index template/employess/index.html this file.
+according to this file strute make a session management when the useer login and when user logout from index.html in tempaltes folder the session should over 
+and diplay the login username in the index.html page and when we logout and try to open or press back button in borwser it should not open index.html page of templates folder it should 
+open only when user is logged in
