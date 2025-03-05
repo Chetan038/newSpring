@@ -1,255 +1,104 @@
-
-
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Shake effect */
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        .shake {
-            animation: shake 0.3s ease-in-out;
+        /* Login container */
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        .error-message {
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        /* Input fields */
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            outline: none;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #ff758c;
+            box-shadow: 0 0 8px rgba(255, 117, 140, 0.5);
+        }
+
+        /* Button */
+        button {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(255, 117, 140, 0.3);
+        }
+
+        /* Error message */
+        p {
+            margin-top: 10px;
             color: red;
-            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2 class="text-center my-4">Login</h2>
-        <form action="/login" method="post" onsubmit="return validateLogin()">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" class="form-control" required>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/login" method="post">
+            <div>
+                <input type="email" name="email" placeholder="Enter your email" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+            <div>
+                <input type="password" name="password" placeholder="Enter your password" required>
             </div>
-            
-            <!-- Error message (Thymeleaf will set this if login fails) -->
-            <p th:if="${param.error}" class="error-message">Wrong email or password!</p>
-            
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit">Login</button>
+            <p th:if="${error}" th:text="${error}"></p>
         </form>
     </div>
-
-    <script>
-        function validateLogin() {
-            let email = document.getElementById("email");
-            let password = document.getElementById("password");
-            let urlParams = new URLSearchParams(window.location.search);
-
-            if (urlParams.has('error')) {
-                email.classList.add("shake");
-                password.classList.add("shake");
-
-                setTimeout(() => {
-                    email.classList.remove("shake");
-                    password.classList.remove("shake");
-                }, 500);
-
-                return false; // Prevent form submission
-            }
-            return true;
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-@@@
-
-package com.bostmytools.emppmng.controllers;
-
-import com.bostmytools.emppmng.models.User;
-import com.bostmytools.emppmng.services.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.io.IOException;
-import java.util.Optional;
-
-@Controller
-public class LoginController {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login"; 
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            session.setAttribute("loggedInUser", user);
-            session.setAttribute("username", user.getName()); // Store username
-            return "redirect:/employees"; 
-        } else {
-            model.addAttribute("errorMessage", "Invalid email or password");
-            return "login";
-        }
-    }
-
-    @GetMapping("/logout")
-    public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        session.invalidate();
-        
-        // Prevent back button access after logout
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "0");
-
-        response.sendRedirect("/login");
-    }
-}
-
-
-
-@@@
-@GetMapping({"", "/"})
-public String showEmployeeList(Model model, HttpSession session) {
-    // Check if user is logged in
-    if (session.getAttribute("loggedInUser") == null) {
-        return "redirect:/login";
-    }
-
-    List<Employee> employees = repo.findAll();
-    model.addAttribute("employees", employees);
-    
-    // Pass username to template
-    model.addAttribute("username", session.getAttribute("username"));
-
-    return "employees/index";
-}
-
-
-@@@@
-
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Employee Data</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script>
-        window.onload = function() {
-            if (window.history.replaceState) {
-                window.history.replaceState(null, null, window.location.href);
-            }
-        };
-    </script>
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-center my-4">Employee Details</h1>
-
-        <!-- Display Logged-in User -->
-        <p class="text-end">Welcome, <span th:text="${username}"></span>!</p>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Salary</th>
-                    <th>Department</th>
-                    <th>Status</th>
-                    <th>Phone</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="employee : ${employees}">
-                    <td th:text="${employee.EMP_ID}"></td>
-                    <td th:text="${employee.E_NAME}"></td>
-                    <td th:text="${employee.SALARY}"></td>
-                    <td th:text="${employee.DEPARTMENT}"></td>
-                    <td th:text="${employee.STATUS}"></td>
-                    <td th:text="${employee.PHONENO}"></td>
-                    <td>
-                        <a class="btn btn-primary btn-sm" th:href="@{/employees/edit(EMP_ID=${employee.EMP_ID})}">Edit</a>
-                        <a class="btn btn-danger btn-sm" th:href="@{/employees/delete(EMP_ID=${employee.EMP_ID})}" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <a class="btn btn-primary" href="/employees/create">Add Employee</a>
-        <a class="btn btn-danger" href="/logout">Logout</a>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
-
-@@@@
-
-package com.bostmytools.emppmng.config;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthenticationInterceptor()).addPathPatterns("/employees/**"); // Apply to employee pages
-    }
-
-    private static class AuthenticationInterceptor implements HandlerInterceptor {
-        @Override
-        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-            HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("loggedInUser") == null) {
-                response.sendRedirect("/login");
-                return false;
-            }
-
-            // Prevent back button access after logout
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-            response.setHeader("Pragma", "no-cache");
-            response.setHeader("Expires", "0");
-
-            return true;
-        }
-    }
-}
