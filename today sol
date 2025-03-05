@@ -1,4 +1,11 @@
 
+
+
+eoorro
+ Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.thymeleaf.exceptions.TemplateInputException: Error resolving template [login], template might not exist or might not be accessible by any of the configured Template Resolvers] with root cause
+ Error resolving template [login], template might not exist or might not be accessible by any of the configured Template Resolvers
+
+fix t his error
 User.java (Inside com.bostmytools.emppmng.models)
 @@@
 package com.bostmytools.emppmng.models;
