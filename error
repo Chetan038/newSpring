@@ -1,3 +1,9 @@
+SELECT column_name 
+FROM user_cons_columns 
+WHERE constraint_name = (SELECT constraint_name FROM user_constraints WHERE table_name = 'YOUR_TABLE_NAME' AND constraint_type = 'P');
+
+
+
 This application has no explicit mapping for /error, so you are seeing this as a fallback.
 
 Wed Mar 05 01:00:58 IST 2025
