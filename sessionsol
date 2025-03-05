@@ -1,0 +1,178 @@
+package com.bostmytools.emppmng.controllers;
+
+import com.bostmytools.emppmng.models.User;
+import com.bostmytools.emppmng.services.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
+import java.util.Optional;
+
+@Controller
+public class LoginController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; 
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            session.setAttribute("loggedInUser", user);
+            session.setAttribute("username", user.getName()); // Store username
+            return "redirect:/employees"; 
+        } else {
+            model.addAttribute("errorMessage", "Invalid email or password");
+            return "login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        session.invalidate();
+        
+        // Prevent back button access after logout
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
+        response.sendRedirect("/login");
+    }
+}
+
+
+
+@@@
+@GetMapping({"", "/"})
+public String showEmployeeList(Model model, HttpSession session) {
+    // Check if user is logged in
+    if (session.getAttribute("loggedInUser") == null) {
+        return "redirect:/login";
+    }
+
+    List<Employee> employees = repo.findAll();
+    model.addAttribute("employees", employees);
+    
+    // Pass username to template
+    model.addAttribute("username", session.getAttribute("username"));
+
+    return "employees/index";
+}
+
+
+@@@@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        window.onload = function() {
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Employee Details</h1>
+
+        <!-- Display Logged-in User -->
+        <p class="text-end">Welcome, <span th:text="${username}"></span>!</p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Salary</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.EMP_ID}"></td>
+                    <td th:text="${employee.E_NAME}"></td>
+                    <td th:text="${employee.SALARY}"></td>
+                    <td th:text="${employee.DEPARTMENT}"></td>
+                    <td th:text="${employee.STATUS}"></td>
+                    <td th:text="${employee.PHONENO}"></td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" th:href="@{/employees/edit(EMP_ID=${employee.EMP_ID})}">Edit</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/employees/delete(EMP_ID=${employee.EMP_ID})}" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <a class="btn btn-primary" href="/employees/create">Add Employee</a>
+        <a class="btn btn-danger" href="/logout">Logout</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+@@@@
+
+package com.bostmytools.emppmng.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new HandlerInterceptorAdapter() {
+            @Override
+            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                HttpSession session = request.getSession(false);
+                if (session == null || session.getAttribute("loggedInUser") == null) {
+                    response.sendRedirect("/login");
+                    return false;
+                }
+                
+                // Prevent back button access after logout
+                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                response.setHeader("Pragma", "no-cache");
+                response.setHeader("Expires", "0");
+
+                return true;
+            }
+        }).addPathPatterns("/employees/**"); // Apply to employee pages
+    }
+}
+
+
+@@
+
