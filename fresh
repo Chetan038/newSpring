@@ -1,4 +1,29 @@
 
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/login").permitAll() // Allow public access to login endpoint
+                .requestMatchers("/api/employees/**").authenticated() // Require authentication for employee API
+                .anyRequest().authenticated() // Secure all other endpoints
+            )
+            .httpBasic(Customizer.withDefaults()) // Enable Basic Authentication
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Ensure stateless authentication
+            .build();
+    }
+}
+
+
+@@@@
+
+
+
 This is my Employe management project using spring boot ,jsp ,oracle database, mvc,theyleaf
 
 this is my file struture and code files
