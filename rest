@@ -1,5 +1,338 @@
 
+// Project Structure
+// com.bootmytool.empstore.controllers -> EmployeeController.java, UserController.java
+// com.bootmytool.empstore.models -> Employee.java, User.java
+// com.bootmytool.empstore.repositories -> EmployeeRepository.java, UserRepository.java
+// com.bootmytool.empstore.services -> EmployeeService.java, EmployeeServiceImpl.java, UserService.java, UserServiceImpl.java
+// com.bootmytool.empstore.dto -> EmployeeDto.java (if needed)
+// com.bootmytool.empstore -> AuthInterceptor.java
 
+// EmployeeController.java
+package com.bootmytool.empstore.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bootmytool.empstore.models.Employee;
+import com.bootmytool.empstore.services.EmployeeService;
+import com.bootmytool.empstore.services.UserService;
+
+@RestController
+@RequestMapping("/api/employees")
+public class EmployeeController {
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+    
+    @GetMapping("/{empId}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable String empId) {
+        Employee employee = employeeService.getEmployeeById(empId).orElse(null);
+        if (employee != null) {
+            return ResponseEntity.ok(employee);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @PostMapping
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        try {
+            Employee createdEmployee = employeeService.createEmployee(employee);
+            return ResponseEntity.ok(createdEmployee);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @PutMapping("/{empId}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable String empId, @RequestBody Employee employee) {
+        try {
+            employee.setEMP_ID(empId); // Ensure ID consistency
+            Employee updatedEmployee = employeeService.updateEmployee(empId, employee);
+            if (updatedEmployee != null) {
+                return ResponseEntity.ok(updatedEmployee);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @DeleteMapping("/{empId}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable String empId) {
+        try {
+            employeeService.deleteEmployee(empId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}
+
+None
+        User user = userService.authenticate(email, password).orElse(null);
+        
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(401).body(Map.of("message", "Invalid credentials"));
+        }
+    }
+    
+    // Additional user management endpoints can be added here
+}
+
+// EmployeeService.java
+package com.bootmytool.empstore.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.bootmytool.empstore.models.Employee;
+
+public interface EmployeeService {
+    
+    public List<Employee> getAllEmployees();
+    
+    public Optional<Employee> getEmployeeById(String empId);
+    
+    public Employee createEmployee(Employee employee);
+    
+    public Employee updateEmployee(String empId, Employee employee);
+    
+    public void deleteEmployee(String empId);
+}
+
+// EmployeeServiceImpl.java
+package com.bootmytool.empstore.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bootmytool.empstore.models.Employee;
+import com.bootmytool.empstore.repositories.EmployeeRepository;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Optional<Employee> getEmployeeById(String empId) {
+        return employeeRepository.findById(empId);
+    }
+
+    @Override
+    public Employee createEmployee(Employee employee) {
+        if (employeeRepository.existsById(employee.getEMP_ID())) {
+            throw new IllegalArgumentException("Employee with ID " + employee.getEMP_ID() + " already exists");
+        }
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Employee updateEmployee(String empId, Employee employee) {
+        if (!employeeRepository.existsById(empId)) {
+            return null;
+        }
+        
+        // Ensure ID consistency
+        employee.setEMP_ID(empId);
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    public void deleteEmployee(String empId) {
+        if (employeeRepository.existsById(empId)) {
+            employeeRepository.deleteById(empId);
+        } else {
+            throw new IllegalArgumentException("Employee with ID " + empId + " not found");
+        }
+    }
+}
+
+// UserService.java
+package com.bootmytool.empstore.services;
+
+import java.util.Optional;
+
+import com.bootmytool.empstore.models.User;
+
+public interface UserService {
+    
+    public boolean authenticate(String email, String password);
+    
+    // Add other user management methods as needed
+}
+
+// UserServiceImpl.java
+package com.bootmytool.empstore.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bootmytool.empstore.models.User;
+import com.bootmytool.empstore.repositories.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Override
+    public boolean authenticate(String email, String password) {
+        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+        return user.isPresent();
+    }
+    
+    // Implement other user management methods as needed
+}
+
+// Update repositories (rename to match Spring convention)
+// EmployeeRepository.java
+package com.bootmytool.empstore.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bootmytool.empstore.models.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee, String> {
+    // Add custom query methods if needed
+}
+
+// Update the main application class to enable RESTful services
+package com.bootmytool.empstore;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@SpringBootApplication
+public class EmployeeManagementApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(EmployeeManagementApplication.class, args);
+    }
+    
+    @Configuration
+    public class WebConfig implements WebMvcConfigurer {
+        
+        @Bean
+        public AuthInterceptor authInterceptor() {
+            return new AuthInterceptor();
+        }
+        
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(authInterceptor())
+                    .addPathPatterns("/api/**")
+                    .excludePathPatterns("/api/test-auth"); // Can add excluded paths if needed
+        }
+    }
+}
+
+// application.properties (sample configuration)
+# Server configuration
+server.port=8080
+
+# Oracle database configuration
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE
+spring.datasource.username=NEWSO
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+
+# JPA/Hibernate properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.OracleDialect
+
+// AuthInterceptor.java
+package com.bootmytool.empstore;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import com.bootmytool.empstore.services.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class AuthInterceptor implements HandlerInterceptor {
+    
+    @Autowired
+    private UserService userService;
+    
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // Get the Authorization header
+        String authHeader = request.getHeader("Authorization");
+        
+        // Check if the Authorization header exists and starts with "Basic "
+        if (authHeader != null && authHeader.startsWith("Basic ")) {
+            // Extract the Base64 encoded username:password
+            String base64Credentials = authHeader.substring("Basic ".length()).trim();
+            
+            // Decode the Base64 encoded username:password
+            byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
+            String credentials = new String(credDecoded, StandardCharsets.UTF_8);
+            
+            // Split into username and password
+            final String[] values = credentials.split(":", 2);
+            String email = values[0];
+            String password = values[1];
+            
+            // Authenticate
+            if (userService.authenticate(email, password)) {
+                // User is authenticated, continue with the request
+                return true;
+            }
+        }
+        
+        // Authentication failed
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write("Unauthorized: Authentication required");
+        return false;
+    }
+}
+
+
+₹₹₹₹₹₹
 // Project Structure
 // com.bootmytool.empstore.controllers -> EmployeeController.java, UserController.java
 // com.bootmytool.empstore.models -> Employee.java, User.java
