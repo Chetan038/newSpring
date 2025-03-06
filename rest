@@ -1,0 +1,488 @@
+This is my main project Employe management project using spring boot ,jsp ,oracle database, mvc,
+
+this is my file struture and code files
+
+src/main/java
+
+src/main/java
+
+com.bootmytool.empstore.controllers->EmployessController.java,UserController.java
+com.bootmytool.empstore.models->Employee.java,EmployeeDto.java,User.java
+com.bootmytool.empstore.repo->EmployeeRepository.java,UserRepository.java
+
+
+EmployessController.java
+package com.bostmytools.emppmng.controllers;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.bostmytools.emppmng.models.Employee;
+import com.bostmytools.emppmng.repo.EmployeeRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/employees")
+public class EmployeesController {
+
+    @Autowired
+    private EmployeeRepository repo;
+
+    @GetMapping({"", "/"})
+    public String showEmployeeList(Model model, HttpSession session) {
+        
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
+
+        List<Employee> employees = repo.findAll();
+        model.addAttribute("employees", employees);
+        
+        
+        model.addAttribute("username", session.getAttribute("username"));
+
+        return "employees/index";
+    }
+    
+    @GetMapping("/delete")
+    public String deleteEmployee(@RequestParam String EMP_ID) {
+        try {
+            if (repo.existsById(EMP_ID)) {
+                repo.deleteById(EMP_ID);
+               
+            } else {
+            }
+        } catch (Exception e) {
+        }
+        
+        return "redirect:/employees";
+    }
+    
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("employee", new Employee());
+        return "employees/create";
+    }
+    
+    @PostMapping("/create")
+    public String createEmployee(@ModelAttribute Employee employee) {
+        try {
+            if (repo.existsById(employee.getEMP_ID())) {
+               
+                return "redirect:/employees/create";
+            }
+            
+            repo.save(employee);
+           
+            return "redirect:/employees";
+        } catch (Exception e) {
+           
+            return "redirect:/employees/create";
+        }
+    }
+    
+    @GetMapping("/edit")
+    public String showEditForm(@RequestParam String EMP_ID, Model model) {
+        try {
+            Optional<Employee> employeeOptional = repo.findById(EMP_ID);
+            
+            if (employeeOptional.isPresent()) {
+                model.addAttribute("employee", employeeOptional.get());
+                return "employees/edit";
+            } else {
+              
+                return "redirect:/employees";
+            }
+        } catch (Exception e) {
+           
+            return "redirect:/employees";
+        }
+    }
+    
+    @PostMapping("/edit")
+    public String updateEmployee(@ModelAttribute Employee employee) {
+        try {
+            // Check if employee exists before updating
+            if (repo.existsById(employee.getEMP_ID())) {
+                repo.save(employee);
+              
+                return "redirect:/employees";
+            } else {
+               
+                return "redirect:/employees";
+            }
+        } catch (Exception e) {
+          
+            return "redirect:/employees/edit?EMP_ID=" + employee.getEMP_ID();
+        }
+    }
+}
+
+LoginController.java
+package com.bostmytools.emppmng.controllers;
+
+import com.bostmytools.emppmng.models.User;
+import com.bostmytools.emppmng.repo.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
+import java.util.Optional;
+
+@Controller
+public class LoginController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; 
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            session.setAttribute("loggedInUser", user);
+            session.setAttribute("username", user.getName()); 
+            return "redirect:/employees"; 
+        } else {
+            model.addAttribute("errorMessage", "Invalid email or password");
+            return "login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        session.invalidate();
+        
+   
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
+        response.sendRedirect("/login");
+    }
+}
+Employee.java
+package com.bostmytools.emppmng.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="EMPLOYEE", schema="NEWSO")
+public class Employee {
+
+	@Id
+	@Column(name="EMP_ID",nullable=false)
+	private String EMP_ID;
+	@Column(name="E_NAME",nullable=false)
+	private String E_NAME;
+	@Column(name="SALARY",nullable=false)
+	private Double SALARY;
+	@Column(name="DEPARTMENT",nullable=false)
+	private String DEPARTMENT;
+	@Column(name="STATUS",nullable=false)
+	private String STATUS;
+	@Column(name="PHONENO",nullable=false)
+	private String PHONENO;
+	public String getEMP_ID() {
+		return EMP_ID;
+	}
+	public void setEMP_ID(String eMP_ID) {
+		EMP_ID = eMP_ID;
+	}
+	public String getE_NAME() {
+		return E_NAME;
+	}
+	public void setE_NAME(String e_NAME) {
+		E_NAME = e_NAME;
+	}
+	public Double getSALARY() {
+		return SALARY;
+	}
+	public void setSALARY(Double sALARY) {
+		SALARY = sALARY;
+	}
+	public String getDEPARTMENT() {
+		return DEPARTMENT;
+	}
+	public void setDEPARTMENT(String dEPARTMENT) {
+		DEPARTMENT = dEPARTMENT;
+	}
+	public String getSTATUS() {
+		return STATUS;
+	}
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+	public String getPHONENO() {
+		return PHONENO;
+	}
+	public void setPHONENO(String pHONENO) {
+		PHONENO = pHONENO;
+	}
+	
+}
+
+User.java
+package com.bostmytools.emppmng.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "USERR", schema = "NEWSO")
+public class User {
+    
+    @Id
+    @Column(name = "ID")
+    private Long id;
+    
+    @Column(name = "NAME", nullable = false)
+    private String name;
+    
+    @Column(name = "EMAIL", nullable = false)
+    private String email;
+    
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;
+    
+    @Column(name = "PHONENO", nullable = false)
+    private String phoneNo;
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getPhoneNo() { return phoneNo; }
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
+}
+EmployeeRepository.java
+package com.bostmytools.emppmng.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bostmytools.emppmng.models.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee, String>{
+
+}
+UserRepository.java
+package com.bostmytools.emppmng.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bostmytools.emppmng.models.User;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmailAndPassword(String email, String password);
+}
+
+
+This is my secound project 
+
+com.chetan.restApi.controllers->MyControllers.java
+com.chetan.restApi.entities->User.java
+com.chetan.restApi.repository->UserRepository.java
+com.chetan.restApi.services->UserServicesImpl.java,UserServices.java
+
+MyControllers.java
+package com.chetan.restApi.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.chetan.restApi.entities.User;
+import com.chetan.restApi.services.UserServices;
+
+@RestController
+public class MyController {
+	
+	@Autowired
+	private UserServices userServices;
+	@PostMapping("/user")
+	public User addUserDetails(@RequestBody User user)
+	{
+		
+		
+		return userServices.createUser(user);
+	}
+	
+	
+	@GetMapping("/user")
+	public List<User> getAllUserDetails() {
+		
+		return userServices.getAllUsers();
+	}
+	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<User> getUserDetails(@PathVariable int id) {
+		
+		User user=userServices.getUserDetails(id).orElse(null);
+		if(user!=null)
+		{
+			return ResponseEntity.ok().body(user);
+		}
+		else
+		{
+			return ResponseEntity.notFound().build();		}
+	}
+	
+	@PostMapping("/user/{id}")
+	public ResponseEntity<User> updateUser(@PathVariable int id,@RequestBody User user) {
+		
+		User updatedUser=userServices.updateUser(id,user);
+		if(updatedUser!=null)
+		{
+			return ResponseEntity.ok(updatedUser);
+		}
+		else
+		{
+			return ResponseEntity.notFound().build();		}
+	}
+	
+	@DeleteMapping("/user/{id}")
+	public ResponseEntity<Void> deleteUser(@PathVariable int id) {
+		
+		userServices.deleteUser(id);
+		
+			
+		return ResponseEntity.noContent().build();		
+	}
+	
+	
+
+}
+
+User.java
+
+UserRepository.java
+UserServicesImpl.java
+package com.chetan.restApi.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.chetan.restApi.entities.User;
+import com.chetan.restApi.repository.UserRepository;
+
+
+@Service
+public class UserServiceImpl implements UserServices {
+
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Override
+	public User createUser(User user) {
+		
+		
+		return userRepository.save(user);
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		
+		return userRepository.findAll();
+	}
+
+	@Override
+	public Optional<User> getUserDetails(int id) {
+	
+		return userRepository.findById(id);
+	}
+
+	@Override
+	public User updateUser(int id, User newUser) {
+
+		User userData=  userRepository.findById(id).orElse(null);
+		if(userData!=null)
+		{
+			
+			return userRepository.save(newUser);
+		}
+		
+		 throw new RuntimeException("nahi mila:"+id);
+	}
+
+	@Override
+	public void deleteUser(int id) {
+		
+		userRepository.deleteById(id);
+		
+	}
+	
+
+}
+
+UserServices.java
+package com.chetan.restApi.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.chetan.restApi.entities.User;
+
+public interface UserServices {
+	
+	public User createUser(User user);
+	public List<User> getAllUsers();
+	public Optional<User> getUserDetails(int id);
+	public User updateUser(int id, User user);
+	public void deleteUser(int id);
+
+}
+
+
+make my main project similar to secound project in coding sturture add service layer as in secound project dont use model in controller layer in main project
+and Make it REST project do changes in url simliar to secound project 
+
