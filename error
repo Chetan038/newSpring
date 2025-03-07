@@ -1,82 +1,39 @@
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-
-
-
-@@@
-
-
-package com.bootmytool.empstore.security;
-
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
-import com.bootmytool.empstore.models.User as AppUser;
-import com.bootmytool.empstore.repositories.UserRepository;
-
-@Service
-public class CustomUserDetailsService implements UserDetailsService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<AppUser> userOptional = userRepository.findById(email);
-        
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-
-        AppUser user = userOptional.get();
-
-        return User.builder()
-                .username(user.getEmail())
-                .password("{noop}" + user.getPassword()) // {noop} means no encoding
-                .roles("USER") // You can implement roles later
-                .build();
-    }
-}
-
-
-@@@
 package com.bootmytool.empstore.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/employees/**").authenticated() // Protect employees API
-                .anyRequest().permitAll()
+            .csrf().disable()
+            .authorizeHttpRequests((authz) -> authz
+                .anyRequest().authenticated()
             )
-            .httpBasic() // Enable Basic Auth
-            .and()
-            .csrf().disable(); // Disable CSRF for simplicity (only for API use)
-
+            .httpBasic();
+        
         return http.build();
     }
+    
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+            .username("admin")
+            .password("{noop}password") // {noop} means no encoding
+            .roles("USER")
+            .build();
+            
+        return new InMemoryUserDetailsManager(user);
+    }
 }
-
