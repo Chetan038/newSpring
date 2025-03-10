@@ -1,65 +1,28 @@
-this is my angular project for basic form validation 
+Application bundle generation failed. [2.353 seconds]
 
-app.component.ts
+▲ [WARNING] TS-998113: LoginComponent is not used within the template of AppComponent [plugin angular-compiler]
 
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-//import { RouterOutlet } from '@angular/router';
-
-@Component({
-  selector: 'app-root',
- // imports: [RouterOutlet],
- standalone:true,
- imports : [FormsModule,CommonModule],
- 
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-})
-export class AppComponent {
-
-  user={
-      Name:'', 
-      City:'',
-      Phoneno:'',
-      email:''
-  };
-  submitted =false;
-  onSubmit(){
-    this.submitted=true;
-  }
-  title = 'counter-app';
-}
+    src/app/app.component.ts:8:25:
+      8 │   imports: [FormsModule, LoginComponent],
+        ╵                          ~~~~~~~~~~~~~~
 
 
-app.component.html
-<h1>Form Validation</h1>
-<div>
- 
-  <form (submit)="onSubmit()">
-    
-     <label>Name</label>    <input type="text" [(ngModel)]="user.Name" required><br>
-     <label>City</label> City    :   <input type="text" [(ngModel)]="user.City" required><br>
-     <label>Phoneno</label>Phoneno :  <input type="text" [(ngModel)]="user.Phoneno" required><br>
-     <label>email</label>email   :   <input type="text" [(ngModel)]="user.email" required><br>
-  <button type="submit">Submit</button>
-  
-   </form>
- 
-</div>
+X [ERROR] NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
 
-<div>
-  <h1>Welcome, your details show below</h1><div>
-    <div>
-      <p *ngIf="submitted">Name    :   {{user.Name}}</p> <br>
-      <p *ngIf="submitted">City    :   {{user.City}}</p><br>
-      <p *ngIf="submitted">Phoneno :   {{user.Phoneno}}</p> <br>
-      <p *ngIf="submitted">email   :   {{user.email}}</p> <br>
-  
- 
-</div>
-<div>
+    src/app/app.component.html:336:0:
+      336 │ <router-outlet />
+          ╵ ~~~~~~~~~~~~~~~~~
 
-the data is not displaying 
+  Error occurs in the template of component AppComponent.
 
-fix the code
+    src/app/app.component.ts:9:15:
+      9 │   templateUrl: './app.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
+
+
+fix this error
