@@ -4,7 +4,7 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
-
+<button [routerLink]="['/login']">Login</button>
 
 home.compo nent.html
 <p>home works!</p>
