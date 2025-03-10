@@ -1,28 +1,61 @@
-Application bundle generation failed. [2.353 seconds]
+login.component.html
 
-▲ [WARNING] TS-998113: LoginComponent is not used within the template of AppComponent [plugin angular-compiler]
+<div>
 
-    src/app/app.component.ts:8:25:
-      8 │   imports: [FormsModule, LoginComponent],
-        ╵                          ~~~~~~~~~~~~~~
+ <h1>LOGIN</h1>
+   <input type="text" placeholder="username" [(ngModel)]="username"> 
+   <input type="password" placeholder="password" [(ngModel)]="password">
+   <button (click)="login()">Login</button>
+   <p>{{message}} </p>
+
+</div>
+
+log.component.ts
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-login',
+  imports: [FormsModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent {
+
+  username: string = '';
+  password: string='';
+  message:string='';
+
+  validUsername='admin';
+  validPassword='admin';
+
+  login(){
+    if(this.username==this.validUsername&&this.password==this.validPassword)
+    {
+      this.message="login sussesful";
+    }
+    else{
+      this.message="failed login";
+    }
+  }
+}
+
+app.c ompnent.ts
+import { Component } from '@angular/core';
+
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from "./login/login.component";
+
+@Component({
+  selector: 'app-root',
+  imports: [FormsModule, LoginComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'simple-login';
+}
 
 
-X [ERROR] NG8001: 'router-outlet' is not a known element:
-1. If 'router-outlet' is an Angular component, then verify that it is included in the '@Component.imports' of this component.
-2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@Component.schemas' of this component to suppress this message. [plugin angular-compiler]
-
-    src/app/app.component.html:336:0:
-      336 │ <router-outlet />
-          ╵ ~~~~~~~~~~~~~~~~~
-
-  Error occurs in the template of component AppComponent.
-
-    src/app/app.component.ts:9:15:
-      9 │   templateUrl: './app.component.html',
-        ╵                ~~~~~~~~~~~~~~~~~~~~~~
-
-
-Watch mode enabled. Watching for file changes...
-
-
-fix this error
+app.compment.html
+<app-login></app-login>
