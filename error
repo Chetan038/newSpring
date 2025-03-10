@@ -1,61 +1,85 @@
-login.component.html
+home.compo nent.html
+<p>home works!</p>
+<button routerLink="/login">Login</button>
 
-<div>
-
- <h1>LOGIN</h1>
-   <input type="text" placeholder="username" [(ngModel)]="username"> 
-   <input type="password" placeholder="password" [(ngModel)]="password">
-   <button (click)="login()">Login</button>
-   <p>{{message}} </p>
-
-</div>
-
-log.component.ts
+home. comopnet.ts
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-home',
+  imports: [],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HomeComponent {
+
+}
+
+login.compo nent.html
+<p>login works!</p>
+
+login. comopnet.ts
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
-  username: string = '';
-  password: string='';
-  message:string='';
-
-  validUsername='admin';
-  validPassword='admin';
-
-  login(){
-    if(this.username==this.validUsername&&this.password==this.validPassword)
-    {
-      this.message="login sussesful";
-    }
-    else{
-      this.message="failed login";
-    }
-  }
 }
 
-app.c ompnent.ts
-import { Component } from '@angular/core';
+app.compo nent.html
 
-import { FormsModule } from '@angular/forms';
-import { LoginComponent } from "./login/login.component";
+<app-nav-bar></app-nav-bar>
+<router-outlet> </router-outlet>
+
+app. comopnet.ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, LoginComponent],
+  standalone:true,
+  imports: [MatToolbarModule,NavBarComponent,MatButtonModule,RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'simple-login';
+  title = 'login';
 }
 
+app.compoent.routes
+import { Routes } from '@angular/router';
+import { HomeComponent } from './component/home/home.component';
+import { LoginComponent } from './component/login/login.component';
+import { DashBoardComponent } from './component/dash-board/dash-board.component';
 
-app.compment.html
-<app-login></app-login>
+export const routes: Routes = [
+ {
+    path:'',
+    component:HomeComponent,
+    pathMatch:'full'
+ },
+ {
+    path:'login',
+    component:LoginComponent,
+    pathMatch:'full'
+ },
+ {
+    path:'dashboard',
+    component:DashBoardComponent,
+    pathMatch:'full'
+ }
+  
+];
+
+fix the code the button in home.component.html
+is not work its not redirecting to login page
