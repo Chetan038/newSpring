@@ -1,39 +1,65 @@
-package com.bootmytool.empstore.security;
+this is my angular project for basic form validation 
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
+app.component.ts
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+//import { RouterOutlet } from '@angular/router';
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeHttpRequests((authz) -> authz
-                .anyRequest().authenticated()
-            )
-            .httpBasic();
-        
-        return http.build();
-    }
-    
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-            .username("admin")
-            .password("{noop}password") // {noop} means no encoding
-            .roles("USER")
-            .build();
-            
-        return new InMemoryUserDetailsManager(user);
-    }
+@Component({
+  selector: 'app-root',
+ // imports: [RouterOutlet],
+ standalone:true,
+ imports : [FormsModule,CommonModule],
+ 
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+
+  user={
+      Name:'', 
+      City:'',
+      Phoneno:'',
+      email:''
+  };
+  submitted =false;
+  onSubmit(){
+    this.submitted=true;
+  }
+  title = 'counter-app';
 }
+
+
+app.component.html
+<h1>Form Validation</h1>
+<div>
+ 
+  <form (submit)="onSubmit()">
+    
+     <label>Name</label>    <input type="text" [(ngModel)]="user.Name" required><br>
+     <label>City</label> City    :   <input type="text" [(ngModel)]="user.City" required><br>
+     <label>Phoneno</label>Phoneno :  <input type="text" [(ngModel)]="user.Phoneno" required><br>
+     <label>email</label>email   :   <input type="text" [(ngModel)]="user.email" required><br>
+  <button type="submit">Submit</button>
+  
+   </form>
+ 
+</div>
+
+<div>
+  <h1>Welcome, your details show below</h1><div>
+    <div>
+      <p *ngIf="submitted">Name    :   {{user.Name}}</p> <br>
+      <p *ngIf="submitted">City    :   {{user.City}}</p><br>
+      <p *ngIf="submitted">Phoneno :   {{user.Phoneno}}</p> <br>
+      <p *ngIf="submitted">email   :   {{user.email}}</p> <br>
+  
+ 
+</div>
+<div>
+
+the data is not displaying 
+
+fix the code
