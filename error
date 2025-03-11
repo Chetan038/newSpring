@@ -1,93 +1,12 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
+import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
-<button [routerLink]="['/login']">Login</button>
-
-home.compo nent.html
-<p>home works!</p>
-<button routerLink="/login">Login</button>
-
-home. comopnet.ts
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-home',
-  imports: [],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
-})
-export class HomeComponent {
-
-}
-
-login.compo nent.html
-<p>login works!</p>
-
-login. comopnet.ts
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-login',
-  imports: [],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
-})
-export class LoginComponent {
-
-}
-
-app.compo nent.html
-
-<app-nav-bar></app-nav-bar>
-<router-outlet> </router-outlet>
-
-app. comopnet.ts
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import { NavBarComponent } from './component/nav-bar/nav-bar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-
-
-
-@Component({
-  selector: 'app-root',
-  standalone:true,
-  imports: [MatToolbarModule,NavBarComponent,MatButtonModule,RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-})
-export class AppComponent {
-  title = 'login';
-}
-
-app.compoent.routes
-import { Routes } from '@angular/router';
-import { HomeComponent } from './component/home/home.component';
-import { LoginComponent } from './component/login/login.component';
-import { DashBoardComponent } from './component/dash-board/dash-board.component';
-
-export const routes: Routes = [
- {
-    path:'',
-    component:HomeComponent,
-    pathMatch:'full'
- },
- {
-    path:'login',
-    component:LoginComponent,
-    pathMatch:'full'
- },
- {
-    path:'dashboard',
-    component:DashBoardComponent,
-    pathMatch:'full'
- }
-  
-];
-
-fix the code the button in home.component.html
-is not work its not redirecting to login page
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule), // Import modules globally
+    provideRouter([]), // Add your routes here
+  ],
+}).catch(err => console.error(err));
