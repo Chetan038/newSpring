@@ -1,7 +1,13 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
-import { AppComponent } from './app/app.component';
-
-bootstrapApplication(AppComponent, {
-  providers: [provideHttpClient()],
-}).catch(err => console.error(err));
+main.ts:4 
+ ERROR NullInjectorError: R3InjectorError(_AppModule)[_LoginService -> _HttpClient -> _HttpClient]: 
+  NullInjectorError: No provider for _HttpClient!
+    at NullInjector.get (core.mjs:1643:21)
+    at R3Injector.get (core.mjs:2167:27)
+    at R3Injector.get (core.mjs:2167:27)
+    at injectInjectorOnly (core.mjs:1099:40)
+    at Module.ɵɵinject (core.mjs:1105:40)
+    at Object.LoginService_Factory [as factory] (login.service.ts:7:26)
+    at core.mjs:2280:35
+    at runInInjectorProfilerContext (core.mjs:880:5)
+    at R3Injector.hydrate (core.mjs:2279:11)
+    at R3Injector.get (core.mjs:2158:23)
