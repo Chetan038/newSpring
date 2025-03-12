@@ -1,3 +1,51 @@
+/* navbar.component.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #9979c2, #805cb3); /* Darker violet gradient */
+  color: white;
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+}
+
+.login-btn {
+  background-color: #673ab7; /* Darker violet */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #512da8; /* Slightly darker violet */
+}
+
+
+<nav class="navbar">
+  <div class="logo-title">
+    <a routerLink="/" class="title">Employee Management</a>
+  </div>
+  <button routerLink="/login" class="login-btn">Login</button>
+</nav>
+
+
 <nav class="navbar">
     <div class="logo-title">
      
