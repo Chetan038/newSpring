@@ -1,3 +1,13 @@
+<nav class="navbar">
+    <div class="logo-title">
+     
+      <a routerLink="/" class="title">Employee Management</a>
+    </div>
+    <button routerLink="/login" class="login-btn">Login</button>
+  </nav>
+
+slimliarly maintain theme for navbar but a litile darker so it stands out 
+
 <div class="login-container">
   <div class="login-card">
     <h2 class="login-title">Login</h2>
