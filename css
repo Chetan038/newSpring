@@ -1,0 +1,71 @@
+navbar
+@@@@
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover Animation */
+.navbar:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo & Title */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.title:hover {
+  color: #007bff;
+}
+
+/* Login Button */
+.login-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.3s;
+}
+
+.login-btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+
+@@@
+<nav class="navbar">
+  <div class="logo-title">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <a routerLink="/" class="title">Employee Management</a>
+  </div>
+  <button routerLink="/login" class="login-btn">Login</button>
+</nav>
