@@ -1,43 +1,42 @@
-/* Full-Screen Background */
-body, html {
-  height: 100%;
-  margin: 0;
+/* Center the form on the page */
+body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffdde1);
   background-size: 400% 400%;
   animation: bgAnimation 10s infinite alternate;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-/* Login Container */
+/* Form Container */
 form {
-  background: linear-gradient(135deg, #8e44ad, #6a11cb);
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff5dcd);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
-  width: 400px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  width: 320px;
+  transition: transform 0.3s ease-in-out;
 }
 
 /* Form Hover Effect */
 form:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  transform: scale(1.02);
 }
 
 /* Input Fields */
 input {
-  width: 100%;
-  padding: 15px;
-  margin: 15px 0;
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
   border: none;
-  border-radius: 30px;
+  border-radius: 25px;
   outline: none;
-  font-size: 18px;
-  background: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
   color: #333;
   transition: background 0.3s ease-in-out, transform 0.2s;
 }
@@ -51,23 +50,23 @@ input:focus {
 /* Login Button */
 button {
   width: 100%;
-  padding: 15px;
-  font-size: 20px;
-  font-weight: 700;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 600;
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 25px;
   cursor: pointer;
-  background: linear-gradient(135deg, #d4145a, #fbb03b);
-  box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
   transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
 /* Button Hover Effect */
 button:hover {
-  background: linear-gradient(135deg, #ff512f, #dd2476);
+  background: linear-gradient(135deg, #ff9900, #ff6600);
   transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(255, 87, 34, 0.5);
+  box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
 }
 
 /* Gradient Background Animation */
