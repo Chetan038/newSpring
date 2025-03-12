@@ -1,6 +1,130 @@
+<div class="landing-container">
+  <div class="landing-content">
+    <div class="image-container">
+      <img src="URL_TO_YOUR_IMAGE" alt="Employee Management Illustration" class="landing-image">
+    </div>
 
-<p>welcome this is landing page of emp mang</p>
+    <h1 class="landing-title">Welcome to Employee Management System</h1>
+    <p class="landing-description">
+      Streamline your workforce management with our intuitive and powerful platform.
+      Manage employee data, track performance, and simplify HR processes all in one place.
+    </p>
 
-<button routerLink="/login">Login</button> 
+    <div class="features">
+      <div class="feature-item">
+        <i class="fas fa-users"></i>
+        <span>Employee Database</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-chart-line"></i>
+        <span>Performance Tracking</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Leave Management</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-file-alt"></i>
+        <span>Reporting & Analytics</span>
+      </div>
+    </div>
 
-smilatr this is my langing page make beatury color changing effect at some more data and the login but at the end center and make it as professional langing page and also add some image form internet to lo0ok attractive
+    <button routerLink="/login" class="landing-login-btn">Login</button>
+  </div>
+</div>
+
+
+@@@
+
+
+/* landing.component.css */
+
+.landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #e0c2ff, #d1a8ff); /* Light violet gradient */
+  animation: backgroundChange 10s infinite alternate; /* Color changing animation */
+}
+
+@keyframes backgroundChange {
+  0% {
+    background: linear-gradient(135deg, #e0c2ff, #d1a8ff);
+  }
+  50% {
+    background: linear-gradient(135deg, #d1a8ff, #b886ff);
+  }
+  100% {
+    background: linear-gradient(135deg, #b886ff, #e0c2ff);
+  }
+}
+
+.landing-content {
+  text-align: center;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%; /* Adjust width as needed */
+  max-width: 800px;
+}
+
+.landing-title {
+  color: #673ab7;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.landing-description {
+  font-size: 1.1em;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.landing-login-btn {
+  background-color: #673ab7;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+}
+
+.landing-login-btn:hover {
+  background-color: #512da8;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  width: 150px;
+}
+
+.feature-item i {
+  font-size: 2em;
+  color: #673ab7;
+  margin-bottom: 10px;
+}
+
+.image-container {
+  margin-bottom: 20px;
+}
+
+.landing-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
