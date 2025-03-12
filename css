@@ -1,5 +1,6 @@
-/* Parallax Background Effect */
+/* Apply Font to the Whole Page */
 body {
+  font-family: 'Poppins', sans-serif;
   background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
   background-size: 400% 400%;
   animation: bgAnimation 10s infinite alternate;
@@ -19,54 +20,10 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-/* Gradient Animation */
-@keyframes bgAnimation {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-/* Animated Glowing Effect */
-.navbar::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 50%);
-  animation: glowingEffect 6s infinite alternate;
-}
-
-@keyframes glowingEffect {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Logo & Title */
-.logo-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 3px solid white;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Logo Hover Effect */
-.logo:hover {
-  transform: rotate(15deg) scale(1.1);
-}
-
-/* Title */
+/* Title Font & Effects */
 .title {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700; /* Bold */
   color: white;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   text-decoration: none;
@@ -81,14 +38,15 @@ body {
 
 /* Login Button */
 .login-btn {
+  font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #ffcc00, #ff9900);
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
+  font-weight: 600; /* Semi-Bold */
   border-radius: 25px;
   cursor: pointer;
-  font-weight: bold;
   box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
   transition: transform 0.3s ease-in-out, background 0.3s;
 }
@@ -99,3 +57,6 @@ body {
   transform: scale(1.1);
   box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
 }
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
