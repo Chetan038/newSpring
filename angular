@@ -1,3 +1,78 @@
+Request URL:
+http://localhost:8080/api/employees/all
+Request Method:
+OPTIONS
+Status Code:
+401 Unauthorized
+Remote Address:
+[::1]:8080
+Referrer Policy:
+strict-origin-when-cross-origin
+access-control-allow-headers:
+authorization
+access-control-allow-methods:
+GET
+access-control-allow-origin:
+*
+access-control-max-age:
+1800
+allow:
+GET, HEAD, POST, PUT, DELETE, OPTIONS, TRACE, PATCH
+cache-control:
+no-cache, no-store, max-age=0, must-revalidate
+connection:
+keep-alive
+content-length:
+38
+date:
+Wed, 12 Mar 2025 20:27:35 GMT
+expires:
+0
+keep-alive:
+timeout=60
+pragma:
+no-cache
+vary:
+Origin
+vary:
+Access-Control-Request-Method
+vary:
+Access-Control-Request-Headers
+x-content-type-options:
+nosniff
+x-frame-options:
+DENY
+x-xss-protection:
+0
+accept:
+*/*
+accept-encoding:
+gzip, deflate, br, zstd
+accept-language:
+en-US,en;q=0.9
+access-control-request-headers:
+authorization
+access-control-request-method:
+GET
+connection:
+keep-alive
+host:
+localhost:8080
+origin:
+http://localhost:4200
+referer:
+http://localhost:4200/
+sec-fetch-dest:
+empty
+sec-fetch-mode:
+cors
+sec-fetch-site:
+same-site
+user-agent:
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
+
+this is erro in network tab "
+
 <h2>Employee List</h2>
 
 <table border="1">
