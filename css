@@ -1,71 +1,101 @@
-navbar
-@@@@
+/* Parallax Background Effect */
+body {
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+  background-size: 400% 400%;
+  animation: bgAnimation 10s infinite alternate;
+}
 
 /* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff5dcd);
   padding: 15px 20px;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease-in-out;
 }
 
-/* Hover Animation */
-.navbar:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+/* Gradient Animation */
+@keyframes bgAnimation {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Animated Glowing Effect */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 50%);
+  animation: glowingEffect 6s infinite alternate;
+}
+
+@keyframes glowingEffect {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Logo & Title */
 .logo-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s ease-in-out;
 }
 
+/* Logo Hover Effect */
+.logo:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* Title */
 .title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   text-decoration: none;
-  transition: color 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out, color 0.3s;
 }
 
+/* Title Hover */
 .title:hover {
-  color: #007bff;
+  transform: translateY(-2px);
+  color: #ffcc00;
 }
 
 /* Login Button */
 .login-btn {
-  background: #007bff;
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   font-size: 16px;
-  border-radius: 20px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, background 0.3s;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
+  transition: transform 0.3s ease-in-out, background 0.3s;
 }
 
+/* Button Hover Effect */
 .login-btn:hover {
-  background: #0056b3;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #ff9900, #ff6600);
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
 }
-
-
-@@@
-<nav class="navbar">
-  <div class="logo-title">
-    <img src="assets/logo.png" alt="Logo" class="logo">
-    <a routerLink="/" class="title">Employee Management</a>
-  </div>
-  <button routerLink="/login" class="login-btn">Login</button>
-</nav>
