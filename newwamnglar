@@ -1,0 +1,117 @@
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Get token from localStorage
+    const token = localStorage.getItem('token');
+    
+    // Only add the token if it exists
+    if (token) {
+      // Clone the request and add the authorization header
+      const clonedRequest = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return next.handle(clonedRequest);
+    }
+    
+    // If no token, pass the original request
+    return next.handle(req);
+  }
+}
+
+@@@
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("http://localhost:4200")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true);
+    }
+}
+
+@@@
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(authorize -> authorize
+                // Permit OPTIONS requests without authentication
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                // Require authentication for other requests
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .addFilterBefore(/* your JWT authentication filter */, UsernamePasswordAuthenticationFilter.class);
+        
+        return http.build();
+    }
+    
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+}
+
+@@
+
+// Add this to your dashboard.component.ts
+debugAuth() {
+  const token = localStorage.getItem('token');
+  console.log('Current token:', token);
+  
+  // Check if token is valid (not expired)
+  if (token) {
+    try {
+      // This is a simple way to check if the token is in valid JWT format
+      // It doesn't verify the signature
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        console.error('Token does not appear to be in JWT format');
+      } else {
+        const payload = JSON.parse(atob(parts[1]));
+        console.log('Token payload:', payload);
+        
+        // Check expiration
+        if (payload.exp && payload.exp * 1000 < Date.now()) {
+          console.error('Token is expired');
+        } else {
+          console.log('Token appears valid');
+        }
+      }
+    } catch (e) {
+      console.error('Error parsing token:', e);
+    }
+  } else {
+    console.error('No token found in localStorage');
+  }
+}
+
+
+
+@@
