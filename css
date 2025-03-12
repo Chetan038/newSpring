@@ -1,60 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+<p>login works!</p>
 
+<form (ngSubmit)="onSubmit()">
+    
+   
+    <input type="text" placeholder="email" name="username" [(ngModel)]="credentials.email" required><br>
+    <input type="text" placeholder="password" name="password" [(ngModel)]="credentials.password" required><br>
+    <button (click)="onSubmit()" type="submit">Login</button>
 
-body {
-  font-family: 'Poppins', sans-serif;
-}
+</form>
 
-
-/* Navbar Styling */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff5dcd);
-  padding: 15px 20px;
-  border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Title Styling */
-.title {
-  font-size: 24px;
-  font-weight: 700;
-  font-family: 'Poppins', sans-serif;
-  color: white;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out, color 0.3s;
-}
-
-/* Title Hover Effect */
-.title:hover {
-  transform: translateY(-2px);
-  color: #ffcc00;
-}
-
-/* Login Button */
-.login-btn {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ffcc00, #ff9900);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
-  transition: transform 0.3s ease-in-out, background 0.3s;
-}
-
-/* Button Hover Effect */
-.login-btn:hover {
-  background: linear-gradient(135deg, #ff9900, #ff6600);
-  transform: scale(1.1);
-  box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
-}
+NOW do the style for this alsoo and maintain the theme
