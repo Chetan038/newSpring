@@ -1,12 +1,76 @@
-<p>login works!</p>
+/* Center the form on the page */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffdde1);
+  background-size: 400% 400%;
+  animation: bgAnimation 10s infinite alternate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
 
-<form (ngSubmit)="onSubmit()">
-    
-   
-    <input type="text" placeholder="email" name="username" [(ngModel)]="credentials.email" required><br>
-    <input type="text" placeholder="password" name="password" [(ngModel)]="credentials.password" required><br>
-    <button (click)="onSubmit()" type="submit">Login</button>
+/* Form Container */
+form {
+  background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff5dcd);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 320px;
+  transition: transform 0.3s ease-in-out;
+}
 
-</form>
+/* Form Hover Effect */
+form:hover {
+  transform: scale(1.02);
+}
 
-NOW do the style for this alsoo and maintain the theme
+/* Input Fields */
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* Input Focus Effect */
+input:focus {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+/* Login Button */
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Button Hover Effect */
+button:hover {
+  background: linear-gradient(135deg, #ff9900, #ff6600);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
+}
+
+/* Gradient Background Animation */
+@keyframes bgAnimation {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
