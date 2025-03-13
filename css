@@ -1,3 +1,574 @@
+/* General Styles /
+body {
+font-family: 'Arial', sans-serif;
+background-color: #f7f7f7; / Light background for contrast */
+margin: 0;
+padding: 20px;
+}
+
+h2 {
+text-align: center;
+color: #5e4b8e; /* Violet color for the header */
+}
+
+/* Table Styles /
+table {
+width: 100%;
+border-collapse: collapse; / Remove space between borders /
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); / Subtle shadow for depth /
+margin: 20px auto; / Center the table */
+}
+
+thead {
+background-color: #5e4b8e; /* Dark violet header /
+color: white; / White text for contrast */
+}
+
+th, td {
+padding: 12px; /* Spacing within cells */
+text-align: left;
+}
+
+/* Alternate row colors for better readability /
+tbody tr:nth-child(even) {
+background-color: #e6e6fa; / Lavender for even rows */
+}
+
+tbody tr:nth-child(odd) {
+background-color: #ffffff; /* White for odd rows */
+}
+
+/* Hover effect for table rows /
+tbody tr:hover {
+transform: translateY(-3px); / Lift effect /
+transition: transform 0.3s ease, background-color 0.3s ease; / Smooth transition /
+background-color: #d5c9e2; / Lighter violet on hover */
+}
+
+/* Responsive Design /
+@media (max-width: 600px) {
+th, td {
+padding: 8px; / Smaller padding on smaller devices /
+font-size: 14px; / Slightly smaller text */
+}
+
+h2 {
+font-size: 24px; /* Adjust header size on smaller screens */
+}
+
+table {
+font-size: 14px; /* Smaller font size for tables */
+}
+}
+
+
+@@@@@@@@@@@@
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif; /* Set a clean and modern font */
+    background-color: #f5f5f5; /* Light background for contrast */
+    margin: 0; /* Remove default margin */
+    padding: 20px; /* Add padding around the content */
+}
+
+/* Heading Style */
+h2 {
+    color: #6a0dad; /* Violet color for the heading */
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Spacing below the heading */
+}
+
+/* Table Styles */
+table {
+    width: 100%; /* Full-width table */
+    border-collapse: collapse; /* Collapse borders for cleaner look */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensure content stays within rounded corners */
+}
+
+/* Table Header Styles */
+th {
+    background-color: #6a0dad; /* Violet background for the header */
+    color: #ffffff; /* White text for contrast */
+    padding: 15px; /* Padding inside header cells */
+    text-align: left; /* Align text to the left */
+    font-weight: bold; /* Bold text for headers */
+}
+
+/* Table Data Cell Styles */
+td {
+    background-color: #ffffff; /* White background for data cells */
+    padding: 12px; /* Padding inside data cells */
+    border-bottom: 1px solid #e0e0e0; /* Light border at the bottom of cells */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for effects */
+}
+
+/* Row Hover Effect */
+tbody tr:hover {
+    background-color: #e0bbff; /* Light violet color on hover */
+    transform: scale(1.02); /* Slightly enlarge the row for effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Slightly smaller font size on smaller screens */
+    }
+
+    th, td {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        font-size: 12px; /* Further reduce font size for very small screens */
+    }
+
+    th, td {
+        padding: 8px; /* Further reduce padding for very small screens */
+    }
+}
+
+
+@@@@@@@@@@
+
+/* violet_employee_table.css */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden; /* Ensures rounded corners are applied */
+}
+
+thead {
+  background-color: #9370DB; /* Medium Purple */
+  color: white;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #E6E6FA; /* Light Lavender */
+  transform: translateY(-2px); /* Slight pop effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+td {
+  transition: background-color 0.3s ease;
+}
+
+/* Specific column styling (optional) */
+td:nth-child(3) { /* Salary column */
+  text-align: right;
+  font-weight: 500;
+  color: #6A5ACD; /* Slate Blue */
+}
+
+td:nth-child(4) { /* Department column */
+  color: #800080; /* Purple */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    text-align: left;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  /* Add data-label attributes to your HTML */
+  td:nth-of-type(1):before { content: "ID"; }
+  td:nth-of-type(2):before { content: "Name"; }
+  td:nth-of-type(3):before { content: "SALARY"; }
+  td:nth-of-type(4):before { content: "DEPARTMENT"; }
+  td:nth-of-type(5):before { content: "STATUS"; }
+  td:nth-of-type(6):before { content: "PHONENO"; }
+}
+
+/* Optional: Alternate row colors on smaller screens */
+@media (max-width: 768px) {
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+
+#@@@@
+
+/* General Table Styling */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #6a0dad, #9c27b0);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Table Headers */
+th {
+  background: #4a0072;
+  padding: 12px;
+  text-align: left;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Table Data */
+td {
+  padding: 12px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Alternating Row Colors */
+tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hover Effect */
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+  }
+  th, td {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+
+
+@@@@@
+
+/* Main styling for the entire table */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f5ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #5e35b1;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, #5e35b1, #9575cd);
+  border-radius: 3px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 1000px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(94, 53, 177, 0.1);
+  margin: 20px auto;
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Table header styling */
+thead {
+  background: linear-gradient(135deg, #5e35b1, #9575cd);
+}
+
+th {
+  padding: 18px 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+}
+
+/* Table body styling */
+tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+td {
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 400;
+  font-size: 14px;
+  color: #555;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover effect for rows */
+tbody tr:hover {
+  background-color: #f0e8ff;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 5px 15px rgba(94, 53, 177, 0.1);
+  z-index: 1;
+  cursor: pointer;
+}
+
+tbody tr::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #673ab7;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+tbody tr:hover::before {
+  opacity: 1;
+}
+
+/* Special styling for different columns */
+td:nth-child(3) {
+  /* Salary column */
+  color: #5e35b1;
+  font-weight: 600;
+}
+
+td:nth-child(5) {
+  /* Status column */
+  font-weight: 500;
+}
+
+/* Status indicators */
+td:nth-child(5)::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Assuming "Active" is a possible status - adjust these as needed */
+tr:nth-child(odd) td:nth-child(5)::before {
+  background-color: #4CAF50; /* Green for active */
+}
+
+tr:nth-child(even) td:nth-child(5)::before {
+  background-color: #9C27B0; /* Violet for another status */
+}
+
+/* Alternating row colors (subtle) */
+tbody tr:nth-child(odd) {
+  background-color: #fdfbff;
+}
+
+/* Responsive design */
+@media (max-width: 767px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  thead, tbody, th, td, tr {
+    display: block;
+  }
+  
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  tr {
+    margin: 0 0 15px 0;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+  
+  td:before {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 600;
+    color: #673ab7;
+  }
+  
+  /* Add labels for mobile view */
+  td:nth-of-type(1):before { content: "ID"; }
+  td:nth-of-type(2):before { content: "Name"; }
+  td:nth-of-type(3):before { content: "Salary"; }
+  td:nth-of-type(4):before { content: "Department"; }
+  td:nth-of-type(5):before { content: "Status"; }
+  td:nth-of-type(6):before { content: "Phone No"; }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #673ab7;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5e35b1;
+}
+
+/* Adding a subtle pulse effect on page load */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(103, 58, 183, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(103, 58, 183, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(103, 58, 183, 0); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Apply pulse animation to table on page load */
+table {
+  animation: pulse 2s 1;
+}
+
+/* Adding tooltip style for showing additional info on hover */
+td[title] {
+  position: relative;
+}
+
+td[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #673ab7;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
 <h2>Employee List</h2>
 
 <table border="1">
