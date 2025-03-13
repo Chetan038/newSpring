@@ -1,3 +1,6 @@
+Hibernate: select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.phoneno from newso.userr u1_0 where u1_0.email=? and u1_0.password=?
+
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
