@@ -1,3 +1,12 @@
+X [ERROR] TS-996008: Component EditEmpComponent is standalone, and cannot be declared in an NgModule. Did you 
+mean to import it instead? [plugin angular-compiler]
+
+    src/app/app.module.ts:25:4:
+      25 │     EditEmpComponent
+
+fix this error 
+
+
 solution 
 
 
