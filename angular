@@ -1,444 +1,96 @@
-Request URL:
-http://localhost:8080/api/employees/all
-Request Method:
-OPTIONS
-Status Code:
-401 Unauthorized
-Remote Address:
-[::1]:8080
-Referrer Policy:
-strict-origin-when-cross-origin
-access-control-allow-headers:
-authorization
-access-control-allow-methods:
-GET
-access-control-allow-origin:
-*
-access-control-max-age:
-1800
-allow:
-GET, HEAD, POST, PUT, DELETE, OPTIONS, TRACE, PATCH
-cache-control:
-no-cache, no-store, max-age=0, must-revalidate
-connection:
-keep-alive
-content-length:
-38
-date:
-Wed, 12 Mar 2025 20:27:35 GMT
-expires:
-0
-keep-alive:
-timeout=60
-pragma:
-no-cache
-vary:
-Origin
-vary:
-Access-Control-Request-Method
-vary:
-Access-Control-Request-Headers
-x-content-type-options:
-nosniff
-x-frame-options:
-DENY
-x-xss-protection:
-0
-accept:
-*/*
-accept-encoding:
-gzip, deflate, br, zstd
-accept-language:
-en-US,en;q=0.9
-access-control-request-headers:
-authorization
-access-control-request-method:
-GET
-connection:
-keep-alive
-host:
-localhost:8080
-origin:
-http://localhost:4200
-referer:
-http://localhost:4200/
-sec-fetch-dest:
-empty
-sec-fetch-mode:
-cors
-sec-fetch-site:
-same-site
-user-agent:
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeService } from '../services/employee.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-this is erro in network tab "
+@Component({
+  selector: 'app-edit-employee',
+  templateUrl: './edit-employee.component.html',
+  styleUrls: ['./edit-employee.component.css']
+})
+export class EditEmployeeComponent implements OnInit {
+  editEmployeeForm!: FormGroup;
+  departments = ['HR', 'Finance', 'Engineering', 'Sales']; // Sample departments
+  employeeId!: number;
 
-<h2>Employee List</h2>
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private employeeService: EmployeeService,
+    private fb: FormBuilder
+  ) {}
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>SALARY</th>
-      <th>DEPARTMENT</th>
-      <th>STATUS</th>
-      <th>PHONENO</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.EMP_ID }}</td>
-      <td>{{ employee.E_NAME }}</td>
-      <td>{{ employee.SALARY }}</td>
-      <td>{{ employee.DEPARTMENT }}</td>
-      <td>{{ employee.STATUS }}</td>
-      <td>{{ employee.PHONENO }}</td>
-    </tr>
-  </tbody>
-</table>
+  ngOnInit(): void {
+    this.employeeId = +this.route.snapshot.paramMap.get('id')!;
+    this.editEmployeeForm = this.fb.group({
+      name: [''],
+      email: [''],
+      department: ['']
+    });
 
-@@@@
+    this.loadEmployee();
+  }
 
-export interface Employee {
-    EMP_ID: string;
-    E_NAME: string;
-    SALARY: string;
-    DEPARTMENT: string;
-    STATUS: string;
-    PHONENO: string;
+  loadEmployee() {
+    this.employeeService.getEmployeeById(this.employeeId).subscribe((data) => {
+      this.editEmployeeForm.patchValue({
+        name: data.name,
+        email: data.email,
+        department: data.department
+      });
+    });
+  }
+
+  updateEmployee() {
+    this.employeeService.updateEmployee(this.employeeId, this.editEmployeeForm.value).subscribe(() => {
+      alert('Employee updated successfully');
+      this.router.navigate(['/employees']); // Redirect to employee list
+    });
+  }
 }
+
 
 @@@
 
-import { Component, OnInit } from '@angular/core';
-import { Employee } from '../../services/employee.model';
-import { EmployeeService } from '../../services/employee.service';
 
-@Component({
-  selector: 'app-dashboard',
-  standalone: false,
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
-})
-export class DashboardComponent implements OnInit {
+<h2>Edit Employee</h2>
+<form [formGroup]="editEmployeeForm" (ngSubmit)="updateEmployee()">
+  <label>Name:</label>
+  <input type="text" formControlName="name" required /><br />
 
-  employees: Employee[] = [];
+  <label>Email:</label>
+  <input type="email" formControlName="email" required /><br />
 
-  constructor(private employeeService: EmployeeService) {}
+  <label>Department:</label>
+  <select formControlName="department">
+    <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+  </select><br />
 
-  ngOnInit(): void {
-    this.loadEmployees();
-  }
-
-  loadEmployees() {
-    this.employeeService.getEmployees().subscribe(
-      (data: Employee[]) => {
-        console.log('API response', data);
-        if (data && data.length > 0) {
-          console.log('First employee object keys:', Object.keys(data[0]));
-          console.log('First employee object:', data[0]);
-          this.employees = data;
-        } else {
-          console.warn('API returned empty data array');
-        }
-      },
-      (error) => {
-        console.error('Error fetching employees:', error);
-        // You might want to add user-friendly error handling here
-      }
-    );
-  }
-}
-
-@@
-
-I'll help you fix the issues with your Angular code that's preventing data from displaying in your dashboard component. After reviewing your code, I've identified several problems that need to be addressed.
-Issues and Fixes
-
-Missing Position Property in Employee Interface
-The employee.model.ts interface is missing the Position property that's being referenced in the HTML template.
-HTML Table Column Mismatch
-Your table has 6 columns in the header but only 5 columns in the data rows, and the ORDER of properties doesn't match.
-STATUS Field
-The STATUS field is incorrectly placed in the HTML template outside the proper table cell format.
-
-Let me provide the corrected code for these issues:
-Fixed dashboard.component.htmlClick to open codeTap to open
-Fixed employee.model.tsClick to open codeTap to open
-Additionally, let's add some basic debugging to help identify any issues with the API response:
-Enhanced dashboard.component.tsClick to open codeTap to open
-Additional Recommendations
-
-Error Handling:
-Consider adding better error handling to show messages to users when API calls fail.
-Loading Indicator:
-Add a loading indicator to show while data is being fetched.
-API URL:
-Make sure your backend API is running at http://localhost:8080 and the endpoint /api/employees/all is correctly implemented.
-JWT Token:
-Verify that your JWT token is being properly saved and sent with requests. The interceptor looks correct, but you might want to check the token format.
-CORS Issues:
-If you're encountering CORS issues, make sure your backend allows requests from your Angular application.
-
-To test if this is working correctly:
-
-Open your browser's developer console (F12)
-Look for any errors in the console
-Check the Network tab to see if your API request is being made and what response is being returned
-
-These changes should fix the immediate issues. Let me know if you need any further assistance or encounter other problems!
+  <button type="submit">Update</button>
+</form>
 
 
+@@@
 
-2222
-
-this is my file structure of angular project
-
-src/app/components/dashboard->dashboard.component.html,dashboard.component.ts
-src/app/interceptors->jwt-interceptor.service.ts
-src/app/services->auth.guard.ts,employee.model.ts,employee.service.ts,login.service.ts,
-src/app->app.component.css,app.component.ts,app.module.ts
-
-
-dashboard.component.html
-<h2>Employee List</h2>
-
-<table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>SALARY</th>
-      <th>Position</th>
-      <th>DEPARTMENT</th>
-      <th>PHONENO</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.EMP_ID }}</td>
-      <td>{{ employee.E_NAME }}</td>
-      <td>{{ employee.SALARY }}</td>
-      <td>{{ employee.DEPARTMENT }}</td>
-      <td>{{ employee.PHONENO }}</td>
-      STATUS
-    </tr>
-  </tbody>
-</table>
-dashboard.component.ts
-import { Component, OnInit } from '@angular/core';
-import { Employee } from '../../services/employee.model';
-import { EmployeeService } from '../../services/employee.service';
-
-@Component({
-  selector: 'app-dashboard',
-  standalone: false,
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
-})
-export class DashboardComponent implements OnInit {
-
-  employees : Employee[]=[];
-
-  constructor(private employeeService: EmployeeService){}
-
-  ngOnInit(): void {
-    this.loadEmployees();
-  }
-
-  loadEmployees(){
-    this.employeeService.getEmployees().subscribe(
-
-      (data : Employee[])=>{
-        console.log('api response',data);
-        this.employees=data;
-      },
-      (error)=>{console.error('Error Fetching employees:',error);}
-      );
-    
-  }
-
-}
-
-jwt-interceptor.service.ts
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-@Injectable()
-export class JwtInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    const token = localStorage.getItem('token');
-    console.log('tokkkken',token)
-    if(token){
-      const clonedRequest = req.clone({
-        setHeaders:{
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return next.handle(clonedRequest);
-    }
-  return next.handle(req);
-  }
-}
-auth.guard.ts
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { LoginService } from './login.service';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard implements CanActivate {
-  constructor(private loginService:LoginService,private router:Router) {}
-
-  canActivate(): boolean | Observable<boolean> {
- 
-    if (this.loginService.isLoggedIn()) {
-      return true;
-    }
-   
-     this.router.navigate(['login'])
-
-    return false;
-  }
-}
-
-
-
-employee.model.ts
-export interface Employee{
-    EMP_ID : string;
-    E_NAME : string;
-    SALARY : string;
-    DEPARTMENT : string;
-    STATUS: string;
-    PHONENO: string; 
-
-}
-employee.service.ts
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Employee } from './employee.model'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
+  private apiUrl = 'http://localhost:8080/employees'; // Update with actual backend API URL
 
-  private apiUrl = 'http://localhost:8080/api/employees/all';
+  constructor(private http: HttpClient) {}
 
-
-
-    constructor(private readonly http:HttpClient) { }
-
-    getEmployees():Observable<Employee[]>{
-      return this.http.get<Employee[]>(this.apiUrl);
-    }
-}
-
-login.service.ts
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class LoginService {
-
-  url="http://localhost:8080"
-
-
-  constructor(private readonly http:HttpClient) { }
-
-
-
-  generateToken(credientials:any){
-    return this.http.post(`${this.url}/api/login`,credientials);
+  getEmployeeById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  logInUser(token :string)
-  {
-    localStorage.setItem("token",token)
-    return true;
-  }
-
-
-  isLoggedIn(){
-    let token=localStorage.getItem("token")
-    if(token==undefined || token=='' || token==null)
-    {
-      return false;
-    }
-    else{
-      return true;
-    }
-  }
-
-  logout(){
-    localStorage.removeItem("token");
-    return true;
-  }
-
-  getToken(){
-    return localStorage.getItem('token')
+  updateEmployee(id: number, employeeData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, employeeData);
   }
 }
+@@
 
-
-app.component.ts
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.css'
-})
-export class AppComponent {
-  title = 'empppmng';
-}
-
-app.module.ts
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HOMEComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from './interceptors/jwt-interceptor.service';
-
-
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavbarComponent,
-    HOMEComponent,
-    DashboardComponent,
-    
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-   
-  ],
-  providers: [{provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-
-
-fix this code this is not able to display the data to my dashboard component from baCKEND 
