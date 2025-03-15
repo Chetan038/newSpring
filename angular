@@ -1,3 +1,111 @@
+solution 
+
+
+{
+  path: 'edit-emp/:id',
+  component: EditEmpComponent,
+  canActivate: [AuthGuard]
+}
+
+
+@@@@@@@@@
+<td>
+  <button (click)="editEmployee(employee.emp_ID)">Edit</button>
+  <button (click)="deleteEmployee(employee.emp_ID)">Delete</button>
+</td>
+
+
+@@@
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeService } from '../../services/employee.service';
+import { Employee } from '../../services/employee.model';
+
+@Component({
+  selector: 'app-edit-emp',
+  templateUrl: './edit-emp.component.html',
+  styleUrl: './edit-emp.component.css'
+})
+export class EditEmpComponent implements OnInit {
+  employee: Employee = {
+    emp_ID: '',
+    e_NAME: '',
+    salary: '',
+    department: '',
+    status: '',
+    phoneno: ''
+  };
+
+  constructor(
+    private route: ActivatedRoute,
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    const empId = this.route.snapshot.paramMap.get('id');
+    if (empId) {
+      this.employeeService.getEmployeeById(empId).subscribe((data) => {
+        this.employee = data;
+      });
+    }
+  }
+
+  updateEmployee() {
+    this.employeeService.updateEmployee(this.employee).subscribe(() => {
+      alert('Employee updated successfully');
+      this.router.navigate(['/dashboard']);
+    });
+  }
+}
+
+
+
+@@@
+
+<h2>Edit Employee</h2>
+<form (submit)="updateEmployee()">
+  <label>Name:</label>
+  <input type="text" [(ngModel)]="employee.e_NAME" name="e_NAME" required />
+
+  <label>Salary:</label>
+  <input type="text" [(ngModel)]="employee.salary" name="salary" required />
+
+  <label>Department:</label>
+  <input type="text" [(ngModel)]="employee.department" name="department" required />
+
+  <label>Status:</label>
+  <input type="text" [(ngModel)]="employee.status" name="status" required />
+
+  <label>Phone Number:</label>
+  <input type="text" [(ngModel)]="employee.phoneno" name="phoneno" required />
+
+  <button type="submit">Update</button>
+</form>
+
+
+@@
+
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  imports: [FormsModule]
+})
+
+@@
+
+getEmployeeById(empId: string): Observable<Employee> {
+  return this.http.get<Employee>(`http://localhost:8080/api/employees/${empId}`);
+}
+
+updateEmployee(employee: Employee): Observable<Employee> {
+  return this.http.put<Employee>(`http://localhost:8080/api/employees/update/${employee.emp_ID}`, employee);
+}
+
+
+
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
