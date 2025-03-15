@@ -1,0 +1,213 @@
+this is my front end angular code
+
+src/app/components/dashboard->dashboard.html,dashboar.compnent.ts
+src/app/components/edit-emp->
+src/app/interceptor/interceptor.service.ts,
+src/app/services/employee.model.ts
+src/app/services/employee.service.ts
+app.routing.module.ts
+
+dashboard.html
+
+
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>SALARY</th>
+      <th>DEPARTMENT</th>
+      <th>STATUS</th>
+      <th>PHONENO</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.emp_ID }}</td>
+      <td>{{ employee.e_NAME }}</td>
+      <td>{{ employee.salary }}</td>
+      <td>{{ employee.department }}</td>
+      <td>{{ employee.status }}</td>
+      <td>{{ employee.phoneno }}</td>
+      <td><button>Edit</button><button (click)="deleteEmployee(employee.emp_ID)">Delete</button></td>
+    </tr>
+  </tbody>
+  
+</table>
+
+
+
+dashboar.compnent.ts
+
+import { Component, OnInit } from '@angular/core';
+import { Employee } from '../../services/employee.model';
+import { EmployeeService } from '../../services/employee.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-dashboard',
+  standalone: false,
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css'
+})
+export class DashboardComponent implements OnInit {
+
+  employees : Employee[]=[];
+
+  constructor(private employeeService: EmployeeService,private router: Router){}
+
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
+
+  loadEmployees(){
+    
+    this.employeeService.getEmployees().subscribe(
+
+      (data : Employee[])=>{
+        console.log('api response',data);
+        this.employees=data;
+      },
+      (error)=>{console.error('Error Fetching employees:',error);}
+      );
+    
+  }
+
+  deleteEmployee(empId : string ){
+    if(confirm('are u sure?')){
+      this.employeeService.deleteEmployee(empId).subscribe(()=>{this.employees= this.employees.filter(emp=>emp.emp_ID!==empId);});
+    }
+  }
+
+
+
+}
+
+edit.html.
+
+edit.comp.ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-edit-emp',
+  standalone: false,
+  templateUrl: './edit-emp.component.html',
+  styleUrl: './edit-emp.component.css'
+})
+export class EditEmpComponent implements OnInit{
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+}
+
+
+interceptor.service.ts,
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    const token = localStorage.getItem('token');
+    console.log('tokkkken',token)
+    if(token){
+      const clonedRequest = req.clone({
+        setHeaders:{
+          Authorization:`Bearer ${token}`
+        }
+      });
+      return next.handle(clonedRequest);
+    }
+  return next.handle(req);
+  }
+}
+employee.model.ts
+export interface Employee{
+    emp_ID : string;
+    e_NAME : string;
+    salary : string;
+    department : string;
+    status: string;
+    phoneno: string; 
+
+}
+employee.service.ts
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Employee } from './employee.model'; 
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+
+  private apiUrl = 'http://localhost:8080/api/employees/all';
+
+  private apiUrll = 'http://localhost:8080/api/employees/delete';
+
+
+    constructor(private readonly http:HttpClient) { }
+
+    getEmployees():Observable<Employee[]>{
+      return this.http.get<Employee[]>(this.apiUrl);
+    }
+
+    deleteEmployee(empId: string):Observable<any>{
+      return this.http.delete(`${this.apiUrll}/${empId}`);
+    }
+}
+
+app.routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HOMEComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from './services/auth.guard';
+import { EditEmpComponent } from './components/edit-emp/edit-emp.component';
+
+const routes: Routes = [
+
+
+{
+  path:'',
+  component:HOMEComponent,
+  pathMatch:'full'
+},
+
+{
+  path:'login',
+  component:LoginComponent,
+  
+},
+
+{
+  path:'dashboard',
+  component:DashboardComponent,
+  canActivate:[AuthGuard]
+
+}
+
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+so this is my front end code add a edit empploye feature in this and guide step by step 
+
+
