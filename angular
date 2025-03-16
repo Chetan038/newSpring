@@ -1,76 +1,56 @@
-<div class="form-group">
-      <label for="department">Department:</label>
-      <select id="department" name="department" [(ngModel)]="employee.department" required>
-        <option value="">Select Department</option>
-        <option value="IT">IT</option>
-        <option value="HR">HR</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Finance">Finance</option>
-        <option value="Operations">Operations</option>
-        <option value="Sales">Sales</option>
-        <option value="Engineering">Engineering</option>
-        <option value="Customer Support">Customer Support</option>
-      </select>
-    </div>
-
-
-.add-employee-container {
-  max-width: 600px;
-  margin: 0 auto;
+.dashboard-container {
   padding: 20px;
 }
 
-h2 {
-  text-align: center;
+.actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input, select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-select {
-  height: 35px;
-  background-color: white;
-}
-
-select:invalid {
-  color: gray;
-}
-
-.form-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-}
-
-button {
-  padding: 10px 20px;
+.add-btn {
   background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-button[type="button"] {
-  background-color: #f44336;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+th, td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:first-child {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+}
+
+button:last-child {
+  background-color: #f44336;
+  color: white;
+  border: none;
 }
