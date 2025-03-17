@@ -1,7 +1,185 @@
- deleteEmployee(empId : string ){
-    if(confirm('are u sure?')){
-      this.employeeService.deleteEmployee(empId).subscribe(()=>{this.employees= this.employees.filter(emp=>emp.emp_ID!==empId);});
+<table border="1">
+  <!-- existing table content -->
+</table>
+
+<!-- Edit Employee Modal -->
+<div class="modal-overlay" *ngIf="showEditModal">
+  <div class="modal-content">
+    <h2>Edit Employee</h2>
+    <form (ngSubmit)="updateEmployee()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" [(ngModel)]="editingEmployee.e_NAME">
+      </div>
+      <div class="form-group">
+        <label for="salary">Salary:</label>
+        <input type="text" id="salary" name="salary" [(ngModel)]="editingEmployee.salary">
+      </div>
+      <div class="form-group">
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" [(ngModel)]="editingEmployee.department">
+      </div>
+      <div class="form-group">
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" [(ngModel)]="editingEmployee.status">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" [(ngModel)]="editingEmployee.phoneno">
+      </div>
+      <div class="form-actions">
+        <button type="submit">Save</button>
+        <button type="button" (click)="closeEditModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+@@@
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.form-actions button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+@@@
+
+import { Component, OnInit } from '@angular/core';
+import { Employee } from '../../services/employee.model';
+import { EmployeeService } from '../../services/employee.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-dashboard',
+  standalone: false,
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css'
+})
+export class DashboardComponent implements OnInit {
+
+  employees: Employee[] = [];
+  showEditModal = false;
+  editingEmployee: Employee = {
+    emp_ID: '',
+    e_NAME: '',
+    salary: '',
+    department: '',
+    status: '',
+    phoneno: ''
+  };
+
+  constructor(private employeeService: EmployeeService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.employeeService.getEmployees().subscribe(
+      (data: Employee[]) => {
+        console.log('api response', data);
+        this.employees = data;
+      },
+      (error) => { console.error('Error Fetching employees:', error); }
+    );
+  }
+
+  deleteEmployee(empId: string) {
+    if (confirm('are u sure?')) {
+      this.employeeService.deleteEmployee(empId).subscribe(() => {
+        this.employees = this.employees.filter(emp => emp.emp_ID !== empId);
+      });
     }
   }
 
-explain this part of code word by word 
+  openEditModal(employee: Employee) {
+    // Create a copy of the employee to avoid direct reference modification
+    this.editingEmployee = { ...employee };
+    this.showEditModal = true;
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
+  }
+
+  updateEmployee() {
+    this.employeeService.updateEmployee(this.editingEmployee).subscribe(
+      () => {
+        // Update the employee in the local array
+        const index = this.employees.findIndex(emp => emp.emp_ID === this.editingEmployee.emp_ID);
+        if (index !== -1) {
+          this.employees[index] = { ...this.editingEmployee };
+        }
+        this.closeEditModal();
+      },
+      (error) => {
+        console.error('Error updating employee:', error);
+      }
+    );
+  }
+}
+
+
+
+@@@@
+
