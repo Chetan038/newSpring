@@ -1,56 +1,161 @@
-.dashboard-container {
-  padding: 20px;
+login service.ts
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginService {
+
+  url="http://localhost:8080"
+
+
+  constructor(private readonly http:HttpClient) { }
+
+
+
+  generateToken(credientials:any){
+    return this.http.post(`${this.url}/api/login`,credientials);
+  }
+
+  logInUser(token :string)
+  {
+    localStorage.setItem("token",token)
+    return true;
+  }
+
+
+  isLoggedIn(){
+    let token=localStorage.getItem("token")
+    if(token==undefined || token=='' || token==null)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    return true;
+  }
+
+  getToken(){
+    return localStorage.getItem('token')
+  }
 }
 
-.actions-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+
+employe.service.ts
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Employee } from './employee.model'; 
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService implements OnInit {
+
+  
+
+  private apiUrl = 'http://localhost:8080/api/employees/all';
+
+  private apiUrll = 'http://localhost:8080/api/employees/delete';
+
+  private apiUrlll = 'http://localhost:8080/api/employees/create';
+
+
+    constructor(private readonly http:HttpClient) { }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+    getEmployees():Observable<Employee[]>{
+      return this.http.get<Employee[]>(this.apiUrl);
+    }
+
+    deleteEmployee(empId: string):Observable<any>{
+      return this.http.delete(`${this.apiUrll}/${empId}`);
+    }
+
+    addEmployee(employee:Employee):Observable<Employee>{
+      return this.http.post<Employee>(this.apiUrlll,employee);
+    }
+
+
+
+
 }
 
-.add-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+autgaur
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { LoginService } from './login.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private loginService:LoginService,private router:Router) {}
+
+  canActivate(): boolean | Observable<boolean> {
+ 
+    if (this.loginService.isLoggedIn()) {
+      return true;
+    }
+   
+     this.router.navigate(['login'])
+
+    return false;
+  }
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-th, td {
-  padding: 8px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
 
-th {
-  background-color: #f2f2f2;
-}
+login.ts
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
+@Component({
+  selector: 'app-login',
+  standalone: false,
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent implements OnInit{
 
-button {
-  margin-right: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
 
-button:first-child {
-  background-color: #2196F3;
-  color: white;
-  border: none;
-}
+  credentials={
+    email:'',
+    password:''
+  }
+  constructor(private readonly LoginServices:LoginService,private router:Router){}
+  ngOnInit(): void {
+    // document why this method 'ngOnInit' is empty
+  
+    
+  }
 
-button:last-child {
-  background-color: #f44336;
-  color: white;
-  border: none;
+  onSubmit(){
+
+    if(this.credentials.email!=''&&this.credentials.password!='')
+    {
+      console.log("ok");       
+      this.LoginServices.generateToken(this.credentials)
+      .subscribe((Response:any)=>{console.log(Response.token);
+        this.LoginServices.logInUser(Response.token)
+        this.router.navigate(['dashboard']);
+      })
+     
+    }
+    else{
+      console.log("not ok");
+    }
+    
+  }
+
 }
