@@ -1,3 +1,14 @@
+mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+mat-dialog-actions {
+  margin-top: 10px;
+}
+
+
+@@
+
 <button mat-raised-button color="primary" (click)="openEmployeeModal()">+ Add Employee</button>
 
 <table border="1">
