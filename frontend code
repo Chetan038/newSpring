@@ -366,6 +366,6 @@ export class LoginService {
 
 
 
- I have a navbar component in angular 19 so without logij it displays login in the navbar and when i loggin it should display logut its display also but we have to relload the whole page once so how do i fix this so when i loggij it navigates to dashboaerd and the navbar should also show logout without refreshing 
-
+add a add employe feature so add one more button in new emp and when clicked on it should not open new page it should open model a pop to enter the details ther only
+guide step by step and make code easy as much possible and comment with steps 
 
