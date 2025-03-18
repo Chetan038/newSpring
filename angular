@@ -1,3 +1,43 @@
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Employee } from '../../services/employee.model';
+
+@Component({
+  selector: 'app-employee-modal',
+  templateUrl: './employee-modal.component.html',
+  styleUrls: ['./employee-modal.component.css']
+})
+export class EmployeeModalComponent {
+
+  employee: Employee;
+
+  constructor(
+    public dialogRef: MatDialogRef<EmployeeModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { employee: Employee, isEdit: boolean }
+  ) {
+    this.employee = data.employee || {
+      emp_ID: '',
+      e_NAME: '',
+      salary: '',
+      department: '',
+      status: '',
+      phoneno: ''
+    };
+  }
+
+  saveEmployee() {
+    this.dialogRef.close(this.employee);
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+}
+
+
+
+@@@
+
 <button mat-raised-button color="primary" (click)="openEmployeeDialog()">New Employee</button>
 
 <table mat-table [dataSource]="employees" class="mat-elevation-z8">
