@@ -1,92 +1,249 @@
-<button (click)="openModal()">Add Employee</button>
+PS C:\Users\ME2B3HC\Documents\Angular\empppmng> ng serve
+Component HMR has been enabled.
+If you encounter application reload issues, you can manually reload the page to bypass HMR and/or disable this feature with 
+the `--no-hmr` command line option.
+Please consider reporting any issues you encounter here: https://github.com/angular/angular-cli/issues
 
-<!-- Employee Table -->
-<table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>SALARY</th>
-      <th>DEPARTMENT</th>
-      <th>STATUS</th>
-      <th>PHONENO</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.emp_ID }}</td>
-      <td>{{ employee.e_NAME }}</td>
-      <td>{{ employee.salary }}</td>
-      <td>{{ employee.department }}</td>
-      <td>{{ employee.status }}</td>
-      <td>{{ employee.phoneno }}</td>
-      <td>
-        <button>Edit</button>
-        <button (click)="deleteEmployee(employee.emp_ID)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+Application bundle generation failed. [3.414 seconds]
 
-<!-- Modal (Hidden by Default) -->
-<div class="modal" [ngClass]="{ 'show': showModal }">
-  <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
-    <h2>Add Employee</h2>
-    <form (submit)="addEmployee()">
-      <label>Name:</label>
-      <input type="text" [(ngModel)]="newEmployee.e_NAME" name="name" required />
-      
-      <label>Salary:</label>
-      <input type="number" [(ngModel)]="newEmployee.salary" name="salary" required />
+X [ERROR] NG8001: 'app-navbar' is not a known element:
+1. If 'app-navbar' is an Angular component, then verify that it is part of this module.
+2. If 'app-navbar' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
 
-      <label>Department:</label>
-      <input type="text" [(ngModel)]="newEmployee.department" name="department" required />
+    src/app/app.component.html:0:0:
+      0 │ 
+        ╵ ^
 
-      <label>Status:</label>
-      <select [(ngModel)]="newEmployee.status" name="status">
-        <option value="Active">Active</option>
-        <option value="Inactive">Inactive</option>
-      </select>
+  Error occurs in the template of component AppComponent.
 
-      <label>Phone No:</label>
-      <input type="text" [(ngModel)]="newEmployee.phoneno" name="phoneno" required />
+    src/app/app.component.ts:5:15:
+      5 │   templateUrl: './app.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~
 
-      <button type="submit">Add Employee</button>
-    </form>
-  </div>
-</div>
 
-<!-- Modal Styling -->
-<style>
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  
-  .modal.show {
-    display: block;
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-  }
-  
-  .close {
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-</style>
+X [ERROR] NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+
+    src/app/app.component.html:2:0:
+      2 │ <router-outlet></router-outlet>
+        ╵ ~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component AppComponent.
+
+    src/app/app.component.ts:5:15:
+      5 │   templateUrl: './app.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "./components/add-emp/add-emp.component"
+
+    src/app/app.module.ts:13:32:
+      13 │ ...{ AddEmpComponent } from './components/add-emp/add-emp.component';
+         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2307: Cannot find module './components/add-emp/add-emp.component' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/app.module.ts:13:32:
+      13 │ ...{ AddEmpComponent } from './components/add-emp/add-emp.component';
+         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS-991010: Value at position 5 in the NgModule.declarations of AppModule is not a reference
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/app.module.ts:19:16:
+      19 │   declarations: [
+         ╵                 ^
+
+  Unknown reference.
+
+    src/app/app.module.ts:25:4:
+      25 │     AddEmpComponent,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:44:49:
+      44 │ ..."text" id="name" name="name" [(ngModel)]="editingEmployee.e_NAME">
+         ╵                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:48:53:
+      48 │ ...t" id="salary" name="salary" [(ngModel)]="editingEmployee.salary">
+         ╵                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:52:50:
+      52 │ ...me="department" [(ngModel)]="editingEmployee.department" required>
+         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:66:53:
+      66 │ ...t" id="status" name="status" [(ngModel)]="editingEmployee.status">
+         ╵                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:72:51:
+      72 │ ...xt" id="phone" name="phone" [(ngModel)]="editingEmployee.phoneno">
+         ╵                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:90:19:
+      90 │ <div class="modal" [ngClass]="{ 'show': showModal }">
+         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:97:25:
+      97 │ ...put type="text" [(ngModel)]="newEmployee.emp_ID" name="emp_ID" ...
+         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:100:25:
+      100 │ ...ut type="text" [(ngModel)]="newEmployee.e_NAME" name="name" re...
+          ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:103:27:
+      103 │ ... type="number" [(ngModel)]="newEmployee.salary" name="salary" ...
+          ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:106:25:
+      106 │ ... type="text" [(ngModel)]="newEmployee.department" name="depart...
+          ╵                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:109:14:
+      109 │       <select [(ngModel)]="newEmployee.status" name="status">
+          ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/dashboard/dashboard.component.html:115:25:
+      115 │ ...ut type="text" [(ngModel)]="newEmployee.phoneno" name="phoneno...
+          ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/components/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/login/login.component.html:10:12:
+      10 │             [(ngModel)]="credentials.email"
+         ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component LoginComponent.
+
+    src/app/components/login/login.component.ts:8:15:
+      8 │   templateUrl: './login.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'. [plugin angular-compiler]
+
+    src/app/components/login/login.component.html:20:12:
+      20 │             [(ngModel)]="credentials.password"
+         ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component LoginComponent.
+
+    src/app/components/login/login.component.ts:8:15:
+      8 │   templateUrl: './login.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
