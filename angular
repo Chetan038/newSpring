@@ -1,3 +1,116 @@
+<h2 mat-dialog-title>{{ data.isEdit ? 'Edit Employee' : 'Add Employee' }}</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field appearance="outline">
+    <mat-label>ID</mat-label>
+    <input matInput [(ngModel)]="employee.emp_ID" [readonly]="data.isEdit">
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="employee.e_NAME">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Salary</mat-label>
+    <input matInput type="number" [(ngModel)]="employee.salary">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Department</mat-label>
+    <input matInput [(ngModel)]="employee.department">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <input matInput [(ngModel)]="employee.status">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Phone No</mat-label>
+    <input matInput type="tel" [(ngModel)]="employee.phoneno">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="saveEmployee()">
+    {{ data.isEdit ? 'Update' : 'Add' }}
+  </button>
+</mat-dialog-actions>
+
+
+
+@@
+
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Employee } from '../../services/employee.model';
+import { EmployeeService } from '../../services/employee.service';
+import { EmployeeModalComponent } from '../employee-modal/employee-modal.component';
+
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponent implements OnInit {
+
+  employees: Employee[] = [];
+
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.employeeService.getEmployees().subscribe(
+      (data: Employee[]) => {
+        console.log('API response', data);
+        this.employees = data;
+      },
+      (error) => { console.error('Error Fetching employees:', error); }
+    );
+  }
+
+  openEmployeeModal(employee?: Employee) {
+    const dialogRef = this.dialog.open(EmployeeModalComponent, {
+      width: '400px',
+      data: { employee: employee || null, isEdit: !!employee }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (employee) {
+          // Update employee
+          this.employees = this.employees.map(emp => emp.emp_ID === result.emp_ID ? result : emp);
+        } else {
+          // Add new employee
+          this.employeeService.addEmployee(result).subscribe(newEmployee => {
+            this.employees.push(newEmployee);
+          });
+        }
+      }
+    });
+  }
+
+  deleteEmployee(empId: string) {
+    if (confirm('Are you sure?')) {
+      this.employeeService.deleteEmployee(empId).subscribe(() => {
+        this.employees = this.employees.filter(emp => emp.emp_ID !== empId);
+      });
+    }
+  }
+}
+
+
+@@
+
+addEmployee(employee: Employee): Observable<Employee> {
+  return this.http.post<Employee>('http://localhost:8080/api/employees/add', employee);
+}
+
+
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Employee } from '../../services/employee.model';
