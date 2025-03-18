@@ -1,3 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Employee } from '../../services/employee.model';
+import { EmployeeService } from '../../services/employee.service';
+import { EmployeeModalComponent } from '../employee-modal/employee-modal.component';
+
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponent implements OnInit {
+
+  employees: Employee[] = [];
+
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.employeeService.getEmployees().subscribe(
+      (data: Employee[]) => {
+        console.log('API response', data);
+        this.employees = data;
+      },
+      (error) => { console.error('Error Fetching employees:', error); }
+    );
+  }
+
+  openEmployeeModal(employee?: Employee) {
+    const dialogRef = this.dialog.open(EmployeeModalComponent, {
+      width: '400px',
+      data: { employee: employee || null, isEdit: !!employee }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (employee) {
+          // Update employee
+          this.employees = this.employees.map(emp => emp.emp_ID === result.emp_ID ? result : emp);
+        } else {
+          // Add new employee
+          this.employeeService.addEmployee(result).subscribe(newEmployee => {
+            this.employees.push(newEmployee);
+          });
+        }
+      }
+    });
+  }
+
+  deleteEmployee(empId: string) {
+    if (confirm('Are you sure?')) {
+      this.employeeService.deleteEmployee(empId).subscribe(() => {
+        this.employees = this.employees.filter(emp => emp.emp_ID !== empId);
+      });
+    }
+  }
+}
+
+
+@@
+
 <h2 mat-dialog-title>{{ data.isEdit ? 'Edit Employee' : 'Add Employee' }}</h2>
 <mat-dialog-content class="mat-typography">
   <mat-form-field appearance="outline">
