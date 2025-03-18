@@ -1,3 +1,35 @@
+<button mat-raised-button color="primary" (click)="openEmployeeModal()">+ Add Employee</button>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Salary</th>
+      <th>Department</th>
+      <th>Status</th>
+      <th>Phone No</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.emp_ID }}</td>
+      <td>{{ employee.e_NAME }}</td>
+      <td>{{ employee.salary }}</td>
+      <td>{{ employee.department }}</td>
+      <td>{{ employee.status }}</td>
+      <td>{{ employee.phoneno }}</td>
+      <td>
+        <button mat-button color="accent" (click)="openEmployeeModal(employee)">Edit</button>
+        <button mat-button color="warn" (click)="deleteEmployee(employee.emp_ID)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+@@
+
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Employee } from '../../services/employee.model';
