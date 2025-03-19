@@ -1,7 +1,7 @@
 this is my front end angular code
 
 src/app/components/dashboard->dashboard.html,dashboar.compnent.ts
-src/app/components/edit-emp->
+src/app/components/home/
 src/app/interceptor/interceptor.service.ts,
 src/app/services/employee.model.ts
 src/app/services/employee.service.ts
@@ -366,6 +366,5 @@ export class LoginService {
 
 
 
-add a add employe feature so add one more button in new emp and when clicked on it should not open new page it should open model a pop to enter the details ther only
-guide step by step and make code easy as much possible and comment with steps 
+intially home page is landing page so i want to diplay the jason data here of which is 
 
