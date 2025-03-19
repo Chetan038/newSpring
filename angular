@@ -2,14 +2,13 @@
 
 <table class="post-table">
   <tbody>
-    <tr *ngFor="let post of posts" class="post-card-row">
-      <td class="post-card">
+    <tr class="post-row">
+      <td *ngFor="let post of posts" class="post-card">
         <div class="post-header">
+          <p class="posted-info"><strong>{{ post.posted_by }}</strong> | {{ post.posted_at }}</p>
           <h3>{{ post.post_header }} (ID: {{ post.post_id }})</h3>
         </div>
         <div class="post-content">
-          <p><strong>Posted By:</strong> {{ post.posted_by }}</p>
-          <p><strong>Posted At:</strong> {{ post.posted_at }}</p>
           <p>{{ post.post_content }}</p>
         </div>
       </td>
@@ -18,33 +17,33 @@
 </table>
 
 
-
 @@
-
 
 /* Table Styles */
 .post-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 20px; /* Space between cards */
+  border-spacing: 15px; /* Space between cards */
 }
 
-/* Each row represents a card */
-.post-card-row {
+/* Row Flexbox to align cards left to right */
+.post-row {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap; /* Wrap to new row if needed */
+  justify-content: flex-start; /* Align cards from left */
 }
 
 /* Card Style inside Table */
 .post-card {
-  width: 300px;
+  width: 280px;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border: 1px solid #ddd;
-  padding: 15px;
+  padding: 10px;
   transition: transform 0.3s ease-in-out;
+  margin: 10px; /* Space between cards */
 }
 
 .post-card:hover {
@@ -57,16 +56,25 @@
   color: white;
   padding: 10px;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   border-radius: 10px 10px 0 0;
+  position: relative;
+}
+
+/* "Posted By" and "Posted At" at the top */
+.posted-info {
+  font-size: 12px;
+  margin-bottom: 5px;
+  opacity: 0.8;
 }
 
 /* Content Section */
 .post-content {
-  padding: 15px;
+  padding: 10px;
   font-size: 14px;
   color: #333;
+  text-align: center;
 }
 
 .post-content p {
