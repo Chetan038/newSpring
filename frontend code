@@ -366,5 +366,19 @@ export class LoginService {
 
 
 
-intially home page is landing page so i want to diplay the jason data here of which is 
+intially home page is landing page so i want to diplay the jason data here of which is this format    {
+        "post_id": 1,
+        "post_header": "ADDED CONTACT US PAGE",
+        "post_content": "THIS IS LITTLE ON CONTNTNEN AJSLD ALSDJ LAJSKLD JLASJD LAJSDLK JASL; JKLASJ L;ASJD LJASLK JAS JL;ASJ L;SJA JAS  ASJDL;J  ASD",
+        "status": "ACTIVE",
+        "posted_by": "CHETAN",
+        "posted_at": "2025-03-19 22:52:37.987 +5:30"
+    }
+
+so display this in home compent in tabluar format in nice i want to make post webpage where it shows in small boxes where it has  hearder in which heading and post id 
+postedby and posted at whoul be there and below it post connet should be there in that box like this boxes for other post in table format 
+
+and for this api no token authicaton need skip the token authenication he should directy display the data from database 
+
+url for this get request - http://localhost:8080/api/posts/all
 
