@@ -1,33 +1,74 @@
-<h2>Posts Table</h2>
-<table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Header</th>
-      <th>Posted By</th>
-      <th>Posted At</th>
-      <th>Status</th>
-    </tr>
-  </thead>
+<h2>Posts in Table Styled as Cards</h2>
+
+<table class="post-table">
   <tbody>
-    <tr *ngFor="let post of posts">
-      <td>{{ post.post_id }}</td>
-      <td>{{ post.post_header }}</td>
-      <td>{{ post.posted_by }}</td>
-      <td>{{ post.posted_at }}</td>
-      <td>{{ post.status }}</td>
+    <tr *ngFor="let post of posts" class="post-card-row">
+      <td class="post-card">
+        <div class="post-header">
+          <h3>{{ post.post_header }} (ID: {{ post.post_id }})</h3>
+        </div>
+        <div class="post-content">
+          <p><strong>Posted By:</strong> {{ post.posted_by }}</p>
+          <p><strong>Posted At:</strong> {{ post.posted_at }}</p>
+          <p>{{ post.post_content }}</p>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>
 
-<hr>
 
-<h2>Posts in Cards</h2>
-<div class="post-container">
-  <div *ngFor="let post of posts" class="post-card">
-    <h3>{{ post.post_header }} (ID: {{ post.post_id }})</h3>
-    <p><strong>Posted By:</strong> {{ post.posted_by }}</p>
-    <p><strong>Posted At:</strong> {{ post.posted_at }}</p>
-    <p>{{ post.post_content }}</p>
-  </div>
-</div>
+
+@@
+
+
+/* Table Styles */
+.post-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 20px; /* Space between cards */
+}
+
+/* Each row represents a card */
+.post-card-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* Card Style inside Table */
+.post-card {
+  width: 300px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #ddd;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Header Section */
+.post-header {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Content Section */
+.post-content {
+  padding: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.post-content p {
+  margin: 5px 0;
+}
