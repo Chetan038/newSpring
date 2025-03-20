@@ -1,82 +1,92 @@
-<h2>Posts in Table Styled as Cards</h2>
-
-<table class="post-table">
-  <tbody>
-    <tr class="post-row">
-      <td *ngFor="let post of posts" class="post-card">
-        <div class="post-header">
-          <p class="posted-info"><strong>{{ post.posted_by }}</strong> | {{ post.posted_at }}</p>
-          <h3>{{ post.post_header }} (ID: {{ post.post_id }})</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeDu Navbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .tagline {
+            font-size: 14px;
+            color: #666;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+        .login {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .login img {
+            width: 25px;
+            height: 25px;
+        }
+        .get-started {
+            background: #f4a51c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="WeDu Logo">
+            <div>
+                <div class="logo-text">WeDu</div>
+                <div class="tagline">Communicate. Collaborate. Create.</div>
+            </div>
         </div>
-        <div class="post-content">
-          <p>{{ post.post_content }}</p>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Product</a>
+            <a href="#">Pricing Plans</a>
+            <a href="#">Contact</a>
+            <div class="login">
+                <img src="user-icon.png" alt="User Icon">
+                <a href="#">Log In</a>
+            </div>
+            <button class="get-started">Get Started</button>
         </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-@@
-
-/* Table Styles */
-.post-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 15px; /* Space between cards */
-}
-
-/* Row Flexbox to align cards left to right */
-.post-row {
-  display: flex;
-  flex-wrap: wrap; /* Wrap to new row if needed */
-  justify-content: flex-start; /* Align cards from left */
-}
-
-/* Card Style inside Table */
-.post-card {
-  width: 280px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  border: 1px solid #ddd;
-  padding: 10px;
-  transition: transform 0.3s ease-in-out;
-  margin: 10px; /* Space between cards */
-}
-
-.post-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Header Section */
-.post-header {
-  background: #007bff;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 10px 10px 0 0;
-  position: relative;
-}
-
-/* "Posted By" and "Posted At" at the top */
-.posted-info {
-  font-size: 12px;
-  margin-bottom: 5px;
-  opacity: 0.8;
-}
-
-/* Content Section */
-.post-content {
-  padding: 10px;
-  font-size: 14px;
-  color: #333;
-  text-align: center;
-}
-
-.post-content p {
-  margin: 5px 0;
-}
+    </nav>
+</body>
+</html>
