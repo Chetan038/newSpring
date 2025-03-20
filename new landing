@@ -1,3 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeDu - Project Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1 class="headline">Communicate.<br>Collaborate. Create.</h1>
+            <p class="subheading">ISS provides an effective and powerful way to manage your Commits</p>
+            <a routerLink="/home" class="cta-button">Get Started</a>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14H11V21L20 10H13Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <strong>Speed &</strong>
+                        <span>Security</span>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="13" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="3" y="13" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="13" y="13" width="8" height="8" rx="2" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <strong>Flexibility &</strong>
+                        <span>Scalability</span>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="13" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <path d="M7 17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17C17 19.7614 14.7614 22 12 22C9.23858 22 7 19.7614 7 17Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <strong>Better</strong>
+                        <span>Collaboration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="illustration">
+            <img src="https://media.licdn.com/dms/image/sync/v2/D4E27AQFVUEopXWv1HA/articleshare-shrink_800/articleshare-shrink_800/0/1715649639700?e=2147483647&v=beta&t=RyjMZ7-2tD6MBNMqlHd4q9ZCNnXXICwRWKNHjsfMr-s" alt="People collaborating on a project interface" />
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="company-info">
+                <div class="logo">  
+                    <span class="logo-icon">🖌️</span> <strong>WeDu</strong>
+                </div>
+                <p>Communicate. Collaborate. Create.</p>
+            </div>
+
+            <div class="contact">
+                <h3>Contact</h3>
+                <p>500 Terry Francine Street<br>San Francisco, CA 94158</p>
+                <p><strong>General Inquiries:</strong> 123-456-7890</p>
+                <p><strong>Sales:</strong> <a href="mailto:info@mysite.com">info@mysite.com</a></p>
+                <p><strong>Customer Care:</strong> <a href="mailto:info@mysite.com">info@mysite.com</a></p>
+            </div>
+
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+
+            <div class="follow">
+                <h3>Follow</h3>
+                <p>Sign up to get the latest news on our product.</p>
+                <input type="email" placeholder="Email *">
+                <div class="subscribe">
+                    <input type="checkbox" id="subscribe">
+                    <label for="subscribe">Yes, subscribe me to your newsletter.</label>
+                </div>
+                <div class="social-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Facebook</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+"@@@@
+
+/* Existing Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: 70%;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.content {
+    flex: 1;
+    max-width: 500px;
+}
+
+.headline {
+    font-size: 3.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #ffbf23;
+}
+
+.subheading {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+/* Footer Section */
+.footer {
+    width: 100%;
+    background-color: #F4AE33;
+    padding: 40px 80px;
+    color: black;
+    margin-top: 40px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Company Info */
+.company-info {
+    max-width: 250px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    font-size: 22px;
+    margin-right: 8px;
+}
+
+/* Contact Section */
+.contact h3,
+.quick-links h3,
+.follow h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Quick Links */
+.quick-links a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.quick-links a:hover {
+    text-decoration: underline;
+}
+
+/* Follow Section */
+.follow input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+}
+
+.subscribe {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.subscribe input {
+    margin-right: 5px;
+}
+
+/* Social Links */
+.social-links a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+    }
+}
+
+
+₹₹₹₹
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
