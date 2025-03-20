@@ -1,3 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff9db;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form Container */
+        .container {
+            width: 60%;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #d9a404;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background: #ffd700;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e6b800;
+        }
+
+        .cancel-btn {
+            background: #ccc;
+        }
+
+        .cancel-btn:hover {
+            background: #a9a9a9;
+        }
+
+        /* Right-side Background */
+        .image-space {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 150px;
+            background: url('https://via.placeholder.com/150') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="postId">Post ID</label>
+                <input type="text" id="postId" name="postId" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="postHeader">Post Header</label>
+                <input type="text" id="postHeader" name="postHeader" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">Post Content</label>
+                <textarea id="postContent" name="postContent" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="Draft">Draft</option>
+                    <option value="Published">Published</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="postedBy">Posted By</label>
+                <input type="text" id="postedBy" name="postedBy" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit">Submit</button>
+                <button type="button" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+        
+        <div class="image-space"></div>
+    </div>
+
+</body>
+</html>
+
+@@@
+
 WeDu Landing Page HTML and CSS
 Preview
 Code
