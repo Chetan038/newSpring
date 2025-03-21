@@ -1,4 +1,25 @@
+<table class="post-table">
+  <tbody>
+    <tr class="post-row" *ngFor="let post of posts">
+      <td class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
+        <div class="post-header">
+          <p class="posted-info">
+            <strong>{{ post.posted_by }}</strong> | {{ post.status }} {{ post.posted_at }} (ID: {{ post.post_id }})
+          </p>
+          <h3>{{ post.post_header }}</h3>
+        </div>
+        <div class="post-content">
+          <p>{{ post.post_content }}</p>
+          <button *ngIf="loggedIn" class="btn-0">Activate</button>
+          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
+          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+@@@
 .post-table {
   width: 100%;
   height: 100%;
