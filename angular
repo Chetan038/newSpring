@@ -1,58 +1,7 @@
-/* Base Table Styling */
-.post-table {
-  width: 100vw; /* Ensure full viewport width */
-  height: 100%;
-  border-collapse: collapse;
-  background: linear-gradient(135deg, #ffffff, #f8d568);
-  padding: 20px;
-  margin: 0 auto;
-  overflow-x: hidden;
-}
 
-/* Row Flexbox Configuration */
-.post-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px; /* Modern spacing between items */
-  max-width: 100%;
-}
 
-/* Card Styling with Animations */
-.post-card {
-  width: 280px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  border: 1px solid rgba(221, 221, 221, 0.5);
-  margin: 10px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-sizing: border-box;
-}
 
-.post-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 20px rgba(255, 193, 35, 0.2);
-  border-color: rgba(255, 193, 35, 0.3);
-}
+it not changing value in database but its showing 200ok also and this in spirng boot 
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .post-row {
-    justify-content: center;
-  }
-
-  .post-card {
-    width: calc(50% - 20px);
-    min-width: 250px;
-  }
-}
-
-@media (max-width: 480px) {
-  .post-card {
-    width: 100%;
-    min-width: auto;
-  }
-}
-
+Hibernate: select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.phoneno from newso.userr u1_0 where u1_0.email=?
+Hibernate: select p1_0.post_seq_id,p1_0.post_content,p1_0.post_header,p1_0.posted_at,p1_0.posted_by,p1_0.status from newso.posts p1_0 where p1_0.post_seq_id=?
