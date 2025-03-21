@@ -1,9 +1,9 @@
-/* Base Table Styling */
+* Base Table Styling */
 .post-table {
   width: 100%;
   height: 100%;
   border-collapse: separate;
-  border-spacing: 0;
+  border-spacing: 15px;
   background: linear-gradient(135deg, #ffffff, #f8d568);
   padding: 20px;
 }
@@ -13,58 +13,25 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 16px;
-  margin: 0 auto;
-  max-width: 1200px;
+  gap: 20px; /* Modern spacing between items */
 }
 
 /* Card Styling with Animations */
 .post-card {
-  flex: 0 0 calc(33.333% - 16px);
-  min-width: 260px;
-  max-width: 320px;
+  width: 280px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   border: 1px solid rgba(221, 221, 221, 0.5);
+  margin: 10px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  display: flex;
-  flex-direction: column;
 }
 
 .post-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 20px rgba(255, 193, 35, 0.2);
   border-color: rgba(255, 193, 35, 0.3);
-}
-
-/* Meta Information (Posted by, time, status, ID) */
-.post-meta {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background-color: rgba(255, 236, 179, 0.3);
-  font-size: 11px;
-  color: #777;
-  border-bottom: 1px solid rgba(221, 221, 221, 0.3);
-}
-
-.post-id {
-  font-weight: 600;
-}
-
-.post-status {
-  background: #4caf50;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 10px;
-  font-size: 10px;
-  text-transform: uppercase;
-}
-
-.post-time {
-  font-style: italic;
 }
 
 /* Header Section with Animation */
@@ -75,6 +42,7 @@
   text-align: center;
   font-size: 17px;
   font-weight: 600;
+  border-radius: 10px 10px 0 0;
   position: relative;
   overflow: hidden;
 }
@@ -95,63 +63,69 @@
   100% { left: 100%; }
 }
 
+/* Posted Info Styling */
+.posted-info {
+  font-size: 13px;
+  margin-bottom: 8px;
+  opacity: 0.8;
+  font-style: italic;
+  transition: opacity 0.3s ease;
+}
+
+.post-card:hover .posted-info {
+  opacity: 1;
+}
+
 /* Content Section Animation */
 .post-content {
   padding: 15px;
   font-size: 14px;
   color: #333;
   text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  transform-origin: center;
+  transition: transform 0.3s ease;
 }
 
-.post-text {
-  margin-bottom: 16px;
+.post-card:hover .post-content {
+  transform: scale(1.02);
+}
+
+.post-content p {
+  margin: 8px 0;
   line-height: 1.5;
-}
-
-/* Button Container */
-.button-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
-  padding: 10px;
 }
 
 /* Button Styling with Hover Effects */
 .btn-0, .btn-1 {
+  position: relative;
   background-color: #ffc107;
   color: rgba(0, 0, 0, 0.8);
-  padding: 8px 16px;
+  padding: 8px 20px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
+  margin: 5px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  max-width: 110px;
-  white-space: nowrap;
+  overflow: hidden;
 }
 
 .btn-2 {
+  position: relative;
   background-color: #ff5252;
   color: rgba(255, 255, 255, 0.9);
-  padding: 8px 16px;
+  padding: 8px 20px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
+  margin-top: 15px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-top: 8px;
-  width: 100%;
+  overflow: hidden;
 }
 
 .btn-0:hover, .btn-1:hover {
@@ -199,30 +173,15 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 992px) {
-  .post-card {
-    flex: 0 0 calc(50% - 16px);
-  }
-  
+@media (max-width: 768px) {
   .post-row {
     justify-content: center;
   }
+  
+  .post-card {
+    width: calc(50% - 30px);
+    min-width: 250px;
+  }
 }
 
-@media (max-width: 576px) {
-  .post-card {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  
-  .button-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .btn-0, .btn-1 {
-    max-width: 100%;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-}
+fix this css ther is some space left in right side of the page
