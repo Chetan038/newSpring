@@ -1,3 +1,89 @@
+
+import { Component } from '@angular/core';
+import { PostService } from '../services/post.service';
+
+@Component({
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css']
+})
+export class PostComponent {
+  employee = {
+    name: '',
+    email: '',
+    salary: ''
+  };
+
+  responseMessage: string = '';
+
+  constructor(private postService: PostService) {}
+
+  submitForm() {
+    if (this.employee.name && this.employee.email && this.employee.salary) {
+      this.postService.createPost(this.employee).subscribe({
+        next: (response) => {
+          this.responseMessage = 'Data submitted successfully!';
+          this.employee = { name: '', email: '', salary: '' }; // Reset form
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to submit data!';
+        }
+      });
+    }
+  }
+}
+
+
+@@@
+
+
+
+<div class="container">
+  <h2>Create Employee</h2>
+  <form (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="employee.name" name="name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="employee.email" name="email" type="email" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Salary</mat-label>
+      <input matInput [(ngModel)]="employee.salary" name="salary" type="number" required />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Submit
+    </button>
+  </form>
+
+  <p *ngIf="responseMessage">{{ responseMessage }}</p>
+</div>
+
+
+@@
+
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PostService {
+  private apiUrl = 'http://localhost:8080/api/employees'; // Change to your backend URL
+
+  constructor(private http: HttpClient) {}
+
+  createPost(data: any): Observable<any> {
+    return this.http.post(this.apiUrl, data);
+  }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
