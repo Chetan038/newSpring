@@ -1,3 +1,37 @@
+<h2 mat-dialog-title>Edit Post</h2>
+<mat-dialog-content>
+  <form [formGroup]="editPostForm">
+    <mat-form-field>
+      <mat-label>Post ID</mat-label>
+      <input matInput formControlName="postId">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Post Data</mat-label>
+      <input matInput formControlName="postData">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Post Head</mat-label>
+      <input matInput formControlName="postHead">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <input matInput formControlName="status">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Posted By</mat-label>
+      <input matInput formControlName="postedBy">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</mat-dialog-actions>
+
+
+
+@@@
+
 
 import { Component } from '@angular/core';
 import { PostService } from '../services/post.service';
