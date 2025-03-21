@@ -1,106 +1,185 @@
-
+* Base Table Styling */
 .post-table {
   width: 100%;
   height: 100%;
   border-collapse: separate;
-  border-spacing: 15px; /* Space between cards */
-  background: linear-gradient(135deg, #ffffff, #b38b07);
+  border-spacing: 15px;
+  background: linear-gradient(135deg, #ffffff, #f8d568);
+  padding: 20px;
 }
 
-/* Row Flexbox to align cards left to right */
+/* Row Flexbox Configuration */
 .post-row {
   display: flex;
-  flex-wrap: wrap; /* Wrap to new row if needed */
-  justify-content: flex-start; /* Align cards from left */
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px; /* Modern spacing between items */
 }
 
-/* Card Style inside Table */
+/* Card Styling with Animations */
 .post-card {
-  width: 250px;
+  width: 280px;
   background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  border: 1px solid #ddd;
-  padding: 10px;
-  transition: transform 0.3s ease-in-out;
-  margin: 10px; /* Space between cards */
+  border: 1px solid rgba(221, 221, 221, 0.5);
+  margin: 10px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .post-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(255, 193, 35, 0.2);
+  border-color: rgba(255, 193, 35, 0.3);
 }
 
-/* Header Section */
+/* Header Section with Animation */
 .post-header {
-  background: #ffc123ba;
-  color: rgb(0, 0, 0);
-  padding: 10px;
+  background: linear-gradient(to right, #ffd54f, #ffca28);
+  color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
   text-align: center;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 600;
   border-radius: 10px 10px 0 0;
   position: relative;
+  overflow: hidden;
 }
 
-/* "Posted By" and "Posted At" at the top */
+.post-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Posted Info Styling */
 .posted-info {
-  font-size: 12px;
-  margin-bottom: 5px;
+  font-size: 13px;
+  margin-bottom: 8px;
   opacity: 0.8;
+  font-style: italic;
+  transition: opacity 0.3s ease;
 }
 
-/* Content Section */
+.post-card:hover .posted-info {
+  opacity: 1;
+}
+
+/* Content Section Animation */
 .post-content {
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
   color: #333;
   text-align: center;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-content {
+  transform: scale(1.02);
 }
 
 .post-content p {
-  margin: 5px 0;
+  margin: 8px 0;
+  line-height: 1.5;
 }
 
-.btn-0{
+/* Button Styling with Hover Effects */
+.btn-0, .btn-1 {
   position: relative;
-  background-color: #ffc803; /* Darker violet */
-  color: rgb(0, 0, 0);
-  padding: 5px 19px;
+  background-color: #ffc107;
+  color: rgba(0, 0, 0, 0.8);
+  padding: 8px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  left: -6%;
-}
-
-.btn-1{
-  position: relative;
-  background-color: #ffc803; /* Darker violet */
-  color: rgb(0, 0, 0);
-  padding: 5px 19px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  left: -3%;
+  font-size: 15px;
+  font-weight: 500;
+  margin: 5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .btn-2 {
   position: relative;
-  background-color: #f50909bb; /* Darker violet */
-  color: rgb(0, 0, 0);
-  padding: 5px 19px;
+  background-color: #ff5252;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  left: -3%;
-  top: 10px; /* Adjust this value to move the button down */
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
+.btn-0:hover, .btn-1:hover {
+  background-color: #ffb300;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
 
-make this more profestin cool with animatino but matain the color theme white and yellow
+.btn-2:hover {
+  background-color: #f44336;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+/* Button Ripple Effect */
+.btn-0::after, .btn-1::after, .btn-2::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.btn-0:focus:not(:active)::after, 
+.btn-1:focus:not(:active)::after,
+.btn-2:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .post-row {
+    justify-content: center;
+  }
+  
+  .post-card {
+    width: calc(50% - 30px);
+    min-width: 250px;
+  }
+}
