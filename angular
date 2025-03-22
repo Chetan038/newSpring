@@ -1,117 +1,52 @@
-.post-table {
-  width: 100%;
-  height: 100%;
-  border-spacing: 15px;
-  background: linear-gradient(135deg, #ffffff, #b38b07);
-}
+Post ID: 2
+Post Header: Implemented User Authentication with JWT
+Post Content: We have integrated JWT-based authentication to enhance security. Now, users need to log in using their credentials, and an access token is generated for session management. This prevents unauthorized access to sensitive sections of the website.
+Posted by: John Doe
 
-/* Row Flexbox */
-.post-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
+Post ID: 3
+Post Header: Added Role-Based Access Control (RBAC)
+Post Content: The system now supports different user roles such as Admin, Manager, and Employee. Each role has specific access rights, ensuring that only authorized personnel can access or modify critical data. This enhances security and data integrity.
+Posted by: Jane Smith
 
-/* Card Style with Shadow */
-.post-card {
-  width: 250px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  border: 1px solid #ddd;
-  padding: 10px;
-  transition: transform 0.3s ease-in-out;
-  margin: 10px;
-  height: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+Post ID: 4
+Post Header: Enhanced Employee Data Search and Filtering
+Post Content: We have introduced an advanced search and filtering system in the Employee Management section. Users can now search for employees by name, department, or role and apply multiple filters for quick data retrieval. This improves efficiency in managing large datasets.
+Posted by: Alex Johnson
 
-/* Fixed Header Height */
-.post-header {
-  background: #ffc123;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 10px 10px 0 0;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-}
+Post ID: 5
+Post Header: Implemented Audit Logging for User Actions
+Post Content: A new audit logging feature has been added to track user actions. Every login, update, or deletion is recorded with timestamps. This helps in monitoring system activities and ensures accountability.
+Posted by: Emily Brown
 
-/* Smaller Post Info Section */
-.post-info {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 10px; /* Reduced font size */
-  margin: 5px;
-  line-height: 1.2;
-}
+Let me know if you need more examples or specific features related to your project! 🚀
 
-/* Light Color and Smaller Size for Text */
-.posted-by, .post-status, .post-time {
-  padding: 2px 0;
-  text-align: left;
-  color: #777;
-  font-weight: normal;
-  font-size: 10px; /* Smaller text */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-/* Content Section with Hidden Scrollbar */
-.post-content {
-  padding: 5px;
-  font-size: 12px;
-  color: #333;
-  text-align: center;
-  height: 100px; /* Adjusted height */
-  overflow-y: scroll;
-  scrollbar-width: none;
-}
 
-.post-content::-webkit-scrollbar {
-  display: none;
-}
 
-/* Button Container (For Logged-in Users) */
-.post-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 5px;
-  border-top: 1px solid #ddd;
-  background: #fff;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
 
-/* Buttons */
-button {
-  background-color: #ffc803;
-  color: rgb(0, 0, 0);
-  padding: 4px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 12px;
-  transition: background-color 0.3s ease;
-}
 
-.btn-2 {
-  background-color: #f50909bb;
-}
 
-.btn-2:hover {
-  background-color: #c50606;
-}
+You said:
+give more 4 
+ChatGPT said:
+Here are four more feature update posts for your project website:
+
+Post ID: 6
+Post Header: Integrated Email Notifications for User Actions
+Post Content: We have added an automated email notification system. Users will now receive email alerts for important actions such as account registration, password changes, and admin updates. This improves communication and security.
+Posted by: Michael Lee
+
+Post ID: 7
+Post Header: Implemented Dark Mode for Better User Experience
+Post Content: A new Dark Mode feature is now available! Users can switch between Light and Dark themes for better readability and reduced eye strain, especially during long working hours. This setting is saved for future sessions.
+Posted by: Sarah Williams
+
+Post ID: 8
+Post Header: Added Export to Excel and PDF for Reports
+Post Content: Users can now export reports in Excel and PDF formats. This feature allows easy sharing and offline access to employee records, attendance reports, and other critical data.
+Posted by: David Carter
+
+Post ID: 9
+Post Header: Improved Performance with Database Optimization
+Post Content: We have optimized database queries and indexing, significantly improving the speed of data retrieval. Large datasets now load faster, ensuring a smoother experience for all users.
+Posted by: Jessica Miller
