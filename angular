@@ -1,38 +1,3 @@
-<div class="post-container">
-  <div class="post-row">
-    <ng-container *ngFor="let post of posts">
-      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
-        <!-- Heading Section -->
-        <div class="post-header">
-          <h3>{{ post.post_header }}</h3>
-        </div>
-
-        <!-- Posted Info Section -->
-        <div class="post-info">
-          <div class="posted-by"><strong>By:</strong> {{ post.posted_by }}</div>
-          <div class="post-status"><strong>Status:</strong> {{ post.status }}</div>
-          <div class="post-time"><strong>Posted:</strong> {{ post.posted_at | date:'MMM d, y hh:mm a' }}</div>
-        </div>
-
-        <!-- Content Section -->
-        <div class="post-content">
-          <p>{{ post.post_content }}</p>
-          <button class="btn-1" *ngIf="loggedIn" (click)="togglestatus(post)">
-            {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
-          </button>
-          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
-          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-</div>
-
-
-
-##
-
-
 .post-table {
   width: 100%;
   height: 100%;
@@ -83,14 +48,15 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   padding: 8px;
   border-radius: 5px;
-  text-align: center;
   font-size: 12px;
   margin: 10px;
 }
 
-/* Each Info Div */
+/* Align "Posted By", "Status", and "Posted Time" to the Left */
 .posted-by, .post-status, .post-time {
   padding: 4px 0;
+  text-align: left;  /* Aligning to the left */
+  font-weight: bold;
 }
 
 /* Content Section */
@@ -125,3 +91,37 @@ button {
 .btn-2:hover {
   background-color: #c50606;
 }
+@@@
+
+<div class="post-container">
+  <div class="post-row">
+    <ng-container *ngFor="let post of posts">
+      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
+        <!-- Heading Section -->
+        <div class="post-header">
+          <h3>{{ post.post_header }}</h3>
+        </div>
+
+        <!-- Posted Info Section (Left Aligned) -->
+        <div class="post-info">
+          <div class="posted-by">By: {{ post.posted_by }}</div>
+          <div class="post-status">Status: {{ post.status }}</div>
+          <div class="post-time">Posted: {{ post.posted_at | date:'MMM d, y hh:mm a' }}</div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="post-content">
+          <p>{{ post.post_content }}</p>
+          <button class="btn-1" *ngIf="loggedIn" (click)="togglestatus(post)">
+            {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+          </button>
+          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
+          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+
