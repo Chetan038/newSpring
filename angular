@@ -1,4 +1,3 @@
-
 .post-table {
   width: 100%;
   height: 100%;
@@ -14,12 +13,13 @@
   justify-content: flex-start; /* Align cards from left */
 }
 
-/* Card Style inside Table */
+/* Card Style with 3D Shadow */
 .post-card {
   width: 250px;
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), 
+              -4px -4px 10px rgba(255, 255, 255, 0.8); /* 3D Effect */
   overflow: hidden;
   border: 1px solid #ddd;
   padding: 10px;
@@ -31,9 +31,9 @@
   transform: translateY(-5px);
 }
 
-/* Header Section */
+/* Header Section with only yellow background */
 .post-header {
-  background: #ffc123ba;
+  background: #ffc123; /* Yellow Background */
   color: rgb(0, 0, 0);
   padding: 10px;
   text-align: center;
@@ -43,11 +43,18 @@
   position: relative;
 }
 
-/* "Posted By" and "Posted At" at the top */
+/* "Posted By" and "Posted At" inside a 3D Box */
 .posted-info {
   font-size: 12px;
   margin-bottom: 5px;
   opacity: 0.8;
+  background: #ffffff;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2),
+              inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  display: inline-block;
 }
 
 /* Content Section */
@@ -62,78 +69,27 @@
   margin: 5px 0;
 }
 
-.btn-0{
-  position: relative;
-  background-color: #ffc803; /* Darker violet */
+/* Buttons */
+button {
+  background-color: #ffc803;
   color: rgb(0, 0, 0);
-  padding: 5px 19px;
+  padding: 5px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  left: -6%;
+  margin: 5px;
 }
 
-.btn-1{
-  position: relative;
-  background-color: #ffc803; /* Darker violet */
-  color: rgb(0, 0, 0);
-  padding: 5px 19px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  left: -3%;
+.btn-1 {
+  background-color: #ffc803;
 }
 
 .btn-2 {
-  position: relative;
-  background-color: #f50909bb; /* Darker violet */
-  color: rgb(0, 0, 0);
-  padding: 5px 19px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  left: -3%;
-  top: 10px; /* Adjust this value to move the button down */
+  background-color: #f50909bb;
 }
 
-html for above css
-
-<div class="post-container">
-
-  <div class="post-row">
-    <ng-container *ngFor="let post of posts">
-      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
-        <div class="post-header">
-          <p class="posted-info">
-            <strong>{{ post.posted_by }}</strong> | {{ post.status }} {{ post.posted_at }} (ID: {{ post.post_id }})
-          </p>
-          <h3>{{ post.post_header }}</h3>
-        </div>
-        <div class="post-content">
-          <p>{{ post.post_content }}</p>
-       
-      <button class="btn-1" *ngIf="loggedIn" (click)="togglestatus(post)">
-        {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
-      </button>
-          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
-          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-
- 
-
-</div>
-
- 
-
-
-make post by status and time in a 3d white box with littel shadow
- and heading should only have yellow backround make changes like this to css
+.btn-2:hover {
+  background-color: #c50606;
+}
