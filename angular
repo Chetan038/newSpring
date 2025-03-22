@@ -1,60 +1,96 @@
+<div class="post-container">
+  <div class="post-row">
+    <ng-container *ngFor="let post of posts">
+      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
+        <!-- Heading Section -->
+        <div class="post-header">
+          <h3>{{ post.post_header }}</h3>
+        </div>
+
+        <!-- Posted Info Section -->
+        <div class="post-info">
+          <div class="posted-by"><strong>By:</strong> {{ post.posted_by }}</div>
+          <div class="post-status"><strong>Status:</strong> {{ post.status }}</div>
+          <div class="post-time"><strong>Posted:</strong> {{ post.posted_at | date:'MMM d, y hh:mm a' }}</div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="post-content">
+          <p>{{ post.post_content }}</p>
+          <button class="btn-1" *ngIf="loggedIn" (click)="togglestatus(post)">
+            {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+          </button>
+          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
+          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+
+##
+
+
 .post-table {
   width: 100%;
   height: 100%;
-  border-collapse: separate;
-  border-spacing: 15px; /* Space between cards */
+  border-spacing: 15px;
   background: linear-gradient(135deg, #ffffff, #b38b07);
 }
 
-/* Row Flexbox to align cards left to right */
+/* Row Flexbox */
 .post-row {
   display: flex;
-  flex-wrap: wrap; /* Wrap to new row if needed */
-  justify-content: flex-start; /* Align cards from left */
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
-/* Card Style with 3D Shadow */
+/* Card Style with Shadow */
 .post-card {
   width: 250px;
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), 
-              -4px -4px 10px rgba(255, 255, 255, 0.8); /* 3D Effect */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   border: 1px solid #ddd;
   padding: 10px;
   transition: transform 0.3s ease-in-out;
-  margin: 10px; /* Space between cards */
+  margin: 10px;
 }
 
 .post-card:hover {
   transform: translateY(-5px);
 }
 
-/* Header Section with only yellow background */
+/* Heading with Yellow Background */
 .post-header {
-  background: #ffc123; /* Yellow Background */
+  background: #ffc123;
   color: rgb(0, 0, 0);
   padding: 10px;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   border-radius: 10px 10px 0 0;
-  position: relative;
 }
 
-/* "Posted By" and "Posted At" inside a 3D Box */
-.posted-info {
-  font-size: 12px;
-  margin-bottom: 5px;
-  opacity: 0.8;
+/* Post Info Section */
+.post-info {
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2),
-              inset -2px -2px 5px rgba(255, 255, 255, 0.8);
-  padding: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 8px;
   border-radius: 5px;
   text-align: center;
-  display: inline-block;
+  font-size: 12px;
+  margin: 10px;
+}
+
+/* Each Info Div */
+.posted-by, .post-status, .post-time {
+  padding: 4px 0;
 }
 
 /* Content Section */
@@ -63,10 +99,6 @@
   font-size: 14px;
   color: #333;
   text-align: center;
-}
-
-.post-content p {
-  margin: 5px 0;
 }
 
 /* Buttons */
