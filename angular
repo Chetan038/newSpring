@@ -1,35 +1,183 @@
-<div class="post-container">
+/* General Table Styling */
+body{
+    background: linear-gradient(135deg, #ffffff, #b38b07); 
+}
 
-  <div class="post-row">
-    <ng-container *ngFor="let post of posts">
-      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
-        <div class="post-header">
-          <p class="posted-info">
-            <strong>{{ post.posted_by }}</strong> | {{ post.status }} {{ post.posted_at }} (ID: {{ post.post_id }})
-          </p>
-          <h3>{{ post.post_header }}</h3>
-        </div>
-        <div class="post-content">
-          <p>{{ post.post_content }}</p>
-          <button *ngIf="loggedIn" class="btn-0">Activate</button>
-          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
-          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
-        </div>
-      </div>
-    </ng-container>
-  </div>
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #e1d39d, #e8d046);
+    color: rgb(0, 0, 0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  /* Table Headers */
+  th {
+    background:  #efbd16;
+    padding: 12px;
+    text-align: left;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  /* Table Data */
+  td {
+    padding: 12px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Alternating Row Colors */
+  tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Hover Effect */
+  tbody tr:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    table {
+      width: 100%;
+    }
+    th, td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  
+      
+  button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  button:first-child {
+    background-color: #ffc123a3;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 3px;
+  }
+  
+  button:last-child {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
 
-  <!-- User Status Toggle Section -->
-  <div class="user-status-container">
-    <h2>User Status Management</h2>
-    <div *ngFor="let user of users" class="user-status-card">
-      <p>{{ user.name }} - Status: {{ user.status }}</p>
-      <button (click)="toggleStatus(user)">
-        {{ user.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
-      </button>
-    </div>
-  </div>
 
-</div>
+  
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
- 
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.form-actions button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+
+
+i want to make colour of background 
+to this   background: linear-gradient(135deg, #ffffff, #b38b07); 
+
+and make i want add a image a right side of maek according to it make the table size little small so image can be placed make it look professtinal this is my htmnl code
+
+
+<button mat-raised-button color="primary" >+ Register Admin</button>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Phone No</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let admins of admin">
+      <td>{{ admins.id}}</td>
+      <td>{{ admins.name}}</td>
+      <td>{{ admins.email}}</td>
+      <td>{{ admins.password}}</td>
+      <td>{{ admins.phoneNo}}</td>
+      <td>
+        <button mat-button color="accent" >Edit</button>
+        <button mat-button color="warn" >Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
