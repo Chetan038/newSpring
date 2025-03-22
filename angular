@@ -1,3 +1,38 @@
+<h2 mat-dialog-title>Edit Post</h2>
+<div mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Post Header</mat-label>
+    <input matInput [(ngModel)]="editedPost.post_header">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Post Content</mat-label>
+    <textarea matInput [(ngModel)]="editedPost.post_content"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <input matInput [(ngModel)]="editedPost.status">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Posted By</mat-label>
+    <input matInput [(ngModel)]="editedPost.posted_by">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeModal()">Cancel</button>
+  <button mat-button color="primary" (click)="saveChanges()">Save</button>
+</div>
+
+
+Q
+
+
+
+
+
+
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PostService } from '../../services/post.service';
