@@ -23,10 +23,13 @@
   padding: 10px;
   transition: transform 0.3s ease-in-out;
   margin: 10px;
-  height: 320px; /* Increased height slightly */
+  height: 320px; /* Ensuring uniform card size */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Keeps content and buttons separate */
 }
 
-/* Fixed Header Height for Consistency */
+/* Fixed Header Height */
 .post-header {
   background: #ffc123;
   color: rgb(0, 0, 0);
@@ -76,21 +79,28 @@
   display: none; /* Hides scrollbar in Chrome/Safari */
 }
 
+/* Button Container (For Logged-in Users) */
+.post-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #fff;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
 /* Buttons */
 button {
   background-color: #ffc803;
   color: rgb(0, 0, 0);
-  padding: 5px 15px;
+  padding: 5px 12px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: background-color 0.3s ease;
-  margin: 5px;
-}
-
-.btn-1 {
-  background-color: #ffc803;
 }
 
 .btn-2 {
@@ -100,3 +110,38 @@ button {
 .btn-2:hover {
   background-color: #c50606;
 }
+
+
+
+@@@
+
+<div class="post-container">
+  <div class="post-row">
+    <ng-container *ngFor="let post of posts">
+      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
+        <div class="post-header">
+          <h3>{{ post.post_header }}</h3>
+        </div>
+
+        <div class="post-info">
+          <p class="posted-by"><strong>Posted by:</strong> {{ post.posted_by }}</p>
+          <p class="post-status"><strong>Status:</strong> {{ post.status }}</p>
+          <p class="post-time"><strong>Posted at:</strong> {{ post.posted_at | date:'MMM d, y h:mm a' }}</p>
+        </div>
+
+        <div class="post-content">
+          <p>{{ post.post_content }}</p>
+        </div>
+
+        <!-- Buttons only for logged-in users -->
+        <div class="post-buttons" *ngIf="loggedIn">
+          <button class="btn-1" (click)="togglestatus(post)">
+            {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+          </button>
+          <button class="btn-1" routerLink="/dashboard">Edit Post</button>
+          <button class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
