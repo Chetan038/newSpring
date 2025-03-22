@@ -1,4 +1,76 @@
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
 
+@Component({
+  selector: 'app-edit-post-modal',
+  templateUrl: './edit-post-modal.component.html',
+  styleUrls: ['./edit-post-modal.component.css']
+})
+export class EditPostModalComponent {
+  editedPost: Post;
+  isSubmitting = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<EditPostModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Post,
+    private postService: PostService
+  ) {
+    this.editedPost = { ...data }; // Create a copy to avoid modifying the original object
+  }
+
+  saveChanges(): void {
+    // Prevent multiple submissions
+    if (this.isSubmitting) return;
+    
+    this.isSubmitting = true;
+    
+    this.postService.editPost(this.editedPost).subscribe({
+      next: (updatedPost) => {
+        // Pass the updated post back to the component that opened the dialog
+        this.dialogRef.close(updatedPost);
+      },
+      error: (err) => {
+        console.error('Error updating post:', err);
+        alert('Failed to update post: ' + (err.message || 'Unknown error'));
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
+    });
+  }
+
+  closeModal(): void {
+    this.dialogRef.close();
+  }
+}
+
+
+@@@
+
+openEditDialog(post: Post): void {
+  const dialogRef = this.dialog.open(EditPostModalComponent, {
+    width: '500px', // Increased width for better usability
+    data: {...post} // Pass a copy to avoid reference issues
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      // Update the local array with the edited post
+      const index = this.posts.findIndex(p => p.post_id === result.post_id);
+      if (index !== -1) {
+        this.posts[index] = result;
+      }
+      // Optionally refresh all posts from server
+      // this.loadPosts();
+    }
+  });
+}
+
+
+@@@
 
 edit-post modal.component.ts
 
