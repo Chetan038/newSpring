@@ -1,3 +1,74 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HOMEComponent } from './components/home/home.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptor } from './interceptors/jwt-interceptor.service';
+
+// Material Imports
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { EmployeeModalComponent } from './components/employee-modal/employee-modal.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { NewPostComponent } from './components/new-post/new-post.component';
+import { EditPostModalComponent } from './components/edit-post-modal/edit-post-modal.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    NavbarComponent,
+    HOMEComponent,
+    DashboardComponent,
+    EmployeeModalComponent,
+    LandingPageComponent,
+    NewPostComponent,
+    EditPostModalComponent,
+    AdminDashboardComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule, // Added for material animations
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    // Material Modules
+    MatDialogModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule
+  ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+@@@
+
+
 <h2 mat-dialog-title>Edit Post</h2>
 
 <div mat-dialog-content>
