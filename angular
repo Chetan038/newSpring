@@ -1,3 +1,100 @@
+<div class="post-container">
+
+  <!-- User Status Management - Positioned Higher -->
+  <div class="user-status-container">
+    <h2>User Status Management</h2>
+    <div *ngFor="let user of users" class="user-status-card">
+      <p>{{ user.name }} - Status: {{ user.status }}</p>
+      <button (click)="toggleStatus(user)">
+        {{ user.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="post-row">
+    <ng-container *ngFor="let post of posts">
+      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
+        <div class="post-header">
+          <p class="posted-info">
+            <strong>{{ post.posted_by }}</strong> | {{ post.status }} {{ post.posted_at }} (ID: {{ post.post_id }})
+          </p>
+          <h3>{{ post.post_header }}</h3>
+        </div>
+        <div class="post-content">
+          <p>{{ post.post_content }}</p>
+          <button *ngIf="loggedIn" class="btn-0">Activate</button>
+          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
+          <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>
+
+
+
+@@@
+
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content */
+  justify-content: flex-start; /* Align near top */
+  margin-top: 60px; /* Space below navbar */
+  padding: 20px;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden; /* Prevent unnecessary scrolling */
+}
+
+.user-status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -20px; /* Move the box up */
+  width: 60%;
+  padding: 15px;
+  background: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.user-status-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-status-card button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  transition: 0.3s;
+}
+
+.user-status-card button:hover {
+  background: #0056b3;
+}
+
+/* Fix Navbar Overlap */
+body {
+  padding-top: 70px; /* Adjust based on navbar height */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
