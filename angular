@@ -1,3 +1,115 @@
+/* edit-post-modal.component.css */
+
+:host {
+  display: block;
+}
+
+h2.mat-dialog-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px 20px;
+  border-top: 1px solid #eee;
+  margin-top: 15px;
+}
+
+button {
+  min-width: 100px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+button[color="primary"] {
+  background-color: #3f51b5;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Add a subtle animation for the modal */
+:host ::ng-deep .mat-dialog-container {
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Make input fields more visually appealing */
+:host ::ng-deep .mat-form-field-outline {
+  border-radius: 4px;
+}
+
+:host ::ng-deep .mat-form-field-label {
+  font-weight: 500;
+}
+
+/* Add some styling for input focus state */
+:host ::ng-deep .mat-form-field.mat-focused .mat-form-field-outline {
+  color: #3f51b5;
+}
+
+/* Style for the save button */
+button[color="primary"] {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 5px 15px;
+}
+
+/* Style for the cancel button */
+button:not([color="primary"]) {
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 5px 15px;
+}
+
+
+@@@
+
+
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PostService } from '../../services/post.service';
