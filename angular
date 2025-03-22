@@ -1,3 +1,42 @@
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
+
+@Component({
+  selector: 'app-edit-post-modal',
+  templateUrl: './edit-post-modal.component.html',
+  styleUrls: ['./edit-post-modal.component.css']
+})
+export class EditPostModalComponent {
+  editedPost: Post;
+
+  constructor(
+    public dialogRef: MatDialogRef<EditPostModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Post,
+    private postService: PostService
+  ) {
+    this.editedPost = { ...data }; // Create a copy to avoid modifying the original object
+  }
+
+  saveChanges(): void {
+    this.postService.editPost(this.editedPost).subscribe({
+      next: () => {
+        this.dialogRef.close(this.editedPost); // Pass updated data back
+      },
+      error: () => {
+        alert('Failed to update post');
+      }
+    });
+  }
+
+  closeModal(): void {
+    this.dialogRef.close();
+  }
+}
+
+
+
 i have edit-post-modal compoent already 
 
 this is my post.compoenet.ts
