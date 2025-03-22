@@ -1,3 +1,57 @@
+div class="edit-post-modal">
+  <h2 mat-dialog-title>Edit Post</h2>
+  
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Post Header</mat-label>
+      <input matInput [(ngModel)]="editedPost.post_header" placeholder="Enter post title">
+      <mat-hint>Enter a descriptive title for your post</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Post Content</mat-label>
+      <textarea 
+        matInput 
+        [(ngModel)]="editedPost.post_content" 
+        placeholder="Enter post content"
+        rows="6">
+      </textarea>
+      <mat-hint>Write the main content of your post here</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <select matNativeControl [(ngModel)]="editedPost.status">
+        <option value="ACTIVE">ACTIVE</option>
+        <option value="INACTIVE">INACTIVE</option>
+      </select>
+      <mat-hint>Set the visibility status of this post</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Posted By</mat-label>
+      <input matInput [(ngModel)]="editedPost.posted_by" placeholder="Author name">
+      <mat-hint>Enter the author's name</mat-hint>
+    </mat-form-field>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-button (click)="closeModal()" [disabled]="isSubmitting">Cancel</button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="saveChanges()" 
+      [disabled]="isSubmitting">
+      <span *ngIf="!isSubmitting">Save Changes</span>
+      <span *ngIf="isSubmitting">Saving...</span>
+    </button>
+  </div>
+</div>
+
+
+@@@
+
+
 /* edit-post-modal.component.css */
 
 :host {
