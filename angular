@@ -1,3 +1,18 @@
+  openEditDialog(post: Post): void {
+    const dialogRef = this.dialog.open(EditPostModalComponent, {
+      width: '400px',
+      data: post
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.posts = this.posts.map(p => (p.post_id === result.post_id ? result : p));
+      }
+    });
+  }
+
+sss
+
 <h2 mat-dialog-title>Edit Post</h2>
 <div mat-dialog-content>
   <mat-form-field appearance="outline">
