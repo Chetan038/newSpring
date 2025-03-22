@@ -1,420 +1,108 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HOMEComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from './interceptors/jwt-interceptor.service';
-
-// Material Imports
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-
-import { EmployeeModalComponent } from './components/employee-modal/employee-modal.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { NewPostComponent } from './components/new-post/new-post.component';
-import { EditPostModalComponent } from './components/edit-post-modal/edit-post-modal.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavbarComponent,
-    HOMEComponent,
-    DashboardComponent,
-    EmployeeModalComponent,
-    LandingPageComponent,
-    NewPostComponent,
-    EditPostModalComponent,
-    AdminDashboardComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule, // Added for material animations
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    // Material Modules
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatTooltipModule
-  ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-
-
-
-@@@
-
-
-<h2 mat-dialog-title>Edit Post</h2>
-
-<div mat-dialog-content>
-  <mat-form-field appearance="outline">
-    <mat-label>Post Header</mat-label>
-    <input matInput [(ngModel)]="editedPost.post_header">
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Post Content</mat-label>
-    <textarea matInput [(ngModel)]="editedPost.post_content" rows="6"></textarea>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Status</mat-label>
-    <input matInput [(ngModel)]="editedPost.status">
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Posted By</mat-label>
-    <input matInput [(ngModel)]="editedPost.posted_by">
-  </mat-form-field>
-</div>
-
-<div mat-dialog-actions>
-  <button mat-button (click)="closeModal()">Cancel</button>
-  <button mat-button color="primary" (click)="saveChanges()" [disabled]="isSubmitting">
-    {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
-  </button>
-</div>
-
-
-@@@
-
-
-div class="edit-post-modal">
-  <h2 mat-dialog-title>Edit Post</h2>
-  
-  <div mat-dialog-content>
-    <mat-form-field appearance="outline">
-      <mat-label>Post Header</mat-label>
-      <input matInput [(ngModel)]="editedPost.post_header" placeholder="Enter post title">
-      <mat-hint>Enter a descriptive title for your post</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Post Content</mat-label>
-      <textarea 
-        matInput 
-        [(ngModel)]="editedPost.post_content" 
-        placeholder="Enter post content"
-        rows="6">
-      </textarea>
-      <mat-hint>Write the main content of your post here</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Status</mat-label>
-      <select matNativeControl [(ngModel)]="editedPost.status">
-        <option value="ACTIVE">ACTIVE</option>
-        <option value="INACTIVE">INACTIVE</option>
-      </select>
-      <mat-hint>Set the visibility status of this post</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Posted By</mat-label>
-      <input matInput [(ngModel)]="editedPost.posted_by" placeholder="Author name">
-      <mat-hint>Enter the author's name</mat-hint>
-    </mat-form-field>
-  </div>
-  
-  <div mat-dialog-actions>
-    <button mat-button (click)="closeModal()" [disabled]="isSubmitting">Cancel</button>
-    <button 
-      mat-raised-button 
-      color="primary" 
-      (click)="saveChanges()" 
-      [disabled]="isSubmitting">
-      <span *ngIf="!isSubmitting">Save Changes</span>
-      <span *ngIf="isSubmitting">Saving...</span>
-    </button>
-  </div>
-</div>
-
-
-@@@
-
-
-/* edit-post-modal.component.css */
-
-:host {
-  display: block;
-}
-
-h2.mat-dialog-title {
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.mat-dialog-content {
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  max-height: 65vh;
-  overflow-y: auto;
-}
-
-mat-form-field {
+.post-table {
   width: 100%;
-  margin-bottom: 15px;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 15px; /* Space between cards */
+  background: linear-gradient(135deg, #ffffff, #b38b07);
 }
 
-textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.mat-dialog-actions {
+/* Row Flexbox to align cards left to right */
+.post-row {
   display: flex;
-  justify-content: flex-end;
-  padding: 10px 20px 20px;
-  border-top: 1px solid #eee;
-  margin-top: 15px;
+  flex-wrap: wrap; /* Wrap to new row if needed */
+  justify-content: flex-start; /* Align cards from left */
 }
 
-button {
-  min-width: 100px;
-  margin-left: 10px;
-  transition: all 0.3s ease;
+/* Card Style inside Table */
+.post-card {
+  width: 250px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #ddd;
+  padding: 10px;
+  transition: transform 0.3s ease-in-out;
+  margin: 10px; /* Space between cards */
 }
 
-button[color="primary"] {
-  background-color: #3f51b5;
-  color: white;
+.post-card:hover {
+  transform: translateY(-5px);
 }
 
-button:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+/* Header Section */
+.post-header {
+  background: #ffc123ba;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+  position: relative;
 }
 
-/* Add a subtle animation for the modal */
-:host ::ng-deep .mat-dialog-container {
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  animation: modalFadeIn 0.3s ease;
+/* "Posted By" and "Posted At" at the top */
+.posted-info {
+  font-size: 12px;
+  margin-bottom: 5px;
+  opacity: 0.8;
 }
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Make input fields more visually appealing */
-:host ::ng-deep .mat-form-field-outline {
-  border-radius: 4px;
-}
-
-:host ::ng-deep .mat-form-field-label {
-  font-weight: 500;
-}
-
-/* Add some styling for input focus state */
-:host ::ng-deep .mat-form-field.mat-focused .mat-form-field-outline {
-  color: #3f51b5;
-}
-
-/* Style for the save button */
-button[color="primary"] {
-  background-color: #3f51b5;
-  color: white;
-  border-radius: 4px;
-  font-weight: 500;
-  padding: 5px 15px;
-}
-
-/* Style for the cancel button */
-button:not([color="primary"]) {
-  background-color: #f5f5f5;
+/* Content Section */
+.post-content {
+  padding: 10px;
+  font-size: 14px;
   color: #333;
-  border-radius: 4px;
-  font-weight: 500;
-  padding: 5px 15px;
+  text-align: center;
 }
 
-
-@@@
-
-
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post.model';
-
-@Component({
-  selector: 'app-edit-post-modal',
-  templateUrl: './edit-post-modal.component.html',
-  styleUrls: ['./edit-post-modal.component.css']
-})
-export class EditPostModalComponent {
-  editedPost: Post;
-  isSubmitting = false;
-
-  constructor(
-    public dialogRef: MatDialogRef<EditPostModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Post,
-    private postService: PostService
-  ) {
-    this.editedPost = { ...data }; // Create a copy to avoid modifying the original object
-  }
-
-  saveChanges(): void {
-    // Prevent multiple submissions
-    if (this.isSubmitting) return;
-    
-    this.isSubmitting = true;
-    
-    this.postService.editPost(this.editedPost).subscribe({
-      next: (updatedPost) => {
-        // Pass the updated post back to the component that opened the dialog
-        this.dialogRef.close(updatedPost);
-      },
-      error: (err) => {
-        console.error('Error updating post:', err);
-        alert('Failed to update post: ' + (err.message || 'Unknown error'));
-        this.isSubmitting = false;
-      },
-      complete: () => {
-        this.isSubmitting = false;
-      }
-    });
-  }
-
-  closeModal(): void {
-    this.dialogRef.close();
-  }
+.post-content p {
+  margin: 5px 0;
 }
 
-
-@@@
-
-openEditDialog(post: Post): void {
-  const dialogRef = this.dialog.open(EditPostModalComponent, {
-    width: '500px', // Increased width for better usability
-    data: {...post} // Pass a copy to avoid reference issues
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      // Update the local array with the edited post
-      const index = this.posts.findIndex(p => p.post_id === result.post_id);
-      if (index !== -1) {
-        this.posts[index] = result;
-      }
-      // Optionally refresh all posts from server
-      // this.loadPosts();
-    }
-  });
+.btn-0{
+  position: relative;
+  background-color: #ffc803; /* Darker violet */
+  color: rgb(0, 0, 0);
+  padding: 5px 19px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  left: -6%;
 }
 
-
-@@@
-
-edit-post modal.component.ts
-
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post.model';
-
-@Component({
-  selector: 'app-edit-post-modal',
-  templateUrl: './edit-post-modal.component.html',
-  standalone:false,
-  styleUrls: ['./edit-post-modal.component.css']
-})
-export class EditPostModalComponent {
-  editedPost: Post;
-
-  constructor(
-    public dialogRef: MatDialogRef<EditPostModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Post,
-    private postService: PostService
-  ) {
-    this.editedPost = { ...data }; // Create a copy to avoid modifying the original object
-  }
-
-  saveChanges(): void {
-    this.postService.editPost(this.editedPost).subscribe({
-      next: () => {
-        this.dialogRef.close(this.editedPost); // Pass updated data back
-      },
-      error: () => {
-        alert('Failed to update post');
-      }
-    });
-  }
-
-  closeModal(): void {
-    this.dialogRef.close();
-  }
+.btn-1{
+  position: relative;
+  background-color: #ffc803; /* Darker violet */
+  color: rgb(0, 0, 0);
+  padding: 5px 19px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  left: -3%;
 }
 
+.btn-2 {
+  position: relative;
+  background-color: #f50909bb; /* Darker violet */
+  color: rgb(0, 0, 0);
+  padding: 5px 19px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  left: -3%;
+  top: 10px; /* Adjust this value to move the button down */
+}
 
-
-editcomponent,html
-<h2 mat-dialog-title>Edit Post</h2>
-<div mat-dialog-content>
-  <mat-form-field appearance="outline">
-    <mat-label>Post Header</mat-label>
-    <input matInput [(ngModel)]="editedPost.post_header">
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Post Content</mat-label>
-    <textarea matInput [(ngModel)]="editedPost.post_content"></textarea>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Status</mat-label>
-    <input matInput [(ngModel)]="editedPost.status">
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Posted By</mat-label>
-    <input matInput [(ngModel)]="editedPost.posted_by">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="closeModal()">Cancel</button>
-  <button mat-button color="primary" (click)="saveChanges()">Save</button>
-</div>
-
-home.compoent.ts
+html for above css
 
 <div class="post-container">
 
@@ -433,7 +121,7 @@ home.compoent.ts
       <button class="btn-1" *ngIf="loggedIn" (click)="togglestatus(post)">
         {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
       </button>
-          <button *ngIf="loggedIn" routerLink="/dashboard" (click)="openEditDialog(post)" class="btn-1">Edit Post</button>
+          <button *ngIf="loggedIn" routerLink="/dashboard" class="btn-1">Edit Post</button>
           <button *ngIf="loggedIn" class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
         </div>
       </div>
@@ -446,181 +134,6 @@ home.compoent.ts
 
  
 
-home.compoent.ts
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
-import {Post} from '../../services/post.model'
-import { PostService } from '../../services/post.service';
-import { MatDialog } from '@angular/material/dialog';
-import { EditPostModalComponent } from '../edit-post-modal/edit-post-modal.component';
 
-
-@Component({
-  selector: 'app-home',
-  standalone: false,
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
-})
-export class HOMEComponent implements OnInit{
-
-    posts: Post[]=[];
-    public loggedIn=false;
-  
-    constructor(private readonly loginService:LoginService, private postService:PostService,private dialog:MatDialog){}
-    ngOnInit(): void {
-      this.loggedIn=this.loginService.isLoggedIn();
-      this.loadPosts();
-
-    }
-
-    loadPosts(){
-      this.postService.getPosts().subscribe(
-        (data: Post[])=>{
-          console.log('posts',data);
-          this.posts=data;
-        },
-      (error)=>{console.error('erro',error);}
-      );
-      
-    }
-
-    deletePost(postid:number){
-      if(confirm('are you sure?'))
-      {
-        this.postService.deletePost(postid).subscribe(()=>{
-          this.posts=this.posts.filter(pst => pst.post_id!==postid);
-        });
-      }
-    }
-
-
-    togglestatus(post:Post):void{
-      this.postService.togglestatus(post.post_id).subscribe((updatedPost)=>
-      {
-        post.status=updatedPost.status;
-      });
-    }
-
-
-    openEditDialog(post: Post): void {
-      const dialogRef = this.dialog.open(EditPostModalComponent, {
-        width: '400px',
-        data: post
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.posts = this.posts.map(p => (p.post_id === result.post_id ? result : p));
-        }
-      });
-    }
-  
-}
-
-
-post.service
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {Post} from './post.model';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class PostService {
-
-  private apiUrlt='http://localhost:8080/api/posts/all';
-  private posturl='http://localhost:8080/api/posts/create';
-  private deleteurl='http://localhost:8080/api/posts/delete';
-  private editurl='http://localhost:8080/api/posts/edit';
-  private toggleurl='http://localhost:8080/api/posts/togglestatus';
-
-  constructor(private http:HttpClient) { }
-
-  getPosts(): Observable<Post[]>{
-    return this.http.get<Post[]>(this.apiUrlt);
-  }
-
-  togglestatus(post_id:number):Observable<any>{
-    return this.http.put(`${this.toggleurl}/${post_id}`,{});
-  }
-
-  createPost(data:any):Observable<any>{
-    return this.http.post(this.posturl,data);
-  }
-
-  editPost(post:Post):Observable<any>{
-    return this.http.put(`${this.editurl}/${post.post_id}`,post);
-  }
-
-  deletePost(postid: number ):Observable<any>{
-    return this.http.delete(`${this.deleteurl}/${postid}`)
-  }
-
-
-}
-
-
-a[pp module
-
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HOMEComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from './interceptors/jwt-interceptor.service';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { EmployeeModalComponent } from './components/employee-modal/employee-modal.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { NewPostComponent } from './components/new-post/new-post.component';
-import { EditPostModalComponent } from './components/edit-post-modal/edit-post-modal.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-
-
-
-
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavbarComponent,
-    HOMEComponent,
-    DashboardComponent,
-    EmployeeModalComponent,
-    LandingPageComponent,
-    NewPostComponent,
-    EditPostModalComponent,
-    AdminDashboardComponent
-    
-    
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule
-  ],
-  providers: [{provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-
-
-
-fix my edit modal is not working its not making changes in database and give css for modal 
-
-
+make post by status and time in a 3d white box with littel shadow
+ and heading should only have yellow backround make changes like this to css
