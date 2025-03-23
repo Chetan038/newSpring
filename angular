@@ -1,3 +1,18 @@
+getPostById(postId: string): Observable<Post> {
+  return this.http.get<Post>(`http://localhost:8080/api/posts/${postId}`);
+}
+
+
+@@
+
+<button class="btn-1" [routerLink]="['/edit', post.post_id]">Edit Post</button>
+
+@@@
+
+
+<button type="submit" (click)="submitPostForm()">{{ isEditing ? 'Update Post' : 'Create Post' }}</button>
+@@@
+
 import { Component, Input, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { Post } from '../../services/post.model';
