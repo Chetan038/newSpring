@@ -1,3 +1,18 @@
+Type '{ post_id: number; post_header: string; post_content: string; status: string; posted_by: string; posted_at: string; }' is not assignable to type '{ post_id: string; post_header: string; post_content: string; status: string; posted_by: string; posted_at: string; }'.
+  Types of property 'post_id' are incompatible.
+    Type 'number' is not assignable to type 'string'.ts(2322)
+(property) NewPostComponent.post: {
+    post_id: string;
+    post_header: string;
+    post_content: string;
+    status: string;
+    posted_by: string;
+    posted_at: string;
+
+
+@@@
+
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
