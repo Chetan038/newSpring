@@ -1,3 +1,78 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-new-post',
+  standalone: false,
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.css'
+})
+export class NewPostComponent implements OnInit {
+ 
+  @Input() post: Post = {
+    post_id: '',
+    post_header: '',
+    post_content: '',
+    status: '',
+    posted_by: '',
+    posted_at: ''
+  };
+
+  responseMessage: string = '';
+  isEditing: boolean = false;
+
+  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    // Check if we are in edit mode (URL contains post_id)
+    this.route.paramMap.subscribe(params => {
+      const postId = params.get('id');
+      if (postId) {
+        this.isEditing = true;
+        this.loadPost(postId);
+      }
+    });
+  }
+
+  loadPost(postId: string) {
+    this.postService.getPostById(postId).subscribe(postData => {
+      this.post = postData; // Populate form fields
+    });
+  }
+
+  submitPostForm() {
+    if (this.isEditing) {
+      // Edit existing post
+      this.postService.editPost(this.post).subscribe({
+        next: () => {
+          this.responseMessage = 'Post updated successfully!';
+          this.router.navigate(['/home']); // Redirect to home after edit
+        },
+        error: () => {
+          this.responseMessage = 'Failed to update post!';
+        }
+      });
+    } else {
+      // Create new post
+      this.postService.createPost(this.post).subscribe({
+        next: () => {
+          this.responseMessage = 'Post created successfully!';
+          this.router.navigate(['/home']); // Redirect to home after creation
+        },
+        error: () => {
+          this.responseMessage = 'Failed to submit post!';
+        }
+      });
+    }
+  }
+}
+
+@@
+
+
+
 this is my new post component.ts
 
 import { Component } from '@angular/core';
