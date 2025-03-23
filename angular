@@ -1,52 +1,355 @@
-Post ID: 2
-Post Header: Implemented User Authentication with JWT
-Post Content: We have integrated JWT-based authentication to enhance security. Now, users need to log in using their credentials, and an access token is generated for session management. This prevents unauthorized access to sensitive sections of the website.
-Posted by: John Doe
+this is my new post component.ts
 
-Post ID: 3
-Post Header: Added Role-Based Access Control (RBAC)
-Post Content: The system now supports different user roles such as Admin, Manager, and Employee. Each role has specific access rights, ensuring that only authorized personnel can access or modify critical data. This enhances security and data integrity.
-Posted by: Jane Smith
+import { Component } from '@angular/core';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
 
-Post ID: 4
-Post Header: Enhanced Employee Data Search and Filtering
-Post Content: We have introduced an advanced search and filtering system in the Employee Management section. Users can now search for employees by name, department, or role and apply multiple filters for quick data retrieval. This improves efficiency in managing large datasets.
-Posted by: Alex Johnson
-
-Post ID: 5
-Post Header: Implemented Audit Logging for User Actions
-Post Content: A new audit logging feature has been added to track user actions. Every login, update, or deletion is recorded with timestamps. This helps in monitoring system activities and ensures accountability.
-Posted by: Emily Brown
-
-Let me know if you need more examples or specific features related to your project! 🚀
+@Component({
+  selector: 'app-new-post',
+  standalone: false,
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.css'
+})
 
 
+export class NewPostComponent {
+ 
+  posts : Post[]=[];
+
+  post={
+    post_id : '',
+    post_header : '',
+    post_content : '',
+    status: '',
+    posted_by:'',
+    posted_at: '' 
+  };
+
+  responseMessage:string='';
+
+  constructor(private postService:PostService){}
+
+  submitpostForm(){
+    if(this.post.post_id)
+    {
+      this.postService.createPost(this.post).subscribe({
+        next:(Response)=>{
+          this.responseMessage='sent';
+          this.post={ post_id : '',
+            post_header : '',
+            post_content : '',
+            status: '',
+            posted_by:'',
+            posted_at: '' };
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to submit data!';
+        }});
+      
+      
+    }
+
+  }
 
 
 
 
 
-You said:
-give more 4 
-ChatGPT said:
-Here are four more feature update posts for your project website:
+}
 
-Post ID: 6
-Post Header: Integrated Email Notifications for User Actions
-Post Content: We have added an automated email notification system. Users will now receive email alerts for important actions such as account registration, password changes, and admin updates. This improves communication and security.
-Posted by: Michael Lee
 
-Post ID: 7
-Post Header: Implemented Dark Mode for Better User Experience
-Post Content: A new Dark Mode feature is now available! Users can switch between Light and Dark themes for better readability and reduced eye strain, especially during long working hours. This setting is saved for future sessions.
-Posted by: Sarah Williams
+new post component .html
 
-Post ID: 8
-Post Header: Added Export to Excel and PDF for Reports
-Post Content: Users can now export reports in Excel and PDF formats. This feature allows easy sharing and offline access to employee records, attendance reports, and other critical data.
-Posted by: David Carter
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
 
-Post ID: 9
-Post Header: Improved Performance with Database Optimization
-Post Content: We have optimized database queries and indexing, significantly improving the speed of data retrieval. Large datasets now load faster, ensuring a smoother experience for all users.
-Posted by: Jessica Miller
+        /* Form Container */
+        .container {
+            width: 60%;
+            background: rgba(226, 192, 21, 0.596);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 85%;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #000000;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background: #ffea01;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e6b800;
+        }
+
+        .cancel-btn {
+            background: #ff1515;
+        }
+
+        .cancel-btn:hover {
+            background: #a9a9a9;
+        }
+
+        /* Right-side Background */
+        .image-space {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 950px;
+            
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="postId">Post ID</label>
+                <input type="text" id="postId" name="postId"  [(ngModel)]="post.post_id" required >
+            </div>
+            
+            <div class="form-group">
+                <label for="postHeader">Post Header</label>
+                <input type="text" id="postHeader"  name="postHeader" [(ngModel)]="post.post_header" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">Post Content</label>
+                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input type="text" id="status"  name="status" [(ngModel)]="post.status" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postedBy">Posted By</label>
+                <input type="text" id="postedBy" name="postedBy"  [(ngModel)]="post.posted_by" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit"  (click)="submitpostForm()" routerLink="/home" >Submit</button>
+                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+        
+        <div class="illustration">
+            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface" />
+        </div>
+
+        <div class="illustrationn">
+            <img src="" />
+        </div>
+    </div>
+    <p *ngIf="responseMessage">{{ responseMessage }}</p>
+    
+
+</body>
+</html>
+
+
+
+home compoent .html
+<div class="post-container">
+  <div class="post-row">
+    <ng-container *ngFor="let post of posts">
+      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
+        <div class="post-header">
+          <h3>{{ post.post_header }}</h3>
+        </div>
+
+        <div class="post-info">
+          <p class="posted-by" *ngIf="loggedIn"><strong>Posted ID:</strong> {{ post.post_id}}</p>
+          <p class="posted-by"><strong>Posted by:</strong> {{ post.posted_by }}</p>
+          <p class="post-time"><strong>Posted at:</strong> {{ post.posted_at | date:'MMM d, y h:mm a' }}</p>
+        </div>
+
+        <div class="post-content">
+          <p>{{ post.post_content }}</p>
+        </div>
+
+        <!-- Buttons only for logged-in users -->
+        <div class="post-buttons" *ngIf="loggedIn">
+          <button class="btn-1" (click)="togglestatus(post)">
+            {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+          </button>
+          <button class="btn-1" routerLink="/dashboard">Edit Post</button>
+          <button class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+home component.ts
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login.service';
+import {Post} from '../../services/post.model'
+import { PostService } from '../../services/post.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditPostModalComponent } from '../edit-post-modal/edit-post-modal.component';
+
+
+@Component({
+  selector: 'app-home',
+  standalone: false,
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HOMEComponent implements OnInit{
+
+    posts: Post[]=[];
+    public loggedIn=false;
+  
+    constructor(private readonly loginService:LoginService, private postService:PostService,private dialog:MatDialog){}
+    ngOnInit(): void {
+      this.loggedIn=this.loginService.isLoggedIn();
+      this.loadPosts();
+
+    }
+
+    loadPosts(){
+      this.postService.getPosts().subscribe(
+        (data: Post[])=>{
+          console.log('posts',data);
+          this.posts=data;
+        },
+      (error)=>{console.error('erro',error);}
+      );
+      
+    }
+
+    deletePost(postid:number){
+      if(confirm('are you sure?'))
+      {
+        this.postService.deletePost(postid).subscribe(()=>{
+          this.posts=this.posts.filter(pst => pst.post_id!==postid);
+        });
+      }
+    }
+
+
+    togglestatus(post:Post):void{
+      this.postService.togglestatus(post.post_id).subscribe((updatedPost)=>
+      {
+        post.status=updatedPost.status;
+      });
+    }
+
+
+  
+}
+
+
+post service .ts
+      import { HttpClient } from '@angular/common/http';
+      import { Injectable } from '@angular/core';
+      import { Observable } from 'rxjs';
+      import {Post} from './post.model';
+
+      @Injectable({
+        providedIn: 'root'
+      })
+      export class PostService {
+
+        private apiUrlt='http://localhost:8080/api/posts/all';
+        private posturl='http://localhost:8080/api/posts/create';
+        private deleteurl='http://localhost:8080/api/posts/delete';
+        private editurl='http://localhost:8080/api/posts/edit';
+        private toggleurl='http://localhost:8080/api/posts/togglestatus';
+
+        constructor(private http:HttpClient) { }
+
+        getPosts(): Observable<Post[]>{
+          return this.http.get<Post[]>(this.apiUrlt);
+        }
+
+        togglestatus(post_id:number):Observable<any>{
+          return this.http.put(`${this.toggleurl}/${post_id}`,{});
+        }
+
+        createPost(data:any):Observable<any>{
+          return this.http.post(this.posturl,data);
+        }
+
+        editPost(post:Post):Observable<Post>{
+          return this.http.put<Post>(`${this.editurl}/${post.post_id}`,post);
+        }
+
+        deletePost(postid: number ):Observable<any>{
+          return this.http.delete(`${this.deleteurl}/${postid}`)
+        }
+
+
+      }
+
+
+i want to make edit post feature for the edit button in home compoent .ts 
+
+resue the the new post component for edit post component and also display values on edit compent when edit button is pressed 
+
+guide step by step
