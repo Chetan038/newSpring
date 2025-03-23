@@ -1,3 +1,54 @@
+import { Component, Input } from '@angular/core';
+import { Post } from '../../services/post.model';
+import { PostService } from '../../services/post.service';
+
+@Component({
+  selector: 'app-new-post',
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.css'
+})
+export class NewPostComponent {
+
+  @Input() post: Post = {
+    post_id: null, // Set as null instead of empty string
+    post_header: '',
+    post_content: '',
+    status: '',
+    posted_by: '',
+    posted_at: ''
+  };
+
+  responseMessage: string = '';
+
+  constructor(private postService: PostService) {}
+
+  submitpostForm() {
+    if (this.post.post_id !== null) { // Check for non-null value
+      this.postService.createPost(this.post).subscribe({
+        next: (response) => {
+          this.responseMessage = 'Sent';
+          this.post = {
+            post_id: null, // Reset to null instead of empty string
+            post_header: '',
+            post_content: '',
+            status: '',
+            posted_by: '',
+            posted_at: ''
+          };
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to submit data!';
+        }
+      });
+    }
+  }
+}
+
+
+
+###
+
+
 Type 'string' is not assignable to type 'number'.ts(2322)
 post.model.ts(2, 5): The expected type comes from property 'post_id' which is declared here on type 'Post'
 (property) Post.post_id: number
