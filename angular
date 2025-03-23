@@ -1,3 +1,104 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
+
+@Component({
+  selector: 'app-new-post',
+  standalone: false,
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.css'
+})
+export class NewPostComponent implements OnInit {
+ 
+  posts: Post[] = [];
+  isEditMode = false;
+
+  post = {
+    post_id: '',
+    post_header: '',
+    post_content: '',
+    status: '',
+    posted_by: '',
+    posted_at: '' 
+  };
+
+  responseMessage: string = '';
+
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Check if we're in edit mode by looking for a post ID in the URL
+    this.route.params.subscribe(params => {
+      const postId = params['id'];
+      if (postId) {
+        this.isEditMode = true;
+        // Get the post data for editing
+        this.postService.getPosts().subscribe(posts => {
+          this.posts = posts;
+          const postToEdit = this.posts.find(p => p.post_id === postId);
+          if (postToEdit) {
+            this.post = { ...postToEdit };
+          } else {
+            this.responseMessage = 'Post not found!';
+          }
+        });
+      }
+    });
+  }
+
+  submitPostForm() {
+    if (this.isEditMode) {
+      // Update existing post
+      this.postService.editPost(this.post).subscribe({
+        next: (response) => {
+          this.responseMessage = 'Post updated successfully!';
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 1500);
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to update post!';
+        }
+      });
+    } else {
+      // Create new post
+      if (this.post.post_id) {
+        this.postService.createPost(this.post).subscribe({
+          next: (response) => {
+            this.responseMessage = 'Post created successfully!';
+            this.post = {
+              post_id: '',
+              post_header: '',
+              post_content: '',
+              status: '',
+              posted_by: '',
+              posted_at: ''
+            };
+            setTimeout(() => {
+              this.router.navigate(['/home']);
+            }, 1500);
+          },
+          error: (error) => {
+            this.responseMessage = 'Failed to submit data!';
+          }
+        });
+      }
+    }
+  }
+
+  cancelForm() {
+    this.router.navigate(['/home']);
+  }
+}
+
+
+@@@@
+
 import { Component, Input } from '@angular/core';
 import { Post } from '../../services/post.model';
 import { PostService } from '../../services/post.service';
