@@ -1,3 +1,178 @@
+!!!
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
+
+@Component({
+  selector: 'app-new-post',
+  standalone: false,
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.css'
+})
+export class NewPostComponent implements OnInit {
+ 
+  posts: Post[] = [];
+  isEditMode = false;
+  statusValue : string="ACTIVE";
+
+  post = {
+    post_id: null,  // Changed to null for new posts
+    post_header: '',
+    post_content: '',
+    status: 'ACTIVE',
+    posted_by: '',
+    posted_at: '' 
+  };
+
+  responseMessage: string = '';
+
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Check if we're in edit mode by looking for a post ID in the URL
+    this.route.params.subscribe(params => {
+      const postId = params['id'];
+      if (postId) {
+        this.isEditMode = true;
+        // Convert postId to number before using it
+        const numericPostId = Number(postId);
+        
+        // Get the post data for editing
+        this.postService.getPosts().subscribe(posts => {
+          this.posts = posts;
+          const postToEdit = this.posts.find(p => p.post_id === numericPostId);
+          if (postToEdit) {
+            // Make a type-safe copy
+            this.post = {
+              post_id: postToEdit.post_id,
+              post_header: postToEdit.post_header,
+              post_content: postToEdit.post_content,
+              status: postToEdit.status,
+              posted_by: postToEdit.posted_by,
+              posted_at: postToEdit.posted_at
+            };
+          } else {
+            this.responseMessage = 'Post not found!';
+          }
+        });
+      }
+    });
+  }
+
+  submitPostForm() {
+    if (this.isEditMode) {
+      // Update existing post
+      this.postService.editPost(this.post as Post).subscribe({
+        next: (response) => {
+          this.responseMessage = 'Post updated successfully!';
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 1500);
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to update post!';
+          console.error('Error updating post:', error);
+        }
+      });
+    } else {
+      // Create new post - no need to check if post_id exists since it will be auto-generated
+      this.postService.createPost(this.post).subscribe({
+        next: (response) => {
+          this.responseMessage = 'Post created successfully!';
+          this.post = {
+            post_id: null,
+            post_header: '',
+            post_content: '',
+            status: 'ACTIVE',
+            posted_by: '',
+            posted_at: ''
+          };
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 1500);
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to submit data!';
+          console.error('Error creating post:', error);
+        }
+      });
+    }
+  }
+
+  cancelForm() {
+    this.router.navigate(['/home']);
+  }
+}
+
+
+@@@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <!-- Only show Post ID field in edit mode -->
+            <div class="form-group" *ngIf="isEditMode">
+                <label for="postId">Post ID</label>
+                <input type="text" id="postId" name="postId" [(ngModel)]="post.post_id" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="postHeader">Post Header</label>
+                <input type="text" id="postHeader" name="postHeader" [(ngModel)]="post.post_header" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">Post Content</label>
+                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
+            </div>
+
+            <div class="form-group" *ngIf="isEditMode">
+                <label for="status">Status</label>
+                <select id="status" name="status" [(ngModel)]="post.status">
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="postedBy">Posted By</label>
+                <input type="text" id="postedBy" name="postedBy" [(ngModel)]="post.posted_by" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" (click)="submitPostForm()">{{isEditMode ? 'Update' : 'Submit'}}</button>
+                <button type="button" (click)="cancelForm()" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+        
+        <div class="illustration">
+            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface" />
+        </div>
+
+        <div class="illustrationn">
+            <img src="" />
+        </div>
+    </div>
+    <p *ngIf="responseMessage">{{ responseMessage }}</p>
+</body>
+</html>
+
+@@
+
 
 newpost  compooent .html
 <!DOCTYPE html>
