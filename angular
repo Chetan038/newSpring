@@ -1,3 +1,10 @@
+Form submission canceled because the form is not connected
+new-post.component.ts:84 
+            
+            
+            POST http://localhost:8080/api/posts/create 400 (Bad Request)
+
+
 Post ID
  
  
