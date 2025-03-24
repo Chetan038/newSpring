@@ -34,6 +34,77 @@
 }
 .offer-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+.offer-card {
+    width: 300px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.offer-card img {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.offer-card h3 {
+    margin: 15px 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+.offer-card p {
+    font-size: 0.9rem;
+    color: #666;
+}
+</style>
+
+
+
+###
+
+<section class="offer-section">
+    <h2>What We Offer</h2>
+    <p>I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.</p>
+    
+    <div class="offer-container">
+        <div class="offer-card">
+            <img src="image1.png" alt="Workflows That Work">
+            <h3>Workflows That Work</h3>
+            <p>I'm a paragraph. Click here to add your own text and edit me.</p>
+        </div>
+        <div class="offer-card">
+            <img src="image2.png" alt="All-In-One Solution">
+            <h3>All-In-One Solution</h3>
+            <p>I'm a paragraph. Click here to add your own text and edit me.</p>
+        </div>
+        <div class="offer-card">
+            <img src="image3.png" alt="Comprehensive Customer Support">
+            <h3>Comprehensive Customer Support</h3>
+            <p>I'm a paragraph. Click here to add your own text and edit me.</p>
+        </div>
+        <div class="offer-card">
+            <img src="image4.png" alt="Smart Automation Tools">
+            <h3>Smart Automation Tools</h3>
+            <p>I'm a paragraph. Click here to add your own text and edit me.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.offer-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff;
+}
+.offer-container {
+    display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
