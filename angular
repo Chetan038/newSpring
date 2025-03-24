@@ -1,739 +1,191 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post.model';
-
-@Component({
-  selector: 'app-new-post',
-  standalone: false,
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.css'
-})
-export class NewPostComponent implements OnInit {
- 
-  posts: Post[] = [];
-  isEditMode = false;
-
-  // Adjust the type of post_id to match your Post model (number)
-  post = {
-    post_id: 0, // Changed from string to number
-    post_header: '',
-    post_content: '',
-    status: '',
-    posted_by: '',
-    posted_at: '' 
-  };
-
-  responseMessage: string = '';
-
-  constructor(
-    private postService: PostService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    // Check if we're in edit mode by looking for a post ID in the URL
-    this.route.params.subscribe(params => {
-      const postId = params['id'];
-      if (postId) {
-        this.isEditMode = true;
-        // Convert postId to number before using it
-        const numericPostId = Number(postId);
-        
-        // Get the post data for editing
-        this.postService.getPosts().subscribe(posts => {
-          this.posts = posts;
-          const postToEdit = this.posts.find(p => p.post_id === numericPostId);
-          if (postToEdit) {
-            // Make a type-safe copy
-            this.post = {
-              post_id: postToEdit.post_id,
-              post_header: postToEdit.post_header,
-              post_content: postToEdit.post_content,
-              status: postToEdit.status,
-              posted_by: postToEdit.posted_by,
-              posted_at: postToEdit.posted_at
-            };
-          } else {
-            this.responseMessage = 'Post not found!';
-          }
-        });
-      }
-    });
-  }
-
-  submitPostForm() {
-    if (this.isEditMode) {
-      // Update existing post
-      this.postService.editPost(this.post as Post).subscribe({
-        next: (response) => {
-          this.responseMessage = 'Post updated successfully!';
-          setTimeout(() => {
-            this.router.navigate(['/home']);
-          }, 1500);
-        },
-        error: (error) => {
-          this.responseMessage = 'Failed to update post!';
-        }
-      });
-    } else {
-      // Create new post
-      if (this.post.post_id) {
-        this.postService.createPost(this.post).subscribe({
-          next: (response) => {
-            this.responseMessage = 'Post created successfully!';
-            this.post = {
-              post_id: 0, // Changed from empty string to 0
-              post_header: '',
-              post_content: '',
-              status: '',
-              posted_by: '',
-              posted_at: ''
-            };
-            setTimeout(() => {
-              this.router.navigate(['/home']);
-            }, 1500);
-          },
-          error: (error) => {
-            this.responseMessage = 'Failed to submit data!';
-          }
-        });
-      }
-    }
-  }
-
-  cancelForm() {
-    this.router.navigate(['/home']);
-  }
-}
-@@@@@
-
-
-Type '{ post_id: number; post_header: string; post_content: string; status: string; posted_by: string; posted_at: string; }' is not assignable to type '{ post_id: string; post_header: string; post_content: string; status: string; posted_by: string; posted_at: string; }'.
-  Types of property 'post_id' are incompatible.
-    Type 'number' is not assignable to type 'string'.ts(2322)
-(property) NewPostComponent.post: {
-    post_id: string;
-    post_header: string;
-    post_content: string;
-    status: string;
-    posted_by: string;
-    posted_at: string;
-
-
-@@@
-
-
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post.model';
-
-@Component({
-  selector: 'app-new-post',
-  standalone: false,
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.css'
-})
-export class NewPostComponent implements OnInit {
- 
-  posts: Post[] = [];
-  isEditMode = false;
-
-  post = {
-    post_id: '',
-    post_header: '',
-    post_content: '',
-    status: '',
-    posted_by: '',
-    posted_at: '' 
-  };
-
-  responseMessage: string = '';
-
-  constructor(
-    private postService: PostService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    // Check if we're in edit mode by looking for a post ID in the URL
-    this.route.params.subscribe(params => {
-      const postId = params['id'];
-      if (postId) {
-        this.isEditMode = true;
-        // Get the post data for editing
-        this.postService.getPosts().subscribe(posts => {
-          this.posts = posts;
-          const postToEdit = this.posts.find(p => p.post_id === postId);
-          if (postToEdit) {
-            this.post = { ...postToEdit };
-          } else {
-            this.responseMessage = 'Post not found!';
-          }
-        });
-      }
-    });
-  }
-
-  submitPostForm() {
-    if (this.isEditMode) {
-      // Update existing post
-      this.postService.editPost(this.post).subscribe({
-        next: (response) => {
-          this.responseMessage = 'Post updated successfully!';
-          setTimeout(() => {
-            this.router.navigate(['/home']);
-          }, 1500);
-        },
-        error: (error) => {
-          this.responseMessage = 'Failed to update post!';
-        }
-      });
-    } else {
-      // Create new post
-      if (this.post.post_id) {
-        this.postService.createPost(this.post).subscribe({
-          next: (response) => {
-            this.responseMessage = 'Post created successfully!';
-            this.post = {
-              post_id: '',
-              post_header: '',
-              post_content: '',
-              status: '',
-              posted_by: '',
-              posted_at: ''
-            };
-            setTimeout(() => {
-              this.router.navigate(['/home']);
-            }, 1500);
-          },
-          error: (error) => {
-            this.responseMessage = 'Failed to submit data!';
-          }
-        });
-      }
-    }
-  }
-
-  cancelForm() {
-    this.router.navigate(['/home']);
-  }
-}
-
-
-@@@@
-
-import { Component, Input } from '@angular/core';
-import { Post } from '../../services/post.model';
-import { PostService } from '../../services/post.service';
-
-@Component({
-  selector: 'app-new-post',
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.css'
-})
-export class NewPostComponent {
-
-  @Input() post: Post = {
-    post_id: null, // Set as null instead of empty string
-    post_header: '',
-    post_content: '',
-    status: '',
-    posted_by: '',
-    posted_at: ''
-  };
-
-  responseMessage: string = '';
-
-  constructor(private postService: PostService) {}
-
-  submitpostForm() {
-    if (this.post.post_id !== null) { // Check for non-null value
-      this.postService.createPost(this.post).subscribe({
-        next: (response) => {
-          this.responseMessage = 'Sent';
-          this.post = {
-            post_id: null, // Reset to null instead of empty string
-            post_header: '',
-            post_content: '',
-            status: '',
-            posted_by: '',
-            posted_at: ''
-          };
-        },
-        error: (error) => {
-          this.responseMessage = 'Failed to submit data!';
-        }
-      });
-    }
-  }
-}
-
-
-
-###
-
-
-Type 'string' is not assignable to type 'number'.ts(2322)
-post.model.ts(2, 5): The expected type comes from property 'post_id' which is declared here on type 'Post'
-(property) Post.post_id: number
-
-this erro is showin in new post compnent ts in posid of 
- @Input() post: Post = {
-    post_id: '',/// it shwing error here
-    post_header: '',
-    post_content: '',
-    status: '',
-    posted_by: '',
-    posted_at: ''
-  };
-
-
-getPostById(postId: string): Observable<Post> {
-  return this.http.get<Post>(`http://localhost:8080/api/posts/${postId}`);
-}
-
-
-@@
-
-<button class="btn-1" [routerLink]="['/edit', post.post_id]">Edit Post</button>
-
-@@@
-
-
-<button type="submit" (click)="submitPostForm()">{{ isEditing ? 'Update Post' : 'Create Post' }}</button>
-@@@
-
-import { Component, Input, OnInit } from '@angular/core';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post.model';
-import { ActivatedRoute, Router } from '@angular/router';
-
-@Component({
-  selector: 'app-new-post',
-  standalone: false,
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.css'
-})
-export class NewPostComponent implements OnInit {
- 
-  @Input() post: Post = {
-    post_id: '',
-    post_header: '',
-    post_content: '',
-    status: '',
-    posted_by: '',
-    posted_at: ''
-  };
-
-  responseMessage: string = '';
-  isEditing: boolean = false;
-
-  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) {}
-
-  ngOnInit(): void {
-    // Check if we are in edit mode (URL contains post_id)
-    this.route.paramMap.subscribe(params => {
-      const postId = params.get('id');
-      if (postId) {
-        this.isEditing = true;
-        this.loadPost(postId);
-      }
-    });
-  }
-
-  loadPost(postId: string) {
-    this.postService.getPostById(postId).subscribe(postData => {
-      this.post = postData; // Populate form fields
-    });
-  }
-
-  submitPostForm() {
-    if (this.isEditing) {
-      // Edit existing post
-      this.postService.editPost(this.post).subscribe({
-        next: () => {
-          this.responseMessage = 'Post updated successfully!';
-          this.router.navigate(['/home']); // Redirect to home after edit
-        },
-        error: () => {
-          this.responseMessage = 'Failed to update post!';
-        }
-      });
-    } else {
-      // Create new post
-      this.postService.createPost(this.post).subscribe({
-        next: () => {
-          this.responseMessage = 'Post created successfully!';
-          this.router.navigate(['/home']); // Redirect to home after creation
-        },
-        error: () => {
-          this.responseMessage = 'Failed to submit post!';
-        }
-      });
-    }
-  }
-}
-
-@@
-
-
-
-this is my new post component.ts
-
-import { Component } from '@angular/core';
-import { PostService } from '../../services/post.service';
-import { Post } from '../../services/post.model';
-
-@Component({
-  selector: 'app-new-post',
-  standalone: false,
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.css'
-})
-
-
-export class NewPostComponent {
- 
-  posts : Post[]=[];
-
-  post={
-    post_id : '',
-    post_header : '',
-    post_content : '',
-    status: '',
-    posted_by:'',
-    posted_at: '' 
-  };
-
-  responseMessage:string='';
-
-  constructor(private postService:PostService){}
-
-  submitpostForm(){
-    if(this.post.post_id)
-    {
-      this.postService.createPost(this.post).subscribe({
-        next:(Response)=>{
-          this.responseMessage='sent';
-          this.post={ post_id : '',
-            post_header : '',
-            post_content : '',
-            status: '',
-            posted_by:'',
-            posted_at: '' };
-        },
-        error: (error) => {
-          this.responseMessage = 'Failed to submit data!';
-        }});
-      
-      
-    }
-
-  }
-
-
-
-
-
-}
-
-
-new post component .html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Submission Form</title>
+    <title>WeDu - Project Management</title>
+
     <style>
-        /* General Styles */
+        /* General Page Styling 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffffff);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 90vh;
-        }
-
-        /* Form Container */
-        .container {
-            width: 60%;
-            background: rgba(226, 192, 21, 0.596);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            position: relative;
-            height: 85%;
-        }
-
-        /* Form Fields */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            color: #000000;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ffd700;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        textarea {
-            height: 120px;
-            resize: none;
-        }
-
-        /* Buttons */
-        .button-group {
-            margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        button {
-            background: #ffea01;
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #e6b800;
-        }
-
-        .cancel-btn {
-            background: #ff1515;
-        }
-
-        .cancel-btn:hover {
-            background: #a9a9a9;
-        }
-
-        /* Right-side Background */
-        .image-space {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 150px;
-            height: 950px;
-            
-            background-size: contain;
-            opacity: 0.3;
-        }
-
-    </style>
+            background: linear-gradient(135deg, #ffffffd3, #b38b07d8); 
+          
+        }*/
+        </style>
+   
 </head>
 <body>
-
     <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="postId">Post ID</label>
-                <input type="text" id="postId" name="postId"  [(ngModel)]="post.post_id" required >
+        <div class="content">
+            <h1 class="headline">Communicate.<br>Collaborate. Create.</h1>
+            <p class="subheading">ISS provides an effective and powerful way to manage your Commits</p>
+            <a routerLink="/home" class="cta-button">Get Started</a>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14H11V21L20 10H13Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <strong>Speed &</strong>
+                        <span>Security</span>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="13" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="3" y="13" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="13" y="13" width="8" height="8" rx="2" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <strong>Flexibility &</strong>
+                        <span>Scalability</span>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <rect x="13" y="3" width="8" height="8" rx="2" fill="white"/>
+                            <path d="M7 17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17C17 19.7614 14.7614 22 12 22C9.23858 22 7 19.7614 7 17Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <strong>Better</strong>
+                        <span>Collaboration</span>
+                    </div>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="postHeader">Post Header</label>
-                <input type="text" id="postHeader"  name="postHeader" [(ngModel)]="post.post_header" required>
-            </div>
-
-            <div class="form-group">
-                <label for="postContent">Post Content</label>
-                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="status">Status</label>
-                <input type="text" id="status"  name="status" [(ngModel)]="post.status" required>
-            </div>
-
-            <div class="form-group">
-                <label for="postedBy">Posted By</label>
-                <input type="text" id="postedBy" name="postedBy"  [(ngModel)]="post.posted_by" required>
-            </div>
-
-            <div class="button-group">
-                <button type="submit"  (click)="submitpostForm()" routerLink="/home" >Submit</button>
-                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
-            </div>
-        </form>
-        
-        <div class="illustration">
-            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface" />
         </div>
-
-        <div class="illustrationn">
-            <img src="" />
+        <div class="illustration">
+            <img src="https://media.licdn.com/dms/image/sync/v2/D4E27AQFVUEopXWv1HA/articleshare-shrink_800/articleshare-shrink_800/0/1715649639700?e=2147483647&v=beta&t=RyjMZ7-2tD6MBNMqlHd4q9ZCNnXXICwRWKNHjsfMr-s" alt="People collaborating on a project interface" />
         </div>
     </div>
-    <p *ngIf="responseMessage">{{ responseMessage }}</p>
     
-
 </body>
 </html>
 
 
 
-home compoent .html
-<div class="post-container">
-  <div class="post-row">
-    <ng-container *ngFor="let post of posts">
-      <div class="post-card" *ngIf="post.status === 'ACTIVE' || loggedIn">
-        <div class="post-header">
-          <h3>{{ post.post_header }}</h3>
-        </div>
+this is css for
 
-        <div class="post-info">
-          <p class="posted-by" *ngIf="loggedIn"><strong>Posted ID:</strong> {{ post.post_id}}</p>
-          <p class="posted-by"><strong>Posted by:</strong> {{ post.posted_by }}</p>
-          <p class="post-time"><strong>Posted at:</strong> {{ post.posted_at | date:'MMM d, y h:mm a' }}</p>
-        </div>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
 
-        <div class="post-content">
-          <p>{{ post.post_content }}</p>
-        </div>
+body {
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: 70%;
+    padding: 20px;
+    background-color: #fff;
+   
+}
 
-        <!-- Buttons only for logged-in users -->
-        <div class="post-buttons" *ngIf="loggedIn">
-          <button class="btn-1" (click)="togglestatus(post)">
-            {{ post.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
-          </button>
-          <button class="btn-1" routerLink="/dashboard">Edit Post</button>
-          <button class="btn-2" (click)="deletePost(post.post_id)">Delete</button>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-</div>
+.container {
+    display: flex;
+    max-width: 1200px;
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
 
-home component.ts
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
-import {Post} from '../../services/post.model'
-import { PostService } from '../../services/post.service';
-import { MatDialog } from '@angular/material/dialog';
-import { EditPostModalComponent } from '../edit-post-modal/edit-post-modal.component';
+.content {
+    flex: 1;
+    max-width: 500px;
+}
 
+.headline {
+    font-size: 3.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #ffbf23;
+}
 
-@Component({
-  selector: 'app-home',
-  standalone: false,
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
-})
-export class HOMEComponent implements OnInit{
+.subheading {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
 
-    posts: Post[]=[];
-    public loggedIn=false;
-  
-    constructor(private readonly loginService:LoginService, private postService:PostService,private dialog:MatDialog){}
-    ngOnInit(): void {
-      this.loggedIn=this.loginService.isLoggedIn();
-      this.loadPosts();
+.cta-button {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    padding: 15px 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-bottom: 50px;
+}
 
+.cta-button:hover {
+    background-color:  #f4bc03d7; /* Slightly darker violet */
+    color: #000000ce;
+  }
+
+.features {
+    display: flex;
+    gap: 30px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.feature-text {
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.illustration {
+    flex: 1;
+    max-width: 600px;
+}
+
+.illustration img {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
     }
-
-    loadPosts(){
-      this.postService.getPosts().subscribe(
-        (data: Post[])=>{
-          console.log('posts',data);
-          this.posts=data;
-        },
-      (error)=>{console.error('erro',error);}
-      );
-      
+    
+    .features {
+        justify-content: center;
     }
-
-    deletePost(postid:number){
-      if(confirm('are you sure?'))
-      {
-        this.postService.deletePost(postid).subscribe(()=>{
-          this.posts=this.posts.filter(pst => pst.post_id!==postid);
-        });
-      }
-    }
-
-
-    togglestatus(post:Post):void{
-      this.postService.togglestatus(post.post_id).subscribe((updatedPost)=>
-      {
-        post.status=updatedPost.status;
-      });
-    }
-
-
-  
 }
 
 
-post service .ts
-      import { HttpClient } from '@angular/common/http';
-      import { Injectable } from '@angular/core';
-      import { Observable } from 'rxjs';
-      import {Post} from './post.model';
 
-      @Injectable({
-        providedIn: 'root'
-      })
-      export class PostService {
-
-        private apiUrlt='http://localhost:8080/api/posts/all';
-        private posturl='http://localhost:8080/api/posts/create';
-        private deleteurl='http://localhost:8080/api/posts/delete';
-        private editurl='http://localhost:8080/api/posts/edit';
-        private toggleurl='http://localhost:8080/api/posts/togglestatus';
-
-        constructor(private http:HttpClient) { }
-
-        getPosts(): Observable<Post[]>{
-          return this.http.get<Post[]>(this.apiUrlt);
-        }
-
-        togglestatus(post_id:number):Observable<any>{
-          return this.http.put(`${this.toggleurl}/${post_id}`,{});
-        }
-
-        createPost(data:any):Observable<any>{
-          return this.http.post(this.posturl,data);
-        }
-
-        editPost(post:Post):Observable<Post>{
-          return this.http.put<Post>(`${this.editurl}/${post.post_id}`,post);
-        }
-
-        deletePost(postid: number ):Observable<any>{
-          return this.http.delete(`${this.deleteurl}/${postid}`)
-        }
-
-
-      }
-
-
-i want to make edit post feature for the edit button in home compoent .ts 
-
-resue the the new post component for edit post component and also display values on edit compent when edit button is pressed 
-
-guide step by step
