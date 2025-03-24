@@ -1,3 +1,727 @@
+admin-dahsboard.ts
+import { Component, OnInit } from '@angular/core';
+import { Admin } from '../../services/admin.modal';
+import { AdminService } from '../../services/admin.service';
+
+@Component({
+  selector: 'app-admin-dashboard',
+  standalone: false,
+  templateUrl: './admin-dashboard.component.html',
+  styleUrl: './admin-dashboard.component.css'
+})
+export class AdminDashboardComponent implements OnInit {
+ 
+  admin: Admin[]=[];
+
+
+  constructor(private adminService:AdminService){}
+
+
+  ngOnInit(): void {
+ this.loadAdmin();  }
+
+  loadAdmin() {
+    this.adminService.getAllAdmins().subscribe((data:Admin[])=>{
+      this.admin=data;
+    });
+  }
+
+}
+
+home compoennt.ts
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login.service';
+import {Post} from '../../services/post.model'
+import { PostService } from '../../services/post.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { EditPostModalComponent } from '../edit-post-modal/edit-post-modal.component';
+
+
+@Component({
+  selector: 'app-home',
+  standalone: false,
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HOMEComponent implements OnInit{
+
+    posts: Post[]=[];
+    public loggedIn=false;
+  
+    constructor(private readonly loginService:LoginService, private postService:PostService,private dialog:MatDialog,private router:Router){}
+    ngOnInit(): void {
+      this.loggedIn=this.loginService.isLoggedIn();
+      this.loadPosts();
+
+    }
+
+    loadPosts(){
+      this.postService.getPosts().subscribe(
+        (data: Post[])=>{
+          console.log('posts',data);
+          this.posts=data;
+        },
+      (error)=>{console.error('erro',error);}
+      );
+      
+    }
+
+    deletePost(postid:number){
+      if(confirm('are you sure?'))
+      {
+        this.postService.deletePost(postid).subscribe(()=>{
+          this.posts=this.posts.filter(pst => pst.post_id!==postid);
+        });
+      }
+    }
+
+
+    togglestatus(post:Post):void{
+      this.postService.togglestatus(post.post_id).subscribe((updatedPost)=>
+      {
+        post.status=updatedPost.status;
+      });
+    }
+
+    editPost(postId:number){
+      this.router.navigate(['/new-post',postId]);
+    }
+
+
+  
+}
+
+login.component.ts
+
+
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  standalone: false,
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent implements OnInit{
+
+
+  public msg=false;
+
+  credentials={
+    email:'',
+    password:''
+  }
+  constructor(private readonly LoginServices:LoginService,private router:Router){}
+  ngOnInit(): void {
+    // 
+  
+    
+  }
+
+  onSubmit(){
+
+    if(this.credentials.email!=''&&this.credentials.password!='')
+    {
+      console.log("ok");       
+      this.LoginServices.generateToken(this.credentials)
+      .subscribe((Response:any)=>{console.log(Response.token);
+        this.LoginServices.logInUser(Response.token)
+       
+        this.router.navigate(['home']);
+        
+      })
+     
+     
+    }
+   
+    else{
+      this.msg=true;
+      console.log("not ok");
+    }
+    
+  }
+
+}
+
+newpost  compooent .html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        /* Form Container */
+        .container {
+            width: 60%;
+            background: rgba(226, 192, 21, 0.596);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 85%;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #000000;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background: #ffea01;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e6b800;
+        }
+
+        .cancel-btn {
+            background: #ff1515;
+        }
+
+        .cancel-btn:hover {
+            background: #a9a9a9;
+        }
+
+        /* Right-side Background */
+        .image-space {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 950px;
+            
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="postId">Post ID</label>
+                <input type="text" id="postId" name="postId"  [(ngModel)]="post.post_id" required [readOnly]="isEditMode">
+            </div>
+            
+            <div class="form-group">
+                <label for="postHeader">Post Header</label>
+                <input type="text" id="postHeader"  name="postHeader" [(ngModel)]="post.post_header" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">Post Content</label>
+                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
+            </div>
+
+            <div class="form-group">
+               
+                <label for="status" *ngIf="isEditMode">Status</label>
+                <select id="status"  name="status"  [(ngModel)]="post.status"  *ngIf="isEditMode">
+                
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
+                </select>
+
+               
+               
+            </div>
+
+            <div class="form-group">
+                <label for="postedBy">Posted By</label>
+                <input type="text" id="postedBy" name="postedBy"  [(ngModel)]="post.posted_by" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit"  (click)="submitPostForm()" routerLink="/home" >{{isEditMode?'update':'submit'}}</button>
+                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+        
+        <div class="illustration">
+            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface" />
+        </div>
+
+        <div class="illustrationn">
+            <img src="" />
+        </div>
+    </div>
+    <p *ngIf="responseMessage">{{ responseMessage }}</p>
+    
+
+</body>
+</html>
+
+
+new post component .ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PostService } from '../../services/post.service';
+import { Post } from '../../services/post.model';
+
+@Component({
+  selector: 'app-new-post',
+  standalone: false,
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.css'
+})
+export class NewPostComponent implements OnInit {
+ 
+  posts: Post[] = [];
+  isEditMode = false;
+  statusValue : string="ACTIVE";
+
+  // Adjust the type of post_id to match your Post model (number)
+  post = {
+    post_id: 0, // Changed from string to number
+    post_header: '',
+    post_content: '',
+    status: 'ACTIVE',
+    posted_by: '',
+    posted_at: '' 
+  };
+
+  responseMessage: string = '';
+
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Check if we're in edit mode by looking for a post ID in the URL
+    this.route.params.subscribe(params => {
+      const postId = params['id'];
+      if (postId) {
+        this.isEditMode = true;
+        // Convert postId to number before using it
+        const numericPostId = Number(postId);
+        
+        // Get the post data for editing
+        this.postService.getPosts().subscribe(posts => {
+          this.posts = posts;
+          const postToEdit = this.posts.find(p => p.post_id === numericPostId);
+          if (postToEdit) {
+            // Make a type-safe copy
+            this.post = {
+              post_id: postToEdit.post_id,
+              post_header: postToEdit.post_header,
+              post_content: postToEdit.post_content,
+              status: postToEdit.status,
+              posted_by: postToEdit.posted_by,
+              posted_at: postToEdit.posted_at
+            };
+          } else {
+            this.responseMessage = 'Post not found!';
+          }
+        });
+      }
+    });
+  }
+
+  submitPostForm() {
+    if (this.isEditMode) {
+      // Update existing post
+      this.postService.editPost(this.post as Post).subscribe({
+        next: (response) => {
+          this.responseMessage = 'Post updated successfully!';
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 1500);
+        },
+        error: (error) => {
+          this.responseMessage = 'Failed to update post!';
+        }
+      });
+    } else {
+      // Create new post
+      if (this.post.post_id) {
+        this.postService.createPost(this.post).subscribe({
+          next: (response) => {
+            this.responseMessage = 'Post created successfully!';
+            this.post = {
+              post_id: 0, // Changed from empty string to 0
+              post_header: '',
+              post_content: '',
+              status: '',
+              posted_by: '',
+              posted_at: ''
+            };
+            setTimeout(() => {
+              this.router.navigate(['/home']);
+            }, 1500);
+          },
+          error: (error) => {
+            this.responseMessage = 'Failed to submit data!';
+          }
+        });
+      }
+    }
+  }
+
+  cancelForm() {
+    this.router.navigate(['/home']);
+  }
+}
+
+post modal.ts
+export interface Post{
+    post_id : number;
+    post_header : string;
+    post_content : string;
+    status: string;
+    posted_by:string;
+    posted_at: string; 
+
+}
+post.service.ts
+      import { HttpClient } from '@angular/common/http';
+      import { Injectable } from '@angular/core';
+      import { Observable } from 'rxjs';
+      import {Post} from './post.model';
+
+      @Injectable({
+        providedIn: 'root'
+      })
+      export class PostService {
+
+        private apiUrlt='http://localhost:8080/api/posts/all';
+        private posturl='http://localhost:8080/api/posts/create';
+        private deleteurl='http://localhost:8080/api/posts/delete';
+        private editurl='http://localhost:8080/api/posts/edit';
+        private toggleurl='http://localhost:8080/api/posts/togglestatus';
+
+        constructor(private http:HttpClient) { }
+
+        getPosts(): Observable<Post[]>{
+          return this.http.get<Post[]>(this.apiUrlt);
+        }
+
+        togglestatus(post_id:number):Observable<any>{
+          return this.http.put(`${this.toggleurl}/${post_id}`,{});
+        }
+
+        createPost(data:any):Observable<any>{
+          return this.http.post(this.posturl,data);
+        }
+
+        editPost(post:Post):Observable<Post>{
+          return this.http.put<Post>(`${this.editurl}/${post.post_id}`,post);
+        }
+
+        deletePost(postid: number ):Observable<any>{
+          return this.http.delete(`${this.deleteurl}/${postid}`)
+        }
+
+        getPostById(postId: string): Observable<Post> {
+          return this.http.get<Post>(`http://localhost:8080/api/posts/byid/${postId}`);
+        }
+        
+
+
+      }
+
+oracal sql script 
+
+-- Create a new tablespace for the new project
+
+CREATE TABLESPACE NEW_DATA
+  DATAFILE 'C:/Chetan/Development/DB/NEW_DATA.dbf'
+  SIZE 100M AUTOEXTEND ON; 
+  
+  
+alter session set "_ORACLE_SCRIPT"=true;
+
+-- Part 1: Create User to serve as the 'Schema Owner' of all the objects
+CREATE USER NEWSO IDENTIFIED BY "NEWSO_pwd"
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp
+  QUOTA UNLIMITED ON users;
+
+
+-- Part 2: Create Application Connect User with Read-write access to the schema
+    CREATE USER NEWCU IDENTIFIED BY "NEWCU_pwd"
+  DEFAULT TABLESPACE users
+  TEMPORARY TABLESPACE temp;
+  
+ALTER USER NEWSO quota unlimited on NEW_DATA;
+
+
+-- ROLES
+
+-- Part 1: Create application role with write access
+CREATE ROLE NEW_ROLE_CU_RW NOT IDENTIFIED;
+GRANT CREATE SESSION TO NEW_ROLE_CU_RW;
+GRANT CONNECT TO NEW_ROLE_CU_RW;
+
+-- Assign ROLES
+GRANT NEW_ROLE_CU_RW TO NEWCU;
+
+
+-- GRANT SELECT on sequence (if you're using sequences to generate primary keys)
+CREATE SEQUENCE NEWSO.USERR_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+GRANT SELECT ON NEWSO.USERR_SEQ TO NEW_ROLE_CU_RW;
+
+CREATE TABLE NEWSO.USERR
+(
+
+NAME 	VARCHAR2(255)NOT NULL,
+EMAIL 		VARCHAR2(255)NOT NULL,
+PASSWORD 		VARCHAR2(255)NOT NULL,
+PHONENO		VARCHAR2(255)NOT NULL
+
+)TABLESPACE NEW_DATA;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.USERR TO NEW_ROLE_CU_RW;
+
+-- NOTE: Hibernate will handle the table creation based on your JPA entities
+-- You do not need to manually create the APP_USER table here, Hibernate will automatically generate it based on the code.
+-- Just make sure the entity
+
+Alter table NEWSO.USERR Add id NUMBER NOT NULL;
+
+Alter table NEWSO.USERR Add constraint user_pk PRIMARY KEY (id);
+
+select * from NEWSO.USERR;
+
+
+select USERR from NEWSO where  upper(USERR) ='USERR';
+
+select sys_context('userenv','current_schema') From dual;
+
+select constraint_name from user_constraints where table_name = 'NEWSO.USERR' and constraint_type='P';
+
+alter table NEWSO.USERR drop primary key;
+
+
+CREATE TABLE NEWSO.EMPLOYEE
+(
+EMP_ID VARCHAR2(50) PRIMARY KEY,
+E_NAME 	VARCHAR2(255)NOT NULL,
+SALARY NUMBER(10,2) NOT NULL,
+DEPARTMENT VARCHAR(255) NOT NULL,
+STATUS VARCHAR2(20) NOT NULL,
+PHONENO	VARCHAR2(20) NOT NULL
+
+)TABLESPACE NEW_DATA;
+
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.EMPLOYEE TO NEW_ROLE_CU_RW;
+
+INSERT INTO NEWSO.EMPLOYEE (EMP_ID,E_NAME,SALARY,DEPARTMENT,STATUS,PHONENO) VALUES('E001','CHETAN',500000,'IT','ACTIVE','912342134');
+INSERT INTO NEWSO.EMPLOYEE (EMP_ID,E_NAME,SALARY,DEPARTMENT,STATUS,PHONENO) VALUES('E002','SHARON',400000,'IT','ACTIVE','9123421354');
+
+SELECT * FROM NEWSO.EMPLOYEE;
+
+desc newso.employee;
+
+alter table newso.employee modify EMP_ID VARCHAR2(255 Char);
+alter table newso.employee modify phoneno varchar2(255 char);
+
+alter table newso.employee modify status varchar2(255 char);
+alter table newso.employee modify salary float(53); 
+commit;
+
+-- post table
+
+
+CREATE TABLE NEWSO.POSTS
+(
+POST_SEQ_ID NUMBER PRIMARY KEY,
+POST_HEADER VARCHAR2(4000)NOT NULL,
+POST_CONTENT CLOB,
+STATUS VARCHAR2(220) NOT NULL,
+POSTED_BY VARCHAR2(220) NOT NULL,
+POSTED_AT TIMESTAMP WITH TIME ZONE DEFAULT SYSTIMESTAMP
+
+)TABLESPACE NEW_DATA;
+
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON NEWSO.POSTS TO NEW_ROLE_CU_RW;
+
+INSERT INTO NEWSO.POSTS(POST_SEQ_ID,POST_HEADER,POST_CONTENT,STATUS,POSTED_BY) VALUES(8,'ADDED CONTACT US PAGdE','THIS IS LITTLE ON CONTdNTNEN AJSLD ALSDJ LAJSKLD JLASJD LAJSDLK JASL; JKLASJ L;ASJD LJASLK JAS JL;ASJ L;SJA JAS  ASJDL;J  ASD','ACTIVE','CHETANd');
+commit;
+
+
+
+
+
+thisis my backend spring boot code
+
+Posts.java
+package com.bostmytools.emppmng.models;
+
+import java.time.OffsetDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "POSTS", schema = "NEWSO")
+public class Posts {
+
+	@Id
+	@Column(name = "POST_SEQ_ID", nullable = false)
+	private long post_id;
+
+	@Column(name = "POST_HEADER", nullable = false)
+	private String post_header;
+
+	@Lob
+	@Column(name = "POST_CONTENT", columnDefinition = "CLOB", nullable = false)
+	private String post_content;
+
+	@Column(name = "STATUS", nullable = false)
+	private String status;
+
+	@Column(name = "POSTED_BY", nullable = false)
+	private String posted_by;
+	
+	@Column(name = "POSTED_AT", columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = false)
+	private OffsetDateTime posted_at;
+	
+	
+	@PrePersist
+	protected void onCreate() {
+		if(posted_at==null) {
+			posted_at=OffsetDateTime.now();
+		}
+	}
+
+	public long getPost_id() {
+		return post_id;
+	}
+
+	public void setPost_id(long post_id) {
+		this.post_id = post_id;
+	}
+
+	public String getPost_header() {
+		return post_header;
+	}
+
+	public void setPost_header(String post_header) {
+		this.post_header = post_header;
+	}
+
+	public String getPost_content() {
+		return post_content;
+	}
+
+	public void setPost_content(String post_content) {
+		this.post_content = post_content;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getPosted_by() {
+		return posted_by;
+	}
+
+	public void setPosted_by(String posted_by) {
+		this.posted_by = posted_by;
+	}
+
+	public OffsetDateTime getPosted_at() {
+		return posted_at;
+	}
+
+	public void setPosted_at(OffsetDateTime posted_at) {
+		this.posted_at = posted_at;
+	}
+	
+	
+
+}
+
+create a sequence for post id will be autogenereated 
+
+and fix in front end angular code so when i createing a new post it should 
+not diplay for id and when submiiting the new post it should be auto genreate 
+which is in the backend code 
+all id along with the new post should be saved in database.
+
+
+
+
+
+
+
+
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^
+
+
 !!!
 
 import { Component, OnInit } from '@angular/core';
