@@ -1,168 +1,193 @@
-this is my logincomponet .ts
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
 
-@Component({
-  selector: 'app-login',
-  standalone: false,
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
-})
-export class LoginComponent implements OnInit{
+        /* Form Container */
+        .container {
+            width: 60%;
+            background: rgba(226, 192, 21, 0.596);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 85%;
+        }
 
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-  public msg=false;
+        label {
+            font-weight: bold;
+            color: #000000;
+            display: block;
+            margin-bottom: 5px;
+        }
 
-  credentials={
-    email:'',
-    password:''
-  }
-  constructor(private readonly LoginServices:LoginService,private router:Router){}
-  ngOnInit(): void {
-    // 
-  
-    
-  }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            font-size: 16px;
+        }
 
-  onSubmit(){
+        textarea {
+            height: 120px;
+            resize: none;
+        }
 
-    if(this.credentials.email!=''&&this.credentials.password!='')
-    {
-      console.log("ok");       
-      this.LoginServices.generateToken(this.credentials)
-      .subscribe((Response:any)=>{console.log(Response.token);
-        this.LoginServices.logInUser(Response.token)
-       
-        this.router.navigate(['home']);
+        /* Buttons */
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background: #ffea01;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e6b800;
+        }
+
+        .cancel-btn {
+            background: #ff1515;
+        }
+
+        .cancel-btn:hover {
+            background: #a9a9a9;
+        }
+
+        /* Right-side Background */
+        .image-space {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 950px;
+            
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="postId" *ngIf="isEditMode">Post ID</label>
+                <input type="text" id="postId" name="postId" *ngIf="isEditMode"  [(ngModel)]="post.post_id" required [readOnly]="isEditMode" >
+            </div>
+            
+            <div class="form-group">
+                <label for="postHeader">Post Header</label>
+                <input type="text" id="postHeader"  name="postHeader" [(ngModel)]="post.post_header" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">Post Content</label>
+                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
+            </div>
+
+            <div class="form-group">
+               
+                <label for="status" *ngIf="isEditMode">Status</label>
+                <select id="status"  name="status"  [(ngModel)]="post.status"  *ngIf="isEditMode">
+                
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
+                </select>
+
+               
+               
+            </div>
+
+            <div class="form-group">
+                <label for="postedBy">Posted By</label>
+                <input type="text" id="postedBy" name="postedBy"  [(ngModel)]="post.posted_by" readonly>
+            </div>
+
+            <div class="button-group">
+                <button type="submit"  (click)="submitPostForm()" routerLink="/home" >{{isEditMode?'update':'submit'}}</button>
+                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
         
-      })
-     
-     
-    }
-   
-    else{
-      this.msg=true;
-      console.log("not ok");
-    }
-    
-  }
-
-}
-
-
-this is my logincomponent.html
-<div class="login-container">
-    <div class="login-card">
-      <h2 class="login-title">Admin Login</h2>
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            [(ngModel)]="credentials.email"
-            required
-            class="form-input"
-          />
+        <div class="illustration">
+            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface" />
         </div>
-        <div class="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            [(ngModel)]="credentials.password"
-            required
-            class="form-input"
-          />
-        </div>
-        <button type="submit" class="login-button">Login</button>
-        <h3 *ngIf="msg">Invalid Credentials</h3>
-      </form>
 
-     
+        <div class="illustrationn">
+            <img src="" />
+        </div>
     </div>
-  </div>
-  
+    <p *ngIf="responseMessage">{{ responseMessage }}</p>
+    
 
-login.srvice.ts
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class LoginService {
-
-  url="http://localhost:8080"
-
-  private loginStatus= new BehaviorSubject<boolean>(this.isLoggedIn());
-
-  constructor(private readonly http:HttpClient) { }
+</body>
+</html>
 
 
-
-  generateToken(credientials:any){
-    return this.http.post(`${this.url}/api/login`,credientials);
-  }
-
-  logInUser(token :string)
-  {
-    localStorage.setItem("token",token)
-    this.loginStatus.next(true);
-    return true;
-  }
-
-
-  isLoggedIn(){
-    let token=localStorage.getItem("token")
-    if(token==undefined || token=='' || token==null)
-    {
-      return false;
-    }
-    else{
-      return true;
-    }
-  }
-
-  logout(){
-    localStorage.removeItem("token");
-    this.loginStatus.next(false);
-    return true;
-  }
-
-  getToken(){
-    return localStorage.getItem('token');
-  }
-
-  getLoginStatus(){
-    return this.loginStatus.asObservable();
-    }
+css
+.illustration {
+    flex: 1;
+    max-width: 600px;
 }
 
-authgurad.ts
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { LoginService } from './login.service';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard implements CanActivate {
-  constructor(private loginService:LoginService,private router:Router) {}
-
-  canActivate(): boolean | Observable<boolean> {
- 
-    if (this.loginService.isLoggedIn()) {
-      return true;
-    }
-   
-     this.router.navigate(['login'])
-
-    return false;
-  }
+.illustration img {
+    position: relative;
+    position: absolute;
+    display: flex;
+    width: 63%;
+    height: auto;
+    left: 36%;
+    top: 44%;
 }
 
+.illustrationn {
+    flex: 1;
+    max-width: 600px;
+}
 
+.illustrationn img {
+    position: relative;
+    position: absolute;
+    display: flex;
+    width: 20%;
+    height: auto;
+    left: 36%;
+    top: 44%;
+}
+
+modifiy css and html such that post content input box should be very huge like its ther in email system and rearrange the  image postion accordly to look good and and alsoset 
+css postinoi for is edit mode and not in edit mode and main my colour theme
