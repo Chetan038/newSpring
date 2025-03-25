@@ -1,21 +1,19 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Submission Form</title>
-    <style>
-        /* General Styles */
+
+
+
+
+
+    /* General Styles */
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffffff);
+            background: linear-gradient(135deg, #9e0000);
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 90vh;
         }
 
         /* Form Container */
@@ -28,7 +26,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            height: auto;
+            height: 75%;
         }
 
         /* Form Fields */
@@ -44,18 +42,26 @@
             margin-bottom: 5px;
         }
 
-        input, select, textarea {
-            width: 100%;
+        input, select {
+            width: 30%;
             padding: 12px;
             border: 2px solid #ffd700;
             border-radius: 5px;
             font-size: 16px;
         }
 
+        
+
         /* Large Post Content Box */
         textarea {
-            height: 250px;
+            height: 170px;
             resize: none;
+
+            width: 98%;
+            padding: 12px;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         /* Buttons */
@@ -81,6 +87,8 @@
         }
 
         .cancel-btn {
+          
+            left: 20%;
             background: #ff1515;
         }
 
@@ -91,262 +99,26 @@
         /* Image Styling */
         .illustration {
             display: flex;
+            position: absolute;
+            left: 30%;
+            top: -4%;
             justify-content: center;
             margin-top: 20px;
+            background-color: #ff151500;
+         
         }
 
         .illustration img {
-            width: 40%;
-            height: auto;
+            position: relative;
+            width: 60%;
+          
+            left: 1%;
+            top: 10%;
         }
 
         /* Edit Mode Styling */
         .edit-mode {
             background: rgba(226, 192, 21, 0.85);
-        }
+        } 
 
-    </style>
-</head>
-<body>
-
-    <div class="container" [ngClass]="{'edit-mode': isEditMode}">
-        <form>
-            <div class="form-group" *ngIf="isEditMode">
-                <label for="postId">Post ID</label>
-                <input type="text" id="postId" name="postId" [(ngModel)]="post.post_id" readonly>
-            </div>
-            
-            <div class="form-group">
-                <label for="postHeader">Post Header</label>
-                <input type="text" id="postHeader" name="postHeader" [(ngModel)]="post.post_header" required>
-            </div>
-
-            <div class="form-group">
-                <label for="postContent">Post Content</label>
-                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
-            </div>
-
-            <div class="form-group" *ngIf="isEditMode">
-                <label for="status">Status</label>
-                <select id="status" name="status" [(ngModel)]="post.status">
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="INACTIVE">INACTIVE</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="postedBy">Posted By</label>
-                <input type="text" id="postedBy" name="postedBy" [(ngModel)]="post.posted_by" readonly>
-            </div>
-
-            <div class="button-group">
-                <button type="submit" (click)="submitPostForm()" routerLink="/home">{{ isEditMode ? 'Update' : 'Submit' }}</button>
-                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
-            </div>
-        </form>
-
-        <div class="illustration">
-            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface">
-        </div>
-    </div>
-
-    <p *ngIf="responseMessage">{{ responseMessage }}</p>
-
-</body>
-</html>
-@@@@
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Submission Form</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffffff);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 90vh;
-        }
-
-        /* Form Container */
-        .container {
-            width: 60%;
-            background: rgba(226, 192, 21, 0.596);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            position: relative;
-            height: 85%;
-        }
-
-        /* Form Fields */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            color: #000000;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ffd700;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        textarea {
-            height: 120px;
-            resize: none;
-        }
-
-        /* Buttons */
-        .button-group {
-            margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        button {
-            background: #ffea01;
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #e6b800;
-        }
-
-        .cancel-btn {
-            background: #ff1515;
-        }
-
-        .cancel-btn:hover {
-            background: #a9a9a9;
-        }
-
-        /* Right-side Background */
-        .image-space {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 150px;
-            height: 950px;
-            
-            background-size: contain;
-            opacity: 0.3;
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="postId" *ngIf="isEditMode">Post ID</label>
-                <input type="text" id="postId" name="postId" *ngIf="isEditMode"  [(ngModel)]="post.post_id" required [readOnly]="isEditMode" >
-            </div>
-            
-            <div class="form-group">
-                <label for="postHeader">Post Header</label>
-                <input type="text" id="postHeader"  name="postHeader" [(ngModel)]="post.post_header" required>
-            </div>
-
-            <div class="form-group">
-                <label for="postContent">Post Content</label>
-                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
-            </div>
-
-            <div class="form-group">
-               
-                <label for="status" *ngIf="isEditMode">Status</label>
-                <select id="status"  name="status"  [(ngModel)]="post.status"  *ngIf="isEditMode">
-                
-                <option value="ACTIVE">ACTIVE</option>
-                <option value="INACTIVE">INACTIVE</option>
-                </select>
-
-               
-               
-            </div>
-
-            <div class="form-group">
-                <label for="postedBy">Posted By</label>
-                <input type="text" id="postedBy" name="postedBy"  [(ngModel)]="post.posted_by" readonly>
-            </div>
-
-            <div class="button-group">
-                <button type="submit"  (click)="submitPostForm()" routerLink="/home" >{{isEditMode?'update':'submit'}}</button>
-                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
-            </div>
-        </form>
-        
-        <div class="illustration">
-            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface" />
-        </div>
-
-        <div class="illustrationn">
-            <img src="" />
-        </div>
-    </div>
-    <p *ngIf="responseMessage">{{ responseMessage }}</p>
-    
-
-</body>
-</html>
-
-
-css
-.illustration {
-    flex: 1;
-    max-width: 600px;
-}
-
-.illustration img {
-    position: relative;
-    position: absolute;
-    display: flex;
-    width: 63%;
-    height: auto;
-    left: 36%;
-    top: 44%;
-}
-
-.illustrationn {
-    flex: 1;
-    max-width: 600px;
-}
-
-.illustrationn img {
-    position: relative;
-    position: absolute;
-    display: flex;
-    width: 20%;
-    height: auto;
-    left: 36%;
-    top: 44%;
-}
-
-modifiy css and html such that post content input box should be very huge like its ther in email system and rearrange the  image postion accordly to look good and and alsoset 
-css postinoi for is edit mode and not in edit mode and main my colour theme
+make this css reponse for differnt type of screen fix the orientation of the screen it not lokking good in bigger screen fix that 
