@@ -1,3 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form Container */
+        .container {
+            width: 65%;
+            background: rgba(226, 192, 21, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: auto;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+            color: #000000;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Large Post Content Box */
+        textarea {
+            height: 250px;
+            resize: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background: #ffea01;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e6b800;
+        }
+
+        .cancel-btn {
+            background: #ff1515;
+        }
+
+        .cancel-btn:hover {
+            background: #a9a9a9;
+        }
+
+        /* Image Styling */
+        .illustration {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .illustration img {
+            width: 40%;
+            height: auto;
+        }
+
+        /* Edit Mode Styling */
+        .edit-mode {
+            background: rgba(226, 192, 21, 0.85);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" [ngClass]="{'edit-mode': isEditMode}">
+        <form>
+            <div class="form-group" *ngIf="isEditMode">
+                <label for="postId">Post ID</label>
+                <input type="text" id="postId" name="postId" [(ngModel)]="post.post_id" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="postHeader">Post Header</label>
+                <input type="text" id="postHeader" name="postHeader" [(ngModel)]="post.post_header" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">Post Content</label>
+                <textarea id="postContent" name="postContent" [(ngModel)]="post.post_content" required></textarea>
+            </div>
+
+            <div class="form-group" *ngIf="isEditMode">
+                <label for="status">Status</label>
+                <select id="status" name="status" [(ngModel)]="post.status">
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="postedBy">Posted By</label>
+                <input type="text" id="postedBy" name="postedBy" [(ngModel)]="post.posted_by" readonly>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" (click)="submitPostForm()" routerLink="/home">{{ isEditMode ? 'Update' : 'Submit' }}</button>
+                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+
+        <div class="illustration">
+            <img src="https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg" alt="People collaborating on a project interface">
+        </div>
+    </div>
+
+    <p *ngIf="responseMessage">{{ responseMessage }}</p>
+
+</body>
+</html>
+@@@@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
