@@ -1,6 +1,153 @@
 
 
 
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #9e0000);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form Container */
+.container {
+    width: 50%;
+    max-width: 600px; /* Limits max width on large screens */
+    background: rgba(226, 192, 21, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: auto;
+    min-height: 60%;
+}
+
+/* Form Fields */
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+    color: #000000;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ffd700;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Large Post Content Box */
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+/* Buttons */
+.button-group {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+button {
+    background: #ffea01;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e6b800;
+}
+
+.cancel-btn {
+    background: #ff1515;
+}
+
+.cancel-btn:hover {
+    background: #a9a9a9;
+}
+
+/* Image Styling */
+.illustration {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.illustration img {
+    width: 100%;
+    max-width: 250px; /* Limits image size */
+}
+
+/* Edit Mode Styling */
+.edit-mode {
+    background: rgba(226, 192, 21, 0.85);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    input, select, textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+7777
+
+
 
 
 
