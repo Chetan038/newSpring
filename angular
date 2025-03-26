@@ -1,151 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Submission Form</title>
+   
+</head>
+<body>
+
+    <div class="container" [ngClass]="{'edit-mode': isEditmode}">
+        <form>
+            <div class="editid" >
+                <label for="Id">ID</label>
+                <input type="text" id="Id" name="Id" [(ngModel)]="admin.id" >
+            </div>
+
+        
+
+            <div class="form-group" >
+                <label for="name">NAME</label>
+                <input type="text" id="name" name="name" [(ngModel)]="admin.name">
+            </div>
+            
+          
+            
+            <div class="form-group" >
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" [(ngModel)]="admin.email" >
+            </div>
+
+            <div class="editheader" >
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password"  [(ngModel)]="admin.password">
+            </div>
+
+            <div class="editheader" >
+                <label for="phoneNo">phoneNo</label>
+                <input type="text" id="phoneNo" name="phoneNo" [(ngModel)]="admin.phoneNo">
+            </div>
+
+           
+           
+
+            <div class="editpostbuttons" >
+                <button type="submit" (click)="submitPostFormm()" routerLink="">{{ isEditmode ? 'Update' : 'Submit' }}</button>
+                <button type="button" routerLink="/home" class="cancel-btn">Cancel</button>
+            </div>
 
 
+        </form>
 
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #9e0000);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Form Container */
-.container {
-    width: 50%;
-    max-width: 600px; /* Limits max width on large screens */
-    background: rgba(226, 192, 21, 0.7);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: auto;
-    min-height: 60%;
-}
-
-/* Form Fields */
-.form-group {
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-label {
-    font-weight: bold;
-    color: #000000;
-    display: block;
-    margin-bottom: 5px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ffd700;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-/* Large Post Content Box */
-textarea {
-    height: 150px;
-    resize: none;
-}
-
-/* Buttons */
-.button-group {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-button {
-    background: #ffea01;
-    color: rgb(0, 0, 0);
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #e6b800;
-}
-
-.cancel-btn {
-    background: #ff1515;
-}
-
-.cancel-btn:hover {
-    background: #a9a9a9;
-}
-
-/* Image Styling */
-.illustration {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.illustration img {
-    width: 100%;
-    max-width: 250px; /* Limits image size */
-}
-
-/* Edit Mode Styling */
-.edit-mode {
-    background: rgba(226, 192, 21, 0.85);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .container {
-        width: 70%;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        padding: 20px;
-    }
-
-    input, select, textarea {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    button {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        width: 95%;
-        padding: 15px;
-    }
-
-    .button-group {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
+     
 
 
-7777
+        
+    </div>
+
+  
+
+</body>
+</html>
+
+this is my form make agood css for this in seprate css file 
+
+and this shoould be yellow and white colur cobmintation just simliar tot this css
+
 
 
 
@@ -165,7 +84,7 @@ button:hover {
 
         /* Form Container */
         .container {
-            width: 65%;
+            width: 80%;
             background: rgba(226, 192, 21, 0.7);
             padding: 30px;
             border-radius: 10px;
@@ -173,15 +92,21 @@ button:hover {
             display: flex;
             flex-direction: column;
             position: relative;
-            height: 75%;
+            height: 77%;
         }
 
         /* Form Fields */
         .form-group {
             margin-bottom: 15px;
-            width: 100%;
+            width: 60%;
+           
         }
 
+        
+   
+      
+        
+       
         label {
             font-weight: bold;
             color: #000000;
@@ -190,7 +115,8 @@ button:hover {
         }
 
         input, select {
-            width: 30%;
+            background-color: rgba(255, 255, 255, 0.685);
+            width: 163%;
             padding: 12px;
             border: 2px solid #ffd700;
             border-radius: 5px;
@@ -201,8 +127,16 @@ button:hover {
 
         /* Large Post Content Box */
         textarea {
-            height: 170px;
+            height: 270px;
             resize: none;
+
+
+           /* background-image: url('https://apps.flowscript.ai/flowscript/static/media/construction.1f81f165c187354329aa1a34fc9d6b1d.svg');*/
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(255, 255, 255, 0.685);
+            background-blend-mode: overlay;
 
             width: 98%;
             padding: 12px;
@@ -211,14 +145,65 @@ button:hover {
             font-size: 16px;
         }
 
+        .edittextarea{
+            height: 170px;
+            width: 975px;
+
+        }
+        .editcontentbox{
+            height: 500px;
+            position: relative;
+            top: -4%;
+            left: -0.5%;
+            width: 97%;
+          
+           
+            
+        }
+
         /* Buttons */
         .button-group {
+            position: relative;
+            top: -1%;
+        
             margin-top: 15px;
             display: flex;
             justify-content: space-between;
         }
 
+        .editpostbuttons {
+            position: relative;
+            top: -40%;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .editid{
+            width: 26%;
+        }
+
+        .editstatus{
+
+            position: relative;
+            top: -9%;
+            left: 50%;
+            width: 30%;
+           
+        }
+
+        .editheader{
+            position: relative;
+            top: -6%;
+            left: -0.1%;
+            width: 59%;
+           
+        }
+
+
+
         button {
+            
             background: #ffea01;
             color: rgb(0, 0, 0);
             border: none;
@@ -257,7 +242,7 @@ button:hover {
 
         .illustration img {
             position: relative;
-            width: 60%;
+            width: 70%;
           
             left: 1%;
             top: 10%;
@@ -266,6 +251,4 @@ button:hover {
         /* Edit Mode Styling */
         .edit-mode {
             background: rgba(226, 192, 21, 0.85);
-        } 
-
-make this css reponse for differnt type of screen fix the orientation of the screen it not lokking good in bigger screen fix that 
+        }
