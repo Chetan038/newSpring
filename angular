@@ -1,22 +1,99 @@
- Request execution failed with message: java.net.ConnectException: Connection refused: getsockopt
-[2m2025-03-27T11:15:05.418+05:30[0;39m [31mERROR[0;39m [35m34040[0;39m [2m--- [demo] [beatExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_DEMO/ULW5CG3330XHT.ent.covance.com:demo - was unable to send heartbeat!
 
- Request execution failed with message: java.net.ConnectException: Connection refused: getsockopt
-[2m2025-03-27T11:15:05.418+05:30[0;39m [31mERROR[0;39m [35m34040[0;39m [2m--- [demo] [beatExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_DEMO/ULW5CG3330XHT.ent.covance.com:demo - was unable to send heartbeat!
+[2m2025-03-27T12:37:39.181+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mc.c.c.ConfigServerApplication           [0;39m [2m:[0;39m Starting ConfigServerApplication using Java 21.0.6 with PID 28412 (C:\Users\ME2B3HC\Downloads\config-server (1)\config-server\target\classes started by ME2B3HC in C:\Users\ME2B3HC\Downloads\config-server (1)\config-server)
+[2m2025-03-27T12:37:39.183+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mc.c.c.ConfigServerApplication           [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2025-03-27T12:37:39.227+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2m2025-03-27T12:37:39.227+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2m2025-03-27T12:37:39.943+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=a6a0de13-780e-33d9-be80-045dc20c845e
+[2m2025-03-27T12:37:40.201+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8888 (http)
+[2m2025-03-27T12:37:40.209+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2025-03-27T12:37:40.210+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.39]
+[2m2025-03-27T12:37:40.257+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2025-03-27T12:37:40.257+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1030 ms
+[2m2025-03-27T12:37:41.052+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m LiveReload server is running on port 35729
+[2m2025-03-27T12:37:41.110+05:30[0;39m [33m WARN[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36miguration$LoadBalancerCaffeineWarnLogger[0;39m [2m:[0;39m Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[2m2025-03-27T12:37:41.115+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.b.a.e.web.EndpointLinksResolver     [0;39m [2m:[0;39m Exposing 1 endpoint beneath base path '/actuator'
+[2m2025-03-27T12:37:41.158+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.c.n.eureka.InstanceInfoFactory      [0;39m [2m:[0;39m Setting initial instance status as: STARTING
+[2m2025-03-27T12:37:41.159+05:30[0;39m [31mERROR[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.c.n.e.s.EurekaRegistration          [0;39m [2m:[0;39m error getting CloudEurekaClient
 
-: Connection refused: getsockopt
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'scopedTarget.eurekaClient' defined in class path resource [org/springframework/cloud/netflix/eureka/EurekaClientAutoConfiguration$RefreshableEurekaClientConfiguration.class]: Unsatisfied dependency expressed through method 'eurekaClient' parameter 3: No qualifying bean of type 'com.netflix.discovery.shared.transport.jersey.TransportClientFactories<?>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1361) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1191) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$1(AbstractBeanFactory.java:378) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.getBean(GenericScope.java:375) ~[spring-cloud-context-4.2.1.jar:4.2.1]
+	at org.springframework.cloud.context.scope.GenericScope.get(GenericScope.java:179) ~[spring-cloud-context-4.2.1.jar:4.2.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:375) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.aop.target.SimpleBeanTargetSource.getTarget(SimpleBeanTargetSource.java:35) ~[spring-aop-6.2.5.jar:6.2.5]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getTargetObject(EurekaRegistration.java:128) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getEurekaClient(EurekaRegistration.java:116) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-6.2.5.jar:6.2.5]
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:482) ~[spring-cloud-context-4.2.1.jar:4.2.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.5.jar:6.2.5]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.5.jar:6.2.5]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration$$SpringCGLIB$$0.getEurekaClient(<generated>) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:na]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.maybeInitializeClient(EurekaServiceRegistry.java:83) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.register(EurekaServiceRegistry.java:66) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration.start(EurekaAutoServiceRegistration.java:89) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:323) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:510) ~[spring-context-6.2.5.jar:6.2.5]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:295) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:240) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:1006) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:630) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.4.jar:3.4.4]
+	at com.configserver.config_server.ConfigServerApplication.main(ConfigServerApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.4.4.jar:3.4.4]
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.netflix.discovery.shared.transport.jersey.TransportClientFactories<?>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:2207) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1630) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1555) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-6.2.5.jar:6.2.5]
+	... 40 common frames omitted
 
-[2m:[0;39m Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=java.net.ConnectException: Connection refused: getsockopt stacktrace=jakarta.ws.rs.ProcessingException: java.net.ConnectException: Connection refused: getsockopt
+[2m2025-03-27T12:37:41.163+05:30[0;39m [33m WARN[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'eurekaAutoServiceRegistration'
+[2m2025-03-27T12:37:41.176+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
 
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2m2025-03-27T12:37:41.191+05:30[0;39m [31mERROR[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
 
-[2m2025-03-27T11:13:05.443+05:30[0;39m [32m INFO[0;39m [35m34040[0;39m [2m--- [demo] [foReplicator-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_DEMO/ULW5CG3330XHT.ent.covance.com:demo: registering service...
-[2m2025-03-27T11:13:05.475+05:30[0;39m [32m INFO[0;39m [35m34040[0;39m [2m--- [demo] [foReplicator-%d] [0;39m[36mc.n.d.s.t.d.RedirectingEurekaHttpClient [0;39m [2m:[0;39m Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=java.net.ConnectException: Connection refused: getsockopt stacktrace=jakarta.ws.rs.ProcessingException: java.net.ConnectException: Connection refused: getsockopt
-	at org.glassfish.jersey.client.internal.HttpUrlConnector.apply(HttpUrlConnector.java:288)
+org.springframework.context.ApplicationContextException: Failed to start bean 'eurekaAutoServiceRegistration'
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:326) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:510) ~[spring-context-6.2.5.jar:6.2.5]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:295) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:240) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:1006) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:630) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.4.jar:3.4.4]
+	at com.configserver.config_server.ConfigServerApplication.main(ConfigServerApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.4.4.jar:3.4.4]
+Caused by: java.lang.NullPointerException: Cannot invoke "org.springframework.cloud.netflix.eureka.CloudEurekaClient.getApplications()" because the return value of "org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getEurekaClient()" is null
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.maybeInitializeClient(EurekaServiceRegistry.java:83) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.register(EurekaServiceRegistry.java:66) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration.start(EurekaAutoServiceRegistration.java:89) ~[spring-cloud-netflix-eureka-client-4.2.1.jar:4.2.1]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:323) ~[spring-context-6.2.5.jar:6.2.5]
+	... 16 common frames omitted
 
-
-[2m2025-03-27T11:13:35.520+05:30[0;39m [33m WARN[0;39m [35m34040[0;39m [2m--- [demo] [foReplicator-%d] [0;39m[36mc.n.discovery.InstanceInfoReplicator    [0;39m [2m:[0;39m There was a problem with the instance info replicator
-
-Request execution failed with message: java.net.ConnectException: Connection refused: getsockopt
-[2m2025-03-27T11:13:05.286+05:30[0;39m [31mERROR[0;39m [35m34040[0;39m [2m--- [demo] [beatExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_DEMO/ULW5CG3330XHT.ent.covance.com:demo - was unable to send heartbeat!
-
-this error is coming while running the aplicatino fix this 
+fix this error
