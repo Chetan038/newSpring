@@ -1,60 +1,16 @@
-[2m2025-03-27T16:32:18.913+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mcom.servicereg.demo.DemoApplication     [0;39m [2m:[0;39m Starting DemoApplication using Java 21.0.6 with PID 20120 (C:\Chetan\Development\projects\micro\demo\target\classes started by ME2B3HC in C:\Chetan\Development\projects\micro\demo)
-[2m2025-03-27T16:32:18.915+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mcom.servicereg.demo.DemoApplication     [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
-[2m2025-03-27T16:32:18.945+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-[2m2025-03-27T16:32:18.946+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-[2m2025-03-27T16:32:19.549+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=33a28ffb-2615-3ea7-8bce-7b817fb2168d
-[2m2025-03-27T16:32:19.770+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8761 (http)
-[2m2025-03-27T16:32:19.778+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
-[2m2025-03-27T16:32:19.778+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.39]
-[2m2025-03-27T16:32:19.821+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[2m2025-03-27T16:32:19.822+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 876 ms
-[2m2025-03-27T16:32:20.351+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.d.provider.DiscoveryJerseyProvider  [0;39m [2m:[0;39m Using JSON encoding codec LegacyJacksonJson
-[2m2025-03-27T16:32:20.351+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.d.provider.DiscoveryJerseyProvider  [0;39m [2m:[0;39m Using JSON decoding codec LegacyJacksonJson
-[2m2025-03-27T16:32:20.436+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.d.provider.DiscoveryJerseyProvider  [0;39m [2m:[0;39m Using XML encoding codec XStreamXml
-[2m2025-03-27T16:32:20.436+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.d.provider.DiscoveryJerseyProvider  [0;39m [2m:[0;39m Using XML decoding codec XStreamXml
-[2m2025-03-27T16:32:20.525+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.v.b.OptionalValidatorFactoryBean    [0;39m [2m:[0;39m Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
-[2m2025-03-27T16:32:20.928+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m LiveReload server is running on port 35729
-[2m2025-03-27T16:32:20.957+05:30[0;39m [33m WARN[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36miguration$LoadBalancerCaffeineWarnLogger[0;39m [2m:[0;39m Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-[2m2025-03-27T16:32:20.970+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.c.n.eureka.InstanceInfoFactory      [0;39m [2m:[0;39m Setting initial instance status as: STARTING
-[2m2025-03-27T16:32:20.988+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Initializing Eureka in region us-east-1
-[2m2025-03-27T16:32:20.988+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Client configured to neither register nor query for data.
-[2m2025-03-27T16:32:20.989+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Discovery Client initialized at timestamp 1743073340988 with initial instances count: 0
-[2m2025-03-27T16:32:21.012+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.eureka.DefaultEurekaServerContext   [0;39m [2m:[0;39m Initializing ...
-[2m2025-03-27T16:32:21.013+05:30[0;39m [33m WARN[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.eureka.cluster.PeerEurekaNodes      [0;39m [2m:[0;39m The replica size seems to be empty. Check the route 53 DNS Registry
-[2m2025-03-27T16:32:21.018+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Finished initializing remote region registries. All known remote regions: []
-[2m2025-03-27T16:32:21.019+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mc.n.eureka.DefaultEurekaServerContext   [0;39m [2m:[0;39m Initialized
-[2m2025-03-27T16:32:21.023+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.b.a.e.web.EndpointLinksResolver     [0;39m [2m:[0;39m Exposing 1 endpoint beneath base path '/actuator'
-[2m2025-03-27T16:32:21.056+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.c.n.e.s.EurekaServiceRegistry       [0;39m [2m:[0;39m Registering application DEMO with eureka with status UP
-[2m2025-03-27T16:32:21.063+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [      Thread-15] [0;39m[36mo.s.c.n.e.server.EurekaServerBootstrap  [0;39m [2m:[0;39m isAws returned false
-[2m2025-03-27T16:32:21.063+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [      Thread-15] [0;39m[36mo.s.c.n.e.server.EurekaServerBootstrap  [0;39m [2m:[0;39m Initialized server context
-[2m2025-03-27T16:32:21.063+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [      Thread-15] [0;39m[36mc.n.e.r.PeerAwareInstanceRegistryImpl   [0;39m [2m:[0;39m Got 1 instances from neighboring DS node
-[2m2025-03-27T16:32:21.064+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [      Thread-15] [0;39m[36mc.n.e.r.PeerAwareInstanceRegistryImpl   [0;39m [2m:[0;39m Renew threshold is: 1
-[2m2025-03-27T16:32:21.064+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [      Thread-15] [0;39m[36mc.n.e.r.PeerAwareInstanceRegistryImpl   [0;39m [2m:[0;39m Changing status to UP
-[2m2025-03-27T16:32:21.065+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [      Thread-15] [0;39m[36me.s.EurekaServerInitializerConfiguration[0;39m [2m:[0;39m Started Eureka Server
-[2m2025-03-27T16:32:21.078+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port 8761 (http) with context path '/'
-[2m2025-03-27T16:32:21.079+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36m.s.c.n.e.s.EurekaAutoServiceRegistration[0;39m [2m:[0;39m Updating port to 8761
-[2m2025-03-27T16:32:21.088+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [  restartedMain] [0;39m[36mcom.servicereg.demo.DemoApplication     [0;39m [2m:[0;39m Started DemoApplication in 2.411 seconds (process running for 3.379)
-[2m2025-03-27T16:32:21.450+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [on(4)-127.0.0.1] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring DispatcherServlet 'dispatcherServlet'
-[2m2025-03-27T16:32:21.450+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [on(4)-127.0.0.1] [0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Initializing Servlet 'dispatcherServlet'
-[2m2025-03-27T16:32:21.451+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [on(4)-127.0.0.1] [0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Completed initialization in 0 ms
-[2m2025-03-27T16:33:15.470+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-8] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance APIGATEWAY/ULW5CG3330XHT.ent.covance.com:apiGateway:8080 with status UP (replication=false)
-[2m2025-03-27T16:33:21.065+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [a-EvictionTimer] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Running the evict task with compensationTime 0ms
-[2m2025-03-27T16:33:48.442+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-2] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance ASERVICE/ULW5CG3330XHT.ent.covance.com:aService:8081 with status DOWN (replication=false)
-[2m2025-03-27T16:33:48.446+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-4] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance ASERVICE/ULW5CG3330XHT.ent.covance.com:aService:8081 with status DOWN (replication=false)
-[2m2025-03-27T16:33:48.450+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [io-8761-exec-10] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Cancelled instance ASERVICE/ULW5CG3330XHT.ent.covance.com:aService:8081 (replication=false)
-[2m2025-03-27T16:34:21.071+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [a-EvictionTimer] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Running the evict task with compensationTime 6ms
-[2m2025-03-27T16:35:09.000+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [io-8761-exec-10] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance SERVICE-A/ULW5CG3330XHT.ent.covance.com:service-a:8081 with status DOWN (replication=false)
-[2m2025-03-27T16:35:09.003+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-4] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance SERVICE-A/ULW5CG3330XHT.ent.covance.com:service-a:8081 with status DOWN (replication=false)
-[2m2025-03-27T16:35:09.007+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-3] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Cancelled instance SERVICE-A/ULW5CG3330XHT.ent.covance.com:service-a:8081 (replication=false)
-[2m2025-03-27T16:35:21.082+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [a-EvictionTimer] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Running the evict task with compensationTime 11ms
-[2m2025-03-27T16:35:37.842+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-7] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082 with status UP (replication=false)
-[2m2025-03-27T16:36:21.095+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [a-EvictionTimer] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Running the evict task with compensationTime 12ms
-[2m2025-03-27T16:37:06.239+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-1] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082 with status DOWN (replication=false)
-[2m2025-03-27T16:37:06.242+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-7] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082 with status DOWN (replication=false)
-[2m2025-03-27T16:37:06.246+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [io-8761-exec-10] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Cancelled instance BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082 (replication=false)
-[2m2025-03-27T16:37:07.898+05:30[0;39m [33m WARN[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-6] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m DS: Registry: lease doesn't exist, registering resource: BSERVICE - ULW5CG3330XHT.ent.covance.com:bService:8082
-[2m2025-03-27T16:37:07.898+05:30[0;39m [33m WARN[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-6] [0;39m[36mc.n.eureka.resources.InstanceResource   [0;39m [2m:[0;39m Not Found (Renew): BSERVICE - ULW5CG3330XHT.ent.covance.com:bService:8082
-[2m2025-03-27T16:37:07.921+05:30[0;39m [32m INFO[0;39m [35m20120[0;39m [2m--- [demo] [nio-8761-exec-8] [0;39m[36mc.n.e.registry.AbstractInstanceRegistry [0;39m [2m:[0;39m Registered instance BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082 with status UP (replication=false)
+<dependency>
+    <groupId>org.hibernate.validator</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>8.0.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.glassfish</groupId>
+    <artifactId>jakarta.el</artifactId>
+    <version>5.0.0</version>
+</dependency>
 
-
-this is when i am running find what woring and how to fix this 
+<dependency>
+    <groupId>com.github.ben-manes.caffeine</groupId>
+    <artifactId>caffeine</artifactId>
+    <version>3.1.8</version>
+</dependency>
