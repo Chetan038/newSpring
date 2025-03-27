@@ -1,20 +1,4 @@
 
-[2m2025-03-27T12:37:39.181+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mc.c.c.ConfigServerApplication           [0;39m [2m:[0;39m Starting ConfigServerApplication using Java 21.0.6 with PID 28412 (C:\Users\ME2B3HC\Downloads\config-server (1)\config-server\target\classes started by ME2B3HC in C:\Users\ME2B3HC\Downloads\config-server (1)\config-server)
-[2m2025-03-27T12:37:39.183+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mc.c.c.ConfigServerApplication           [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
-[2m2025-03-27T12:37:39.227+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-[2m2025-03-27T12:37:39.227+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-[2m2025-03-27T12:37:39.943+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=a6a0de13-780e-33d9-be80-045dc20c845e
-[2m2025-03-27T12:37:40.201+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8888 (http)
-[2m2025-03-27T12:37:40.209+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
-[2m2025-03-27T12:37:40.210+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.39]
-[2m2025-03-27T12:37:40.257+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[2m2025-03-27T12:37:40.257+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1030 ms
-[2m2025-03-27T12:37:41.052+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m LiveReload server is running on port 35729
-[2m2025-03-27T12:37:41.110+05:30[0;39m [33m WARN[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36miguration$LoadBalancerCaffeineWarnLogger[0;39m [2m:[0;39m Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-[2m2025-03-27T12:37:41.115+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.b.a.e.web.EndpointLinksResolver     [0;39m [2m:[0;39m Exposing 1 endpoint beneath base path '/actuator'
-[2m2025-03-27T12:37:41.158+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.c.n.eureka.InstanceInfoFactory      [0;39m [2m:[0;39m Setting initial instance status as: STARTING
-[2m2025-03-27T12:37:41.159+05:30[0;39m [31mERROR[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.c.n.e.s.EurekaRegistration          [0;39m [2m:[0;39m error getting CloudEurekaClient
-
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'scopedTarget.eurekaClient' defined in class path resource [org/springframework/cloud/netflix/eureka/EurekaClientAutoConfiguration$RefreshableEurekaClientConfiguration.class]: Unsatisfied dependency expressed through method 'eurekaClient' parameter 3: No qualifying bean of type 'com.netflix.discovery.shared.transport.jersey.TransportClientFactories<?>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-6.2.5.jar:6.2.5]
 	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546) ~[spring-beans-6.2.5.jar:6.2.5]
@@ -65,11 +49,11 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-6.2.5.jar:6.2.5]
 	... 40 common frames omitted
 
-[2m2025-03-27T12:37:41.163+05:30[0;39m [33m WARN[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'eurekaAutoServiceRegistration'
-[2m2025-03-27T12:37:41.176+05:30[0;39m [32m INFO[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+[2m2025-03-27T12:48:25.898+05:30[0;39m [33m WARN[0;39m [35m16516[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'eurekaAutoServiceRegistration'
+[2m2025-03-27T12:48:25.910+05:30[0;39m [32m INFO[0;39m [35m16516[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
 
 Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-[2m2025-03-27T12:37:41.191+05:30[0;39m [31mERROR[0;39m [35m28412[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+[2m2025-03-27T12:48:25.930+05:30[0;39m [31mERROR[0;39m [35m16516[0;39m [2m--- [config-server] [  restartedMain] [0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
 
 org.springframework.context.ApplicationContextException: Failed to start bean 'eurekaAutoServiceRegistration'
 	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:326) ~[spring-context-6.2.5.jar:6.2.5]
@@ -96,4 +80,3 @@ Caused by: java.lang.NullPointerException: Cannot invoke "org.springframework.cl
 	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:323) ~[spring-context-6.2.5.jar:6.2.5]
 	... 16 common frames omitted
 
-fix this error
