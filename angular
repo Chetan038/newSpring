@@ -1,44 +1,174 @@
--27T17:25:53.683+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mc.serviceb.bService.BServiceApplication [0;39m [2m:[0;39m Starting BServiceApplication using Java 21.0.6 with PID 20804 (C:\Users\ME2B3HC\Downloads\bService\bService\target\classes started by ME2B3HC in C:\Users\ME2B3HC\Downloads\bService\bService)
-[2m2025-03-27T17:25:53.684+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mc.serviceb.bService.BServiceApplication [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
-[2m2025-03-27T17:25:54.107+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=28878ad1-1bea-3634-bd9e-96100bf9911a
-[2m2025-03-27T17:25:54.270+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8082 (http)
-[2m2025-03-27T17:25:54.279+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
-[2m2025-03-27T17:25:54.279+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.39]
-[2m2025-03-27T17:25:54.330+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[2m2025-03-27T17:25:54.330+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 620 ms
-[2m2025-03-27T17:25:54.715+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mDiscoveryClientOptionalArgsConfiguration[0;39m [2m:[0;39m Eureka HTTP Client uses RestTemplate.
-[2m2025-03-27T17:25:54.812+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.s.c.n.eureka.InstanceInfoFactory      [0;39m [2m:[0;39m Setting initial instance status as: STARTING
-[2m2025-03-27T17:25:54.826+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Initializing Eureka in region us-east-1
-[2m2025-03-27T17:25:54.829+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mc.n.d.s.r.aws.ConfigClusterResolver     [0;39m [2m:[0;39m Resolving eureka endpoints via configuration
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Disable delta property : false
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Single vip registry refresh property : null
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Force full registry fetch : false
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Application is null : false
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Registered Applications size is zero : true
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Application version is -1: true
-[2m2025-03-27T17:25:54.835+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Getting all instance registry info from the eureka server
-[2m2025-03-27T17:25:55.170+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m The response status is 200
-[2m2025-03-27T17:25:55.171+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Starting heartbeat executor: renew interval is: 30
-[2m2025-03-27T17:25:55.173+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mc.n.discovery.InstanceInfoReplicator    [0;39m [2m:[0;39m InstanceInfoReplicator onDemand update allowed rate per min is 4
-[2m2025-03-27T17:25:55.175+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Discovery Client initialized at timestamp 1743076555174 with initial instances count: 0
-[2m2025-03-27T17:25:55.178+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.s.c.n.e.s.EurekaServiceRegistry       [0;39m [2m:[0;39m Registering application BSERVICE with eureka with status UP
-[2m2025-03-27T17:25:55.178+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Saw local status change event StatusChangeEvent [timestamp=1743076555178, current=UP, previous=STARTING]
-[2m2025-03-27T17:25:55.180+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [foReplicator-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082: registering service...
-[2m2025-03-27T17:25:55.201+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port 8082 (http) with context path '/'
-[2m2025-03-27T17:25:55.202+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36m.s.c.n.e.s.EurekaAutoServiceRegistration[0;39m [2m:[0;39m Updating port to 8082
-[2m2025-03-27T17:25:55.214+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [           main] [0;39m[36mc.serviceb.bService.BServiceApplication [0;39m [2m:[0;39m Started BServiceApplication in 1.784 seconds (process running for 2.589)
-[2m2025-03-27T17:25:55.268+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [foReplicator-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_BSERVICE/ULW5CG3330XHT.ent.covance.com:bService:8082 - registration status: 204
-[2m2025-03-27T17:26:11.204+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [nio-8082-exec-1] [0;39m[36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring DispatcherServlet 'dispatcherServlet'
-[2m2025-03-27T17:26:11.204+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [nio-8082-exec-1] [0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Initializing Servlet 'dispatcherServlet'
-[2m2025-03-27T17:26:11.204+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [nio-8082-exec-1] [0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Completed initialization in 0 ms
-[2m2025-03-27T17:26:25.180+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Disable delta property : false
-[2m2025-03-27T17:26:25.181+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Single vip registry refresh property : null
-[2m2025-03-27T17:26:25.181+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Force full registry fetch : false
-[2m2025-03-27T17:26:25.181+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Application is null : false
-[2m2025-03-27T17:26:25.181+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Registered Applications size is zero : true
-[2m2025-03-27T17:26:25.181+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Application version is -1: false
-[2m2025-03-27T17:26:25.181+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Getting all instance registry info from the eureka server
-[2m2025-03-27T17:26:25.207+05:30[0;39m [32m INFO[0;39m [35m20804[0;39m [2m--- [bService] [reshExecutor-%d] [0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m The response status is 200
+apiGateway
+
+ApiGatewayApplication.java
+package com.api.apiGateway;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class ApiGatewayApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ApiGatewayApplication.class, args);
+	}
+
+}
 
 
-this is showing in run when i am running micrcosrive are running confi ser and ,discory server is there any problem if then ho to fix it and its showing error when ia asscising local host 8082/service-b/hello 
+application.properties
+
+spring.application.name=apiGateway
+
+
+server.port=8080
+
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+
+
+
+spring.cloud.gateway.routes[0].id=service-b
+spring.cloud.gateway.routes[0].uri=lb://service-b
+spring.cloud.gateway.routes[0].predicates[0]=Path=/service-b/**
+
+
+------
+
+bService
+
+BServiceApplication.java
+
+package com.serviceb.bService;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class BServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BServiceApplication.class, args);
+	}
+
+}
+
+
+ClientController.java
+
+package com.serviceb.bService;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+@RestController
+@RequestMapping("/service-b")
+public class ClientController {
+
+
+@GetMapping("/hello")
+public String callServiceA() {
+    return "bbbb";
+}
+
+}
+
+
+application.properties
+
+spring.application.name=bService
+
+server.port=8082
+
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+
+config-server
+
+ConfigServerApplication.java
+package com.example.config_server;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
+
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ConfigServerApplication.class, args);
+	}
+
+}
+
+
+application.properties
+
+spring.application.name=config-server
+
+
+
+
+
+server.port=8888
+
+spring.profiles.active=native
+
+spring.cloud.config.server.native.search-locations=file:///C:/config-repo
+
+
+
+
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+demo
+
+DempApplication.java
+package com.servicereg.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+@SpringBootApplication
+@EnableEurekaServer
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
+
+
+application.properties
+
+spring.application.name=demo
+
+server.port=8761
+
+eureka.instance.hostname=localhost
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+eureka.server.wait-time-in-ms-when-sync-empty=0
+
+eureka.client.service-url.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/
+
+  
+
+
+this is my microservice small project bservice and api gate way is showing in euruka dashboard
+but api gateway is not dredirectrly not working localhost://8080/service-b/hello not working 
+but localhost://8082/service-b/hello
+
+guide step by step fix that tell where erro why itsnot working 
